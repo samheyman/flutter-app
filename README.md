@@ -1,10 +1,18 @@
 # Mama Fit Club
 
-A hybrid app for pregnant women who want to exercise. Built with Flutter.
+An app for pregnant women who want to exercise. Built with Flutter.
 
-## Getting Started
+## Usage
 
-This project is a starting point for a Flutter application.
+To run the app locally:
+
+```shell
+open -a simulator
+```
+
+```shell
+run flutter
+```
 
 A few resources to get you started if this is your first Flutter project:
 
