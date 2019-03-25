@@ -9,8 +9,8 @@ class DashboardWidget extends StatelessWidget {
  Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.all(10.0),
-        color: Colors.white,
+        margin: const EdgeInsets.all(20.0),
+        // color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,    

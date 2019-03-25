@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './mama_fit_club_icons.dart';
+
 import './pages/dashboard_widget.dart';
 import './pages/classes_widget.dart';
 import './pages/schedule_widget.dart';
@@ -18,7 +19,7 @@ class _HomeState extends State<Home> {
   int _currentPage = 0;
   final List<Widget> _appPages= [
     DashboardWidget(Colors.white),
-    ClassesWidget(Colors.deepOrange),
+    ClassesWidget(),
     ScheduleWidget(Colors.green),
     ProfileWidget(Colors.blue),
   ];

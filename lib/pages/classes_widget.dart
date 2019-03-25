@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import '../classes.dart';
 
-class ClassesWidget extends StatelessWidget {
- final Color color;
+class ClassesWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+      return _ClassesWidgetState();
+    }
+}
 
- ClassesWidget(this.color);
+class _ClassesWidgetState extends State<ClassesWidget> {
 
- @override
- Widget build(BuildContext context) {
-   return Container(
-    child: Container(
-      // margin: const EdgeInsets.all(10.0),
-      color: Colors.white,
-      child: Text('Classes', style: Theme.of(context).textTheme.display1.copyWith(color: Colors.black)),
-    ),
-   );
- }
+  List<List> _classes = [
+    ['10:30', '60min', 'Pre-natal yoga', 'My Gym'],
+    ['14:00', '90min', 'Pre-natal Pilates', 'Fitness Centre'],
+    ['15:00', '60min', 'Water Aerobics', 'Communal Centre'],
+    ['18:00', '120min', 'Spinning', 'Aero Club'],
+    ['20:30', '90min', 'Outdoor Pre-natal HIIT', 'Sport Centre'],
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Classes(_classes);
+  }
 }
