@@ -10,7 +10,7 @@ class MamaFitClub extends StatelessWidget {
       title: "Mama Fit Club",
       home: Home(title: 'Title'),
       theme: ThemeData(
-        primaryColor: Colors.deepPurple,
+        primaryColor: Colors.green,
       ),
     );
   }

@@ -21,7 +21,7 @@ class DashboardWidget extends StatelessWidget {
             Text('13 weeks, 1 day', 
               // textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.display1.copyWith(color: Colors.black, fontSize: 16)),
-            Image.asset('assets/images/lemon.jpg', height: 100),
+            Image.asset('assets/images/lemon.png', height: 100),
           ],
         ),
       ),

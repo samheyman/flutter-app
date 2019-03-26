@@ -6,7 +6,7 @@ import '../model/gym_class.dart';
 class ClassesWidget extends StatefulWidget {
   // ClassesWidget({Key key, this.title}) : super(key: key);
   // final String title = 'Classes';
-
+  
   @override
   State<StatefulWidget> createState() {
       return _ClassesWidgetState();
