@@ -8,7 +8,7 @@ class MamaFitClub extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Mama Fit Club",
-      home: Home(),
+      home: Home(title: 'Title'),
       theme: ThemeData(
         primaryColor: Colors.deepPurple,
       ),
