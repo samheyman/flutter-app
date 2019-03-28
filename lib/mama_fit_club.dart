@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-
-import './pages/home_widget.dart';
-import './pages/classes_widget.dart';
-import './pages/schedule_widget.dart';
-import './pages/profile_widget.dart';
 import './bottom_navigation.dart';
+import './pages/app_pages.dart';
 
 class MamaFitClub extends StatefulWidget {
   MamaFitClub({Key key, this.title}) : super(key: key);
@@ -17,23 +13,19 @@ class MamaFitClub extends StatefulWidget {
 }
 
 class _MamaFitClub extends State<MamaFitClub> {
-  int _currentPage = 0;
-  final List<Widget> _appPages= [
-    HomeWidget(),
-    ClassesWidget(),
-    ScheduleWidget(),
-    ProfileWidget(),
-  ];
+  int _currentIndex = 0;
+  final List<Widget> _appPages = appPages;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mama Fit Club'),
       ),
-      body: _appPages[_currentPage],
+      body: _appPages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: _currentPage,
+        currentIndex: _currentIndex,
         onTap: onTabTapped,
         items: bottomNavigationItems,
       ),
@@ -43,7 +35,7 @@ class _MamaFitClub extends State<MamaFitClub> {
   // Simple function to handle the bottom naviation  
   void onTabTapped(int index) {
     setState(() {
-      _currentPage = index;
+      _currentIndex = index;
     });
   }
 }
