@@ -20,7 +20,8 @@ class Classes extends StatelessWidget{
     return ListView(
       scrollDirection: Axis.vertical,
       // class entry begins here: can be card or container
-      children: classes.map((element) => Card(
+      children: 
+        classes.map((element) => Card(
         // elevation: 2,
         // margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         child: Container(

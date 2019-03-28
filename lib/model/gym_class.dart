@@ -4,6 +4,9 @@ class GymClass {
   int duration;
   String name;
   String location;
+  String category;
+  int places;
+  double price;
 
   GymClass(
     {
@@ -12,6 +15,9 @@ class GymClass {
       this.duration,
       this.name,
       this.location,
+      this.category,
+      this.places,
+      this.price,
     }
   );
 }

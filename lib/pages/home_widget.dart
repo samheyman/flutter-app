@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DashboardWidget extends StatelessWidget {
- final Color color;
-
- DashboardWidget(this.color);
+class HomeWidget extends StatelessWidget {
 
  @override
  Widget build(BuildContext context) {
@@ -21,7 +18,7 @@ class DashboardWidget extends StatelessWidget {
             Text('13 weeks, 1 day', 
               // textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.display1.copyWith(color: Colors.black, fontSize: 16)),
-            Image.asset('assets/images/lemon.png', height: 100),
+            Image.asset('images/lemon.png', height: 100),
           ],
         ),
       ),

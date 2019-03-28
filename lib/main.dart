@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import './home_widget.dart';
+import './mama_fit_club.dart';
 
-void main() => runApp(MamaFitClub());
-
-class MamaFitClub extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Mama Fit Club",
-      home: Home(title: 'Title'),
-      theme: ThemeData(
-        primaryColor: Colors.green,
-      ),
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    title: "Mama Fit Club",
+    home: MamaFitClub(),
+    theme: ThemeData(
+      primaryColor: Colors.redAccent,
+    ),
+  ));
 }
