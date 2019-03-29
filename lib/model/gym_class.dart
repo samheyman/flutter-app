@@ -1,14 +1,14 @@
 class GymClass {
-  String date;
-  String time;
-  int duration;
-  String name;
-  String location;
-  String category;
-  int places;
-  double price;
+  final String date;
+  final String time;
+  final int duration;
+  final String name;
+  final String location;
+  final String category;
+  final int places;
+  final double price;
 
-  GymClass(
+  const GymClass(
     {
       this.date,
       this.time,

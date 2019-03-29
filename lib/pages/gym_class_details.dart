@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../model/gym_class.dart';
 
-class ClassDetailsPage extends StatelessWidget {
+class GymClassDetails extends StatelessWidget {
   final GymClass gymClass;
-  ClassDetailsPage(this.gymClass);
+
+  GymClassDetails(this.gymClass);
   
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,6 @@ class ClassDetailsPage extends StatelessWidget {
           border: new Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(5.0)),
       child: new Text(
-        // "\$20",
         "SEK " + gymClass.price.toString(),
         style: TextStyle(color: Colors.white),
       ),
@@ -56,8 +56,6 @@ class ClassDetailsPage extends StatelessWidget {
         ),
       ],
     );
-
-    
 
     final headerContent = Stack(
       children: <Widget>[
@@ -149,18 +147,9 @@ class ClassDetailsPage extends StatelessWidget {
         children: [
           headerContent,
           bottomContent,
-
-          // Image.asset('assets/images/pregnant-spinning.jpeg'),
-          // Text('Location: ' + gymClass.location),
-          // Text('Date: ' + gymClass.date),
-          // Text('Duration: ' + gymClass.duration.toString() + " mins"),
-          // Text('Category: ' + gymClass.category), 
-          // Text('Places left: ' + gymClass.places.toString()),
         ],
       ),
     );
-
-    
   }
 }
 
