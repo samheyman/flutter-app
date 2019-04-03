@@ -6,7 +6,7 @@ import '../utils/helper_functions.dart';
 import '../pages/pregnancy_tip_page.dart';
 
 class HomeWidget extends StatelessWidget {
-
+  
  @override
  Widget build(BuildContext context) {
 
@@ -17,17 +17,122 @@ class HomeWidget extends StatelessWidget {
       )
     );
   }
-  
+
+  TextStyle sectionHeaderStyle() {
+    return TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 22,
+      color: Colors.grey[600],
+    );
+  }
+
+  Container myPregnancy(BabyData babyDetails) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      color: Colors.transparent,
+      child: Column( 
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(0),
+            child: Text('Today', 
+              style: sectionHeaderStyle()),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Text("You're " +
+              getElapsedTimeString(babyDetails) + " in, " + getRemainingTimeString(babyDetails),
+            style: Theme.of(context).textTheme.display1.copyWith(
+              color: Colors.grey[500], fontWeight: FontWeight.bold, fontSize: 14, height: 1.5)),
+          ),
+          Container(
+            color: Colors.white,
+            height: 120,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset('images/lemon.png', height: 70),
+                          Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Text("Your baby is \nthe size of a " + babyDetails.fruitSize
+                              + "\n(" + babyDetails.sizeCm.toString() + "cm, " + babyDetails.weightG.toString() + "g)",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 12),),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+Container myClasses() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+      color: Colors.transparent,
+      child: Column( 
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(0),
+            child: Text('My classes', 
+              style: sectionHeaderStyle()),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Text("You have completed 0 classes. ",
+            style: Theme.of(context).textTheme.display1.copyWith(
+              color: Colors.grey[500], fontWeight: FontWeight.bold, fontSize: 14, height: 1.5)),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                child: Text("Find your next class", style: TextStyle(fontWeight: FontWeight.bold),),
+                // onPressed: ()=> {},
+                onPressed: () {
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => MamaFitClub()),
+                  // );
+                },
+                color: Colors.greenAccent[100],
+                textColor: Colors.green,
+                elevation: 1,
+                shape: SuperellipseShape(),
+          ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Container makeTipContainer(pregnancyTip) {
     return Container(
       color: Colors.white,
-      margin: EdgeInsets.only(top: 5),
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
       height: 130,
-      // //decoration: BoxDecoration(
-      //   border: Border(top: BorderSide(color: Theme.of(context).primaryColor, width: 2)),
-      //   color: Colors.white,
-      // ),
       child: GestureDetector(
         onTap: () {
           _goToTipPage(context, pregnancyTip);
@@ -88,168 +193,44 @@ class HomeWidget extends StatelessWidget {
     );
   }
 
-  Container makePageHeader(BabyData babyDetails) {
+  Container myTips() {
     return Container(
-      child: Card(
-        elevation: 1,
-        margin: EdgeInsets.all(0),
-        color: Colors.white,
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          child: Column( 
-            children: [
-              Padding(
-                padding: EdgeInsets.all(0),
-                child: Text('Trimester 1', 
-                            style: Theme.of(context).textTheme.display1.copyWith(color: Colors.black)),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 0),
-                child: Text(
-                  getElapsedTimeString(babyDetails),
-              // textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.display1.copyWith(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 16, height: 1.5)),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  getRemainingTimeString(babyDetails),
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  // Expanded(
-                  //   flex: 1,
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     children: <Widget>[
-                  //       Image.asset('images/embryo_13.jpg', height: 40),
-                  //       // Card(
-                  //       //   shape: CircleBorder(side: BorderSide(width: 100)),
-                  //       //   elevation: 4,
-                  //       //   color: Colors.white,
-                  //       //   child: Stack(
-                  //       //     alignment: AlignmentDirectional.center,
-                  //       //     children: [
-                  //       //       // new Container(
-                  //       //       //   width: 90.0,
-                  //       //       //   height: 90.0,
-                  //       //       // ),
-                  //       //       Image.asset('images/embryo_13.jpg', height: 40),
-                  //       //     ],
-                  //       //   ),
-                  //       // ),
-                  //       Padding(
-                  //         padding: EdgeInsets.all(5),
-                  //         child: Text(babyDetails.sizeCm.toString() + "cm, " + babyDetails.weightG.toString() + "g",
-                  //           textAlign: TextAlign.center,
-                  //           style: TextStyle(fontSize: 10),),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset('images/lemon.png', height: 70),
-                        // Card(
-                        //   shape: CircleBorder(side: BorderSide(width: 300)),
-                        //   elevation: 2,
-                        //   color: Colors.white,
-                        //   child: Stack(
-                        //     alignment: AlignmentDirectional.center,
-                        //     children: [
-                        //       // new Container(
-                        //       //   color: Colors.transparent,
-                        //       //   width: 110.0,
-                        //       //   height: 110.0,
-                        //       // ),
-                        //       Image.asset('images/lemon.png', height: 70),
-                        //     ],
-                        //   ),
-                        // ),
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text("Your baby is \nthe size of a " + babyDetails.fruitSize
-                            + "\n(" + babyDetails.sizeCm.toString() + "cm, " + babyDetails.weightG.toString() + "g)",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 12),),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Expanded(
-                  //   flex: 1,
-                  //   child: Column(  
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     children: <Widget>[
-                  //       Text(
-                  //         getRemainingTimeString(babyDetails),
-                  //         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey),
-                  //         textAlign: TextAlign.center,
-                  //       ),
-                  //       // Card(
-                  //       //   shape: CircleBorder(side: BorderSide(width: 300)),
-                  //       //   elevation: 4,
-                  //       //   color: Colors.white,
-                  //       //   child: Stack(
-                  //       //     alignment: AlignmentDirectional.center,
-                  //       //     children: [
-                  //       //       Container(
-                  //       //         width: 90.0,
-                  //       //         height: 90.0,
-                  //       //       ),
-                  //       //       Text(
-                  //       //         getRemainingTimeString(babyDetails),
-                  //       //         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey),
-                  //       //         textAlign: TextAlign.center,
-                  //       //       ),
-                  //       //     ],
-                  //       //   ),
-                  //       // ),
-                  //       Padding(
-                  //         padding: EdgeInsets.all(5),
-                  //         child: Text("to go",
-                  //           textAlign: TextAlign.center,
-                  //           style: TextStyle(fontSize: 10),),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                ],
-              ),
-            ],
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      color: Colors.transparent,
+      child: Column( 
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(0),
+            child: Text('Daily tips', 
+              style: sectionHeaderStyle()),
           ),
-        ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+            child: Column(
+              children: <Widget>[
+                makeTipContainer(getPregnancyTips()[3]),
+                makeTipContainer(getPregnancyTips()[1]),
+                makeTipContainer(getPregnancyTips()[4]),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  final _pageHeader = makePageHeader(getBabyData());
-
-  final _dailyExerciseTip1 = makeTipContainer(getPregnancyTips()[4]);
-  final _dailyExerciseTip2 = makeTipContainer(getPregnancyTips()[3]);
-  final _dailyNutritionTip = makeTipContainer(getPregnancyTips()[1]);
-
   return Center(
     child: Container(
       margin: const EdgeInsets.all(5),
-      // color: Colors.white,
       child: ListView(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,    
         scrollDirection: Axis.vertical,
         children: [
-          _pageHeader,
-          _dailyExerciseTip1,
-          _dailyNutritionTip,
-          _dailyExerciseTip2,
+          myPregnancy(getBabyData()),
+          myClasses(),
+          myTips(),
         ],
       ),
     ),

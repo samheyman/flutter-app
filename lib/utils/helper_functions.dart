@@ -11,7 +11,7 @@ String getRemainingTimeString(babyData) {
   }
   
   return
-    babyData.weeksLeft.toString() + ' ' + weeksOrWeek + ' ' + 
+    babyData.weeksLeft.toString() + ' ' + weeksOrWeek + ' and ' + 
     (babyData.daysLeft - babyData.weeksLeft*7).toString() + ' ' + daysOrDay + ' to go!';
 }
 
@@ -28,7 +28,7 @@ String getElapsedTimeString(babyData) {
   }
   
   return
-    babyData.weeksElapsed.toString() + ' ' + weeksOrWeek + ', ' + 
+    babyData.weeksElapsed.toString() + ' ' + weeksOrWeek + ' and ' + 
     (babyData.daysElapsed - babyData.weeksElapsed*7).toString() + ' ' + daysOrDay;
 }
 
