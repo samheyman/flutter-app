@@ -3,6 +3,7 @@ class PregnancyTip {
   final String content;
   final String category;
   final String source;
+  final String image;
 
 
   const PregnancyTip(
@@ -11,6 +12,7 @@ class PregnancyTip {
       this.content,
       this.category,
       this.source,
+      this.image,
     }
   );
 }

@@ -50,6 +50,109 @@ class Classes extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    // return Container(
+    //   margin: EdgeInsets.only(top: 10),
+    //   // padding: EdgeInsets.only(top:10),
+    //   child: DefaultTabController(
+    //     length: 7,
+    //     initialIndex: 0,
+    //     child: Column(
+    //       children: <Widget>[
+    //         TabBar(
+    //           labelColor: Colors.black,
+    //           isScrollable: true,
+    //           tabs: [
+    //             Tab(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text('TODAY'.toUpperCase(),
+    //                   style: dayTabStyle()),
+    //                   Padding(padding: dayDateTabPadding(),),
+    //                   Text('3',
+    //                   style: dateTabStyle()),
+    //                 ],
+    //               ),
+    //             ),
+    //             Tab(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text('Thu'.toUpperCase(),
+    //                   style: dayTabStyle()),
+    //                   Padding(padding: dayDateTabPadding(),),
+    //                   Text('4',
+    //                   style: dateTabStyle()),
+    //                 ],
+    //               ),
+    //             ),
+    //             Tab(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text('Fri'.toUpperCase(),
+    //                   style: dayTabStyle()),
+    //                   Padding(padding: dayDateTabPadding(),),
+    //                   Text('5',
+    //                   style: dateTabStyle()),
+    //                 ],
+    //               ),
+    //             ),
+    //             Tab(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text('Sat'.toUpperCase(),
+    //                   style: dayTabStyle()),
+    //                   Padding(padding: dayDateTabPadding(),),
+    //                   Text('6',
+    //                   style: dateTabStyle()),
+    //                 ],
+    //               ),
+    //             ),
+    //             Tab(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text('Sun'.toUpperCase(),
+    //                   style: dayTabStyle()),
+    //                   Padding(padding: dayDateTabPadding(),),
+    //                   Text('7',
+    //                   style: dateTabStyle()),
+    //                 ],
+    //               ),
+    //             ),
+    //             Tab(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text('Mon'.toUpperCase(),
+    //                   style: dayTabStyle()),
+    //                   Padding(padding: dayDateTabPadding(),),
+    //                   Text('8',
+    //                   style: dateTabStyle()),
+    //                 ],
+    //               ),
+    //             ),
+    //             Tab(
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text('tue'.toUpperCase(),
+    //                   style: dayTabStyle()),
+    //                   Padding(padding: dayDateTabPadding(),),
+    //                   Text('9',
+    //                   style: dateTabStyle()),
+    //                 ],
+    //               ),
+    //             ),
+                
+    //         ]),
+            
+    //       ],
+    //     ),
+    //   ),
+    // );
     return ListView(
       scrollDirection: Axis.vertical,
       // class entry begins here: can be card or container
@@ -174,4 +277,20 @@ List <GymClass> getGymClasses() {
       price: 250,
     ), 
   ];
+}
+
+TextStyle dayTabStyle() {
+  return TextStyle(
+    fontSize: 10,
+  );
+}
+
+TextStyle dateTabStyle() {
+  return TextStyle(
+    fontSize: 16,
+  );
+}
+
+EdgeInsets dayDateTabPadding() {
+  return EdgeInsets.only(top: 5);
 }

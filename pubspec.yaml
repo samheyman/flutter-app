@@ -49,6 +49,8 @@ flutter:
     - images/pregnant-spinning.jpeg
     - images/yoga.jpg
     - images/embryo_13.jpg
+    - images/magnesium.jpg
+    - images/cardio.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

@@ -16,6 +16,7 @@ class _MamaFitClubState extends State<MamaFitClub> {
     return MaterialApp(
       title: 'Mama Fit Club',
       home: Scaffold(
+        backgroundColor: Colors.grey[300],
         appBar: AppBar(
           title: Text((appPages[_currentIndex]).pageTitle),
         ),
