@@ -132,13 +132,15 @@ class PregnancyTipPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(pregnancyTip.name),
       ),
-      body: Column(
-        crossAxisAlignment:  CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          headerContent,
-          bottomContent,
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment:  CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            headerContent,
+            bottomContent,
+          ],
+        ),
       ),
     );
   }
