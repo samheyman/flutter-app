@@ -1,174 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 import '../model/gym_class.dart';
 import './gym_class_details.dart';
 
 class ClassesWidget extends StatefulWidget {
-  // ClassesWidget({Key key, this.title}) : super(key: key);
-  // final String title = 'Classes';
   
+  @override
+  void initState() {
+    initializeDateFormatting();
+  }
+
   @override
   State<StatefulWidget> createState() {
       return _ClassesWidgetState();
-    }
+  }
 }
 
 class _ClassesWidgetState extends State<ClassesWidget> {
 
-  List <GymClass> _classes = getGymClasses();
-
-  // @override
-  // void initState() {
-  //   _classes = getGymClasses();
-  //   super.initState();
-  // }
-
-  // List<GymClass> _classes = [GymClass(
-  //     time: '10:30', 
-  //     date: '2019-04-10',
-  //     duration: 60,
-  //     name: 'Pre-natal yoga',
-  //     location: 'My Gym'),];
-
   @override
   Widget build(BuildContext context) {
-    return Classes(_classes);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("My classes")
+      ),
+      body: _buildBody(context),
+    );
   }
 }
 
-class Classes extends StatelessWidget{
+Widget _buildBody(BuildContext context) {
+  return StreamBuilder<QuerySnapshot>(
+    stream: Firestore.instance.collection('gymClasses').snapshots(),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) return LinearProgressIndicator();
+      print(snapshot.data.documents[0]['date'].toDate().hour);
+      return _buildList(context, snapshot.data.documents);
+    },
+  );
+}
 
-  final List<GymClass> classes;
-  Classes(this.classes);
-
-  _goToClassDetails(BuildContext context, GymClass gymClass) {
-    Navigator.of(context).push(
-      new MaterialPageRoute(
-        builder: (context) => GymClassDetails(gymClass)
-      )
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // return Container(
-    //   margin: EdgeInsets.only(top: 10),
-    //   // padding: EdgeInsets.only(top:10),
-    //   child: DefaultTabController(
-    //     length: 7,
-    //     initialIndex: 0,
-    //     child: Column(
-    //       children: <Widget>[
-    //         TabBar(
-    //           labelColor: Colors.black,
-    //           isScrollable: true,
-    //           tabs: [
-    //             Tab(
-    //               child: Column(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text('TODAY'.toUpperCase(),
-    //                   style: dayTabStyle()),
-    //                   Padding(padding: dayDateTabPadding(),),
-    //                   Text('3',
-    //                   style: dateTabStyle()),
-    //                 ],
-    //               ),
-    //             ),
-    //             Tab(
-    //               child: Column(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text('Thu'.toUpperCase(),
-    //                   style: dayTabStyle()),
-    //                   Padding(padding: dayDateTabPadding(),),
-    //                   Text('4',
-    //                   style: dateTabStyle()),
-    //                 ],
-    //               ),
-    //             ),
-    //             Tab(
-    //               child: Column(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text('Fri'.toUpperCase(),
-    //                   style: dayTabStyle()),
-    //                   Padding(padding: dayDateTabPadding(),),
-    //                   Text('5',
-    //                   style: dateTabStyle()),
-    //                 ],
-    //               ),
-    //             ),
-    //             Tab(
-    //               child: Column(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text('Sat'.toUpperCase(),
-    //                   style: dayTabStyle()),
-    //                   Padding(padding: dayDateTabPadding(),),
-    //                   Text('6',
-    //                   style: dateTabStyle()),
-    //                 ],
-    //               ),
-    //             ),
-    //             Tab(
-    //               child: Column(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text('Sun'.toUpperCase(),
-    //                   style: dayTabStyle()),
-    //                   Padding(padding: dayDateTabPadding(),),
-    //                   Text('7',
-    //                   style: dateTabStyle()),
-    //                 ],
-    //               ),
-    //             ),
-    //             Tab(
-    //               child: Column(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text('Mon'.toUpperCase(),
-    //                   style: dayTabStyle()),
-    //                   Padding(padding: dayDateTabPadding(),),
-    //                   Text('8',
-    //                   style: dateTabStyle()),
-    //                 ],
-    //               ),
-    //             ),
-    //             Tab(
-    //               child: Column(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text('tue'.toUpperCase(),
-    //                   style: dayTabStyle()),
-    //                   Padding(padding: dayDateTabPadding(),),
-    //                   Text('9',
-    //                   style: dateTabStyle()),
-    //                 ],
-    //               ),
-    //             ),
-                
-    //         ]),
-            
-    //       ],
-    //     ),
-    //   ),
-    // );
-    return ListView(
-      scrollDirection: Axis.vertical,
-      // class entry begins here: can be card or container
-      children: 
-        classes.map((element) => Card(
+Widget _buildList(BuildContext context, List documents) {
+  return ListView(
+    scrollDirection: Axis.vertical,
+    children: 
+      documents.map((element) => Card(
         // elevation: 2,
         // margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         child: Container(
           // decoration: BoxDecoration(color: Color.fromRGBO(164, 175, 196, .5)),
-          child: makeClassBox(context, element),
+          child: _buildListItem(context, element),
         ),
-      )).toList(),  
-    );
-  }
+    )).toList(),  
+  );
+}
 
-  ListTile makeClassBox(BuildContext context, GymClass gymClass) => ListTile(
+Widget _buildListItem(BuildContext context, DocumentSnapshot gymClass) {
+  return ListTile(
     contentPadding:
         EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
     leading: Container(
@@ -185,14 +76,15 @@ class Classes extends StatelessWidget{
             Container(
               padding: EdgeInsets.only(bottom: 5),
               child: Text(
-              gymClass.time,
+                DateFormat('Hm').format(gymClass['date'].toDate()),
+                // (gymClass['date'].toDate()).DateFormat.Hm,
                 style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16, )),
             ),
             Row(
                 children: [
                   Icon(Icons.access_time, color: Colors.grey, size: 14,),
                   Text(
-                    " " + gymClass.duration.toString() + "min",
+                    " " + gymClass['duration'].toString() + "min",
                     style: TextStyle(fontSize: 12, color: Colors.black54)),
                 ],
             ),
@@ -201,96 +93,24 @@ class Classes extends StatelessWidget{
       ),
     ),
     title: Text(
-      gymClass.name,
+      gymClass['name'],
       style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
     ),
     subtitle: Text(
-      gymClass.location,
+      gymClass['location'],
       style: TextStyle(color: Colors.black54, fontSize: 12)
     ),
     onTap: () {
-      _goToClassDetails(context, gymClass);
+      // _goToClassDetails(context, gymClass);
     },
   );
 }
 
 
-List <GymClass> getGymClasses() {
-  return [
-    GymClass(
-      time: '10:30', 
-      date: '2019-04-10',
-      duration: 60,
-      name: 'Pre-natal yoga',
-      location: 'My Gym', 
-      category: 'yoga', 
-      places: 2,
-      price: 470,
-    ),
-    GymClass(
-      time: '10:30', 
-      date: '2019-04-10',
-      duration: 60,
-      name: 'Outdoor Pre-natal HIIT',
-      location: 'Sport Centre', 
-      category: 'cardio', 
-      places: 1,
-      price: 340,
-    ),  
-    GymClass(
-      time: '15:00', 
-      date: '2019-04-10',
-      duration: 60,
-      name: 'Spinning',
-      location: 'My Gym', 
-      category: 'cardio', 
-      places: 5,
-      price: 410,
-    ),  
-    GymClass(
-      time: '19:30', 
-      date: '2019-04-10',
-      duration: 90,
-      name: 'Cross training',
-      location: 'Global Sports', 
-      category: 'cardio', 
-      price: 220,
-    ),  
-    GymClass(
-      time: '21:30', 
-      date: '2019-04-10',
-      duration: 60,
-      name: 'Pilates',
-      location: 'Fitness Chicks', 
-      category: 'pilates', 
-      places: 4,
-      price: 330,
-    ),  
-    GymClass(
-      time: '22:30', 
-      date: '2019-04-10',
-      duration: 30,
-      name: 'Pre-natal yoga',
-      location: 'My Gym', 
-      category: 'yoga', 
-      places: 2,
-      price: 250,
-    ), 
-  ];
-}
-
-TextStyle dayTabStyle() {
-  return TextStyle(
-    fontSize: 10,
-  );
-}
-
-TextStyle dateTabStyle() {
-  return TextStyle(
-    fontSize: 16,
-  );
-}
-
-EdgeInsets dayDateTabPadding() {
-  return EdgeInsets.only(top: 5);
-}
+// _goToClassDetails(BuildContext context, DocumentSnapshot gymClass) {
+//   Navigator.of(context).push(
+//     new MaterialPageRoute(
+//       builder: (context) => GymClassDetails(gymClass)
+//     )
+//   );
+// }

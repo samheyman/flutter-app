@@ -365,7 +365,7 @@ class HomeWidget extends StatelessWidget {
           myBaby(getBabyData()),
           myClasses(),
           myFitnessTips(),
-          myNutritionTips(),
+          myNutritionTips(),  
         ],
       ),
     ),

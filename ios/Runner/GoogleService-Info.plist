@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>525688804880-apv5d578se027sptgbosg546brs6knli.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.525688804880-apv5d578se027sptgbosg546brs6knli</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCT-9V4-jPAu2tEStZCGCgtWontnzilgHU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>525688804880</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mamafitclub.app</string>
+	<key>PROJECT_ID</key>
+	<string>mama-fit-club</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mama-fit-club.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:525688804880:ios:730b4e6b1b34f5b7</string>
+	<key>DATABASE_URL</key>
+	<string>https://mama-fit-club.firebaseio.com</string>
+</dict>
+</plist>
