@@ -82,25 +82,27 @@ class PregnancyTipPage extends StatelessWidget {
     );
 
     final bottomContentText = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text(
-        //   "Location",
-        //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        // ),
         Text(
           pregnancyTip.name,
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
-        // Text(
-        //   "\nDate",
-        //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        // ),
         Padding(
-          padding: EdgeInsets.only(top:10),
+          padding: EdgeInsets.only(top: 10),
+        ),
+        Text(
+          pregnancyTip.source,
+          style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal, color: Colors.grey[600]),
+          textAlign: TextAlign.start,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top:20),
           child:
             Text(
               pregnancyTip.content,
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 14.0),
+              textAlign: TextAlign.justify,
             ),
         ),
         // Text(

@@ -15,6 +15,18 @@ String getRemainingTimeString(babyData) {
     (babyData.daysLeft - babyData.weeksLeft*7).toString() + ' ' + daysOrDay + ' to go!';
 }
 
+String getRemainingWeeksString(babyData) {
+  // String weeksOrWeek = 'weeks';
+
+  // if (babyData.weeksLeft == 1) {
+  //   weeksOrWeek = 'week';
+  // }
+  
+  return
+    babyData.weeksLeft.toString();
+}
+
+
 String getElapsedTimeString(babyData) {
   String daysOrDay = 'days';
   String weeksOrWeek = 'weeks';
@@ -30,5 +42,16 @@ String getElapsedTimeString(babyData) {
   return
     babyData.weeksElapsed.toString() + ' ' + weeksOrWeek + ' and ' + 
     (babyData.daysElapsed - babyData.weeksElapsed*7).toString() + ' ' + daysOrDay;
+}
+
+String getElapsedWeeksString(babyData) {
+  // String weeksOrWeek = 'weeks';
+
+  // if (babyData.weeksElapsed == 1) {
+  //   weeksOrWeek = 'week';
+  // }
+  
+  return
+    babyData.weeksElapsed.toString();
 }
 
