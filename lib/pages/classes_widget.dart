@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
-import '../model/gym_class.dart';
-import './gym_class_details.dart';
 
 class ClassesWidget extends StatefulWidget {
-  
-  @override
-  void initState() {
-    initializeDateFormatting();
-  }
 
   @override
   State<StatefulWidget> createState() {
@@ -54,7 +45,8 @@ Widget _buildList(BuildContext context, List documents) {
           // decoration: BoxDecoration(color: Color.fromRGBO(164, 175, 196, .5)),
           child: _buildListItem(context, element),
         ),
-    )).toList(),  
+      ),
+    ).toList(),  
   );
 }
 

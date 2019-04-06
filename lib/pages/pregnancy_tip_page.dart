@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../model/pregnancy_tip.dart';
 
 class PregnancyTipPage extends StatelessWidget {
-  final PregnancyTip pregnancyTip;
+  final dynamic pregnancyTip;
 
   PregnancyTipPage(this.pregnancyTip);
   
@@ -64,7 +64,7 @@ class PregnancyTipPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.4,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/" + pregnancyTip.image),
+              image: NetworkImage(pregnancyTip['image_url']),
               fit: BoxFit.cover,
             ),
           )
@@ -85,14 +85,14 @@ class PregnancyTipPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          pregnancyTip.name,
+          pregnancyTip['title'].toString(),
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         Padding(
           padding: EdgeInsets.only(top: 10),
         ),
         Text(
-          pregnancyTip.source,
+          pregnancyTip['source'],
           style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal, color: Colors.grey[600]),
           textAlign: TextAlign.start,
         ),
@@ -100,19 +100,11 @@ class PregnancyTipPage extends StatelessWidget {
           padding: EdgeInsets.only(top:20),
           child:
             Text(
-              pregnancyTip.content,
+              pregnancyTip['content'],
               style: TextStyle(fontSize: 14.0),
               textAlign: TextAlign.justify,
             ),
         ),
-        // Text(
-        //   "\nTime",
-        //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        // ),
-        // Text(
-        //   gymClass.time + " (" + gymClass.duration.toString() + " mins)",
-        //   style: TextStyle(fontSize: 18.0),
-        // ),
       ],
     );
 
@@ -132,7 +124,7 @@ class PregnancyTipPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(pregnancyTip.name),
+        title: Text(pregnancyTip['title']),
       ),
       body: SingleChildScrollView(
         child: Column(
