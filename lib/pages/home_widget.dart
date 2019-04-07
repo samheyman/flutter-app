@@ -6,6 +6,7 @@ import '../model/user_profile.dart';
 import '../model/baby_data.dart';
 import '../utils/helper_functions.dart';
 import '../pages/pregnancy_tip_page.dart';
+import '../utils/animated_chart.dart';
 
 BabyData getBabyData() {
   return BabyData(
@@ -36,9 +37,10 @@ class _HomeWidgetState extends State<HomeWidget> {
  
   @override
   Widget build(BuildContext context) {
+    
     Container myDates(BabyData babyDetails) {
       return Container(
-        margin: EdgeInsets.symmetric(vertical:40, horizontal:10),
+        // margin: EdgeInsets.symmetric(vertical:40, horizontal:10),
         width: 150.0,
         height: 150.0,
         decoration: new BoxDecoration(
@@ -95,7 +97,19 @@ class _HomeWidgetState extends State<HomeWidget> {
         ),
       );
     }
-    final headerContent = Stack(
+
+    Stack progressPieChart = Stack(
+      children: <Widget>[
+        myDates(getBabyData()),
+        SizedBox(
+          height: 150,
+          width: 150,
+          child: AnimatedPieChart(),
+        )
+      ],
+    );
+
+    Stack headerContent = Stack(
       children: [
         Container(
           padding: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -107,11 +121,10 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
           )
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            myDates(getBabyData()),
-          ],
+        Container(
+          margin: EdgeInsets.only(top:90),
+          padding: EdgeInsets.only(left: 20),
+          child: progressPieChart,
         ),
       ],
     );
@@ -251,16 +264,17 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   // title: Text("Mama Fit Club"),
-      // ),
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+        elevation: 0,
+        title: Text("Mama Fit Club"),
+      ),
       body: Container(
         margin: const EdgeInsets.all(0),
         child: ListView(
           scrollDirection: Axis.vertical,
           children: [
+            SizedBox(height: 0,),
             headerContent,
             myBaby(getBabyData()),
             myClasses(),
