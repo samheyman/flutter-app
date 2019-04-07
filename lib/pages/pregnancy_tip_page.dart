@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../model/pregnancy_tip.dart';
 
 class PregnancyTipPage extends StatelessWidget {
   final dynamic pregnancyTip;
@@ -18,43 +17,6 @@ class PregnancyTipPage extends StatelessWidget {
       //   "SEK " + gymClass.price.toString(),
       //   style: TextStyle(color: Colors.white),
       // ),
-    );
-
-    final headerContentText = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 60.0),
-        // Icon(
-        //   Icons.pregnant_woman,
-        //   color: Colors.white,
-        //   size: 40.0,
-        // ),
-        // Container(
-        //   width: 90.0,
-        //   child: new Divider(color: Colors.white),
-        // ),
-        // SizedBox(height: 20.0),
-        // Text(
-        //   pregnancyTip.name,
-        //   style: TextStyle(color: Colors.white, fontSize: 35.0),
-        // ),
-        // SizedBox(height: 30.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            // Expanded(flex: 5, child: Text("")),
-            // Expanded(
-            //     flex: 6,
-            //     child: Padding(
-            //         padding: EdgeInsets.only(left: 10.0),
-            //         child: Text(
-            //           lesson.level,
-            //           style: TextStyle(color: Colors.white),
-            //         ))),
-            Expanded(flex: 0, child: gymClassPrice ),
-          ],
-        ),
-      ],
     );
 
     final headerContent = Stack(
@@ -82,11 +44,13 @@ class PregnancyTipPage extends StatelessWidget {
     );
 
     final bottomContentText = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           pregnancyTip['title'].toString(),
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
         ),
         Padding(
           padding: EdgeInsets.only(top: 10),
@@ -102,7 +66,7 @@ class PregnancyTipPage extends StatelessWidget {
             Text(
               pregnancyTip['content'],
               style: TextStyle(fontSize: 14.0),
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.start,
             ),
         ),
       ],
@@ -110,9 +74,10 @@ class PregnancyTipPage extends StatelessWidget {
 
     final bottomContent = Container(
       // height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
+      //width: MediaQuery.of(context).size.width,
       // color: Theme.of(context).primaryColor,
-      padding: EdgeInsets.all(20.0),
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(30.0),
       child: Center(
         child: Column(
           children: <Widget>[

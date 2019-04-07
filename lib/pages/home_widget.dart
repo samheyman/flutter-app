@@ -18,12 +18,12 @@ BabyData getBabyData() {
 }
 
 TextStyle sectionHeaderStyle() {
-        return TextStyle(
-          fontWeight: FontWeight.normal,
-          fontSize: 14,
-          color: Colors.grey[600],
-        );
-      }
+  return TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 14,
+    color: Colors.grey[600],
+  );
+}
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -38,16 +38,16 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     Container myDates(BabyData babyDetails) {
       return Container(
-        margin: EdgeInsets.only(top:140),
+        margin: EdgeInsets.symmetric(vertical:40, horizontal:10),
         width: 150.0,
         height: 150.0,
         decoration: new BoxDecoration(
-          color: Colors.red[50],
+          color: Colors.white,
           shape: BoxShape.circle,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -102,13 +102,13 @@ class _HomeWidgetState extends State<HomeWidget> {
           height: MediaQuery.of(context).size.height * 0.35,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/exercise.jpg"),
+              image: AssetImage("images/exercise2.jpg"),
               fit: BoxFit.cover,
             ),
           )
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             myDates(getBabyData()),
           ],
@@ -119,7 +119,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     Container myBaby(babyDetails) {
       return Container(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         padding: EdgeInsets.all(0),
         child:
           Row(
@@ -155,6 +155,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           ),
         );
       }
+
     Container myClasses() {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -207,7 +208,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         //   MaterialPageRoute(builder: (context) => MamaFitClub()),
                         // );
                       },
-                      color: Colors.red[300],
+                      color: Colors.purple[200],
                       textColor: Colors.white,
                       elevation: 1,
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
@@ -250,11 +251,11 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        backgroundColor: Colors.red[400],
-        elevation: 2,
-        title: Text("Mama Fit Club"),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   // title: Text("Mama Fit Club"),
+      // ),
       body: Container(
         margin: const EdgeInsets.all(0),
         child: ListView(
