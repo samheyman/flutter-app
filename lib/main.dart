@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import './bottom_navigation.dart';
 import './pages/app_pages.dart';
 import './model/bookings_model.dart';
+import './utils/theme.dart';
 
 void main() {
   final classBookings = BookingsModel();
@@ -43,9 +44,7 @@ class _MamaFitClubState extends State<MamaFitClub> {
           items: bottomNavigationItems,
         ),
       ),
-      theme: ThemeData(
-        primaryColor: Colors.redAccent,
-      ),
+      theme: buildTheme(),
     );
   }
 
