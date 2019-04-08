@@ -129,7 +129,8 @@ Widget _buildTab(int daysFromNow) {
   if (daysFromNow != 0) {
     day = DateFormat('E').format(DateTime.now().add(Duration(days: daysFromNow))).toString();
   }
-        print(DateTime.now());
+
+  DateTime new_date = DateTime.parse('2019-05-01');
 
   return Tab(
     child: Container(

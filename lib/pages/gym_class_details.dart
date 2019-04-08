@@ -96,7 +96,7 @@ class GymClassDetails extends StatelessWidget {
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         Text(
-          gymClass.date,
+          gymClass.dateTime.toString(),
           style: TextStyle(fontSize: 18.0),
         ),
         Text(
@@ -104,7 +104,7 @@ class GymClassDetails extends StatelessWidget {
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         Text(
-          gymClass.time + " (" + gymClass.duration.toString() + " mins)",
+          gymClass.dateTime.toString() + " (" + gymClass.duration.toString() + " mins)",
           style: TextStyle(fontSize: 18.0),
         ),
       ],
