@@ -4,10 +4,29 @@
   import './pages/app_pages.dart';
   import './model/bookings_model.dart';
   import './utils/theme.dart';
+  import './pages/login.dart';
+  import './pages/classes_widget.dart';
+  import './pages/home_widget.dart';
 
   void main() => runApp(
-    MamaFitClub(),
+    Login(),
   );
+
+  class Login extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        title: 'Mama Fit Club',
+        initialRoute: '/login',
+        routes: {
+          '/': (context) => MamaFitClub(),
+          '/homepage': (context) => MamaFitClub(),
+          '/login': (context) => LoginScreen(),
+        },
+        theme: buildTheme(),
+      );
+    }
+  }
 
   class MamaFitClub extends StatefulWidget {
     @override
@@ -21,7 +40,6 @@
     @override
     Widget build(BuildContext context) {
       return MaterialApp(
-        title: 'Mama Fit Club',
         home: Scaffold(
           backgroundColor: Colors.red[50],
           // appBar: AppBar(

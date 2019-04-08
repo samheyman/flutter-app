@@ -14,6 +14,5 @@ List<AppPage> appPages = [
 class AppPage {
   final String pageTitle;
   final Widget pageWidget;
-
   const AppPage({this.pageTitle, this.pageWidget});
 }

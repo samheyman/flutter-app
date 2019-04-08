@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import '../bottom_navigation.dart';
 import '../model/pregnancy_tip.dart';
 import '../model/user_profile.dart';
 import '../model/baby_data.dart';
 import '../utils/helper_functions.dart';
 import '../pages/pregnancy_tip_page.dart';
 import '../utils/animated_chart.dart';
+import '../pages/classes_widget.dart';
 
 BabyData getBabyData() {
   return BabyData(
@@ -34,7 +36,6 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
- 
   @override
   Widget build(BuildContext context) {
     
@@ -233,10 +234,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => MamaFitClub()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ClassesWidget()),
+                        );
                       },
                       color: Colors.purple[200],
                       textColor: Colors.white,
@@ -309,7 +310,7 @@ Widget _buildFitnessTips(BuildContext context) {
     stream: Firestore.instance.collection('pregnancyTips').snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
-      print(snapshot.data.documents.length);
+      // print(snapshot.data.documents.length);
       return _myFitnessTips(context, snapshot.data.documents);
     },
   ); 
