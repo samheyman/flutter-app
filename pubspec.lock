@@ -51,7 +51,7 @@ packages:
     source: hosted
     version: "0.1.0+2"
   duration:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: duration
       url: "https://pub.dartlang.org"
@@ -77,7 +77,7 @@ packages:
     source: hosted
     version: "0.0.8"
   flutter_circular_chart:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_circular_chart
       url: "https://pub.dartlang.org"
