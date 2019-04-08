@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import '../data/gym_classes.dart';
+import '../model/gym_class.dart';
 import '../utils/theme.dart';
+import './widgets/gym_class_card.dart';
 
 class ClassesWidget extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
       return _ClassesWidgetState();
@@ -12,8 +14,39 @@ class ClassesWidget extends StatefulWidget {
 }
 
 class _ClassesWidgetState extends State<ClassesWidget> {
+  List<GymClass> gymClasses = getGymClasses();
+  List<String> userFavorites = getFavoritesIDs();
+  void _handleFavoritesListChanged(String recipeID) {
+    // Set new state and refresh the widget:
+    setState(() {
+      if (userFavorites.contains(recipeID)) {
+        userFavorites.remove(recipeID);
+      } else {
+        userFavorites.add(recipeID);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    Column _buildGymClasses(List<GymClass> gymClassList) {
+      return Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: gymClassList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GymClassCard(
+                  gymClass: gymClassList[index],
+                  inFavorites: userFavorites.contains(gymClassList[index].id),
+                  onFavoritesButtonPressed: _handleFavoritesListChanged,);
+              },
+            ),
+          ),
+        ],
+      );
+    }
 
     return DefaultTabController(
       length: 7,
@@ -39,85 +72,42 @@ class _ClassesWidgetState extends State<ClassesWidget> {
             ),
           ),
         ),
-        body: _buildBody(context),
+        body: Padding(
+          padding: EdgeInsets.all(0.0),
+          child: TabBarView(
+            // Replace placeholders:
+            children: [
+              // Display recipes of type food:
+              _buildGymClasses(gymClasses
+                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().day)
+                  .toList()),
+              // Display recipes of type drink:
+              _buildGymClasses(gymClasses
+                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:1)).day)
+                  .toList()),
+              // Display favorite recipes:
+              _buildGymClasses(gymClasses
+                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:2)).day)
+                  .toList()),
+              _buildGymClasses(gymClasses
+                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:3)).day)
+                  .toList()),
+              _buildGymClasses(gymClasses
+                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:4)).day)
+                  .toList()),
+              _buildGymClasses(gymClasses
+                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:5)).day)
+                  .toList()),
+              _buildGymClasses(gymClasses
+                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:6)).day)
+                  .toList()),
+              Center(child: Icon(Icons.settings)),
+            ],
+          ),
+        ),
       ),
     );
   }
-}
-
-Widget _buildBody(BuildContext context) {
-  return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('gymClasses').snapshots(),
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) return LinearProgressIndicator();
-      print(snapshot.data.documents[0]['date'].toDate().hour);
-      return _buildList(context, snapshot.data.documents);
-    },
-  );
-}
-
-Widget _buildList(BuildContext context, List documents) {
-  return ListView(
-    scrollDirection: Axis.vertical,
-    children: 
-      documents.map((element) => Card(
-        // elevation: 2,
-        margin: EdgeInsets.only(top: 10,),
-        child: Container(
-          // decoration: BoxDecoration(color: Color.fromRGBO(164, 175, 196, .5)),
-          child: _buildListItem(context, element),
-        ),
-      ),
-    ).toList(),  
-  );
-}
-
-Widget _buildListItem(BuildContext context, DocumentSnapshot gymClass) {
-  return ListTile(
-    contentPadding:
-        EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-    leading: Container(
-      padding: EdgeInsets.only(right: 12.0),
-      decoration: new BoxDecoration(
-          border: new Border(
-              right: new BorderSide(width: 1.0, color: Colors.white24))),
-      child: Container(
-        width: 60,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.only(bottom: 5),
-              child: Text(
-                DateFormat('Hm').format(gymClass['date'].toDate()),
-                // (gymClass['date'].toDate()).DateFormat.Hm,
-                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16, )),
-            ),
-            Row(
-                children: [
-                  Icon(Icons.access_time, color: Colors.grey, size: 14,),
-                  Text(
-                    " " + gymClass['duration'].toString() + "min",
-                    style: TextStyle(fontSize: 12, color: Colors.black54)),
-                ],
-            ),
-          ],
-      ),
-      ),
-    ),
-    title: Text(
-      gymClass['name'],
-      style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
-    ),
-    subtitle: Text(
-      gymClass['location'],
-      style: TextStyle(color: Colors.black54, fontSize: 12)
-    ),
-    onTap: () {
-      // _goToClassDetails(context, gymClass);
-    },
-  );
 }
 
 Widget _buildTab(int daysFromNow) {
@@ -129,8 +119,6 @@ Widget _buildTab(int daysFromNow) {
   if (daysFromNow != 0) {
     day = DateFormat('E').format(DateTime.now().add(Duration(days: daysFromNow))).toString();
   }
-
-  DateTime new_date = DateTime.parse('2019-05-01');
 
   return Tab(
     child: Container(
@@ -152,7 +140,6 @@ Widget _buildTab(int daysFromNow) {
     ),
   );
 }
-
 
 // _goToClassDetails(BuildContext context, DocumentSnapshot gymClass) {
 //   Navigator.of(context).push(
