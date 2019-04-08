@@ -20,7 +20,7 @@ BabyData getBabyData() {
 TextStyle sectionHeaderStyle() {
   return TextStyle(
     fontWeight: FontWeight.normal,
-    fontSize: 14,
+    fontSize: 10,
     color: Colors.grey[600],
   );
 }
@@ -116,11 +116,14 @@ class _HomeWidgetState extends State<HomeWidget> {
       ],
     );
     
-    Container myBaby(babyDetails) {
-      return Container(
+    Card myBaby(babyDetails) {
+      return Card(
         color: Colors.white,
         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        padding: EdgeInsets.all(0),
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
         child:
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -129,8 +132,8 @@ class _HomeWidgetState extends State<HomeWidget> {
               Expanded(
                 flex: 1,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  // color: Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,15 +173,19 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Text('My classes'.toUpperCase(), 
                 style: sectionHeaderStyle()),
             ),
-            Container(
+            Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: Row(
+              shape: BeveledRectangleBorder(
+                borderRadius: BorderRadius.circular(3),
+              ),
+              elevation: 1,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Expanded(
-                    flex:2,
+                  SizedBox(
+                    height: 100,
+                    width: 300,
                     child: Text("You have no upcoming classes.",
                       style: 
                         TextStyle(
@@ -187,14 +194,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                         textAlign: TextAlign.start,
                       ),
                   ),
-                  Expanded(
-                    flex:1,
+                  SizedBox(
+                    width: 100,
                     child: RaisedButton(
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.search),
                           Text(
-                            " Search ", 
+                            " Search classes", 
                             style: TextStyle( 
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
@@ -208,7 +216,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         //   MaterialPageRoute(builder: (context) => MamaFitClub()),
                         // );
                       },
-                      color: Colors.purple[200],
+                      color: Colors.purple[100],
                       textColor: Colors.white,
                       elevation: 1,
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
@@ -251,11 +259,11 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   // title: Text("Mama Fit Club"),
-      // ),
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+        elevation: 0,
+        title: Text("Mama Fit Club"),
+      ),
       body: Container(
         margin: const EdgeInsets.all(0),
         child: ListView(
