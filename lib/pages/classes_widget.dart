@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import '../utils/theme.dart';
 
 class ClassesWidget extends StatefulWidget {
 
@@ -11,14 +12,35 @@ class ClassesWidget extends StatefulWidget {
 }
 
 class _ClassesWidgetState extends State<ClassesWidget> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My classes")
+
+    return DefaultTabController(
+      length: 7,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(50.0), // New code
+          child: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 1.0,
+            bottom: TabBar(
+              isScrollable: true,
+              labelColor: Theme.of(context).primaryColor,
+              indicatorColor: Theme.of(context).primaryColor,
+              tabs: [
+                _buildTab(0),
+                _buildTab(1),
+                _buildTab(2),
+                _buildTab(3),
+                _buildTab(4),
+                _buildTab(5),
+                _buildTab(6),
+              ],
+            ),
+          ),
+        ),
+        body: _buildBody(context),
       ),
-      body: _buildBody(context),
     );
   }
 }
@@ -40,7 +62,7 @@ Widget _buildList(BuildContext context, List documents) {
     children: 
       documents.map((element) => Card(
         // elevation: 2,
-        // margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        margin: EdgeInsets.only(top: 10,),
         child: Container(
           // decoration: BoxDecoration(color: Color.fromRGBO(164, 175, 196, .5)),
           child: _buildListItem(context, element),
@@ -95,6 +117,38 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot gymClass) {
     onTap: () {
       // _goToClassDetails(context, gymClass);
     },
+  );
+}
+
+Widget _buildTab(int daysFromNow) {
+  double _calendarDaySize = 9.0;
+  double _calendarDateSize = 16.0;
+  double _calendarPadding = 3;
+  String day = 'today';
+
+  if (daysFromNow != 0) {
+    day = DateFormat('E').format(DateTime.now().add(Duration(days: daysFromNow))).toString();
+  }
+        print(DateTime.now());
+
+  return Tab(
+    child: Container(
+      child: Column(
+        children: [
+          Text(
+            day.toUpperCase(), 
+            style: TextStyle(fontSize: _calendarDaySize), 
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: _calendarPadding),
+          ),
+          Text(
+            DateFormat('d').format(DateTime.now().add(Duration(days: daysFromNow))).toString(), 
+            style: TextStyle(fontSize: _calendarDateSize, fontWeight: FontWeight.normal), 
+          ),
+        ],
+      ),
+    ),
   );
 }
 
