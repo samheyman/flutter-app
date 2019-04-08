@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/google_sign_in_button.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -21,7 +22,8 @@ class LoginScreen extends StatelessWidget {
     Container _logo() {
       return Container(
         child: Text("Mama Fit Club",
-          style: TextStyle(color: Colors.white, fontSize: 28),),
+          style: Theme.of(context).textTheme.headline,
+        ),
       );
     }
     return Scaffold(
@@ -34,10 +36,8 @@ class LoginScreen extends StatelessWidget {
             children: <Widget>[
               _logo(),
               SizedBox(height: 50,),
-              MaterialButton(
-                color: Colors.white,
-                child: Text("Sign in with Google"),
-                onPressed: () => print("Button pressed"),
+              GoogleSignInButton( // New code
+                onPressed: () => print("Button pressed."), // New code
               ),
               MaterialButton(
                 color: Colors.white,
@@ -47,8 +47,11 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 50,
               ),
-              Text("I'll join later.",
-                style: TextStyle(color: Colors.white) ,) 
+              GestureDetector(
+                onTap: () => Navigator.of(context).pushReplacementNamed('/'),
+                child: Text("I'll join later.",
+                  style: TextStyle(color: Colors.white) ,) ,
+              ),
             ],
           ),
         ),
