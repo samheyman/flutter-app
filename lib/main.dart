@@ -33,6 +33,7 @@
             currentIndex: _currentIndex,
             onTap: onTabTapped,
             items: bottomNavigationItems,
+            
           ),
         ),
         theme: buildTheme(),

@@ -12,9 +12,19 @@ ThemeData buildTheme() {
 
   // We want to override a default light blue theme.
   final ThemeData base = ThemeData.light();
-  
+
   // And apply changes on it:
   return base.copyWith(
     textTheme: _buildTextTheme(base.textTheme),
+    // New code:
+    primaryColor: Colors.red[700],
+    indicatorColor: Colors.red,
+    scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+    accentColor: Colors.red,
+    iconTheme: IconThemeData(
+      color: Colors.red,
+      size: 20.0,
+    ),
+    buttonColor: Colors.white,
   );
 }

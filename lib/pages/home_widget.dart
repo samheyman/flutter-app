@@ -21,7 +21,7 @@ BabyData getBabyData() {
 TextStyle sectionHeaderStyle() {
   return TextStyle(
     fontWeight: FontWeight.normal,
-    fontSize: 10,
+    fontSize: 12,
     color: Colors.grey[600],
   );
 }
@@ -186,31 +186,39 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Text('My classes'.toUpperCase(), 
                 style: sectionHeaderStyle()),
             ),
+            
             Card(
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-              shape: BeveledRectangleBorder(
-                borderRadius: BorderRadius.circular(3),
-              ),
               elevation: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 100,
-                    width: 300,
-                    child: Text("You have no upcoming classes.",
-                      style: 
-                        TextStyle(
-                          fontSize: 13
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                  ),
-                  SizedBox(
-                    width: 100,
-                    child: RaisedButton(
-                      child: Row(
+              margin: EdgeInsets.symmetric(vertical:5, horizontal: 0),
+              shape: BeveledRectangleBorder(
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                padding: EdgeInsets.symmetric(vertical:20, horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text("You have no upcoming classes.",
+                          style: 
+                            TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey[600],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                    ),
+                    RaisedButton(
+                      child: SizedBox(
+                        width: 120,
+                        child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.search),
@@ -222,6 +230,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                           ),
                         ],
+                        ),
                       ),
                       onPressed: () {
                         // Navigator.push(
@@ -229,13 +238,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                         //   MaterialPageRoute(builder: (context) => MamaFitClub()),
                         // );
                       },
-                      color: Colors.purple[100],
+                      color: Colors.purple[200],
                       textColor: Colors.white,
                       elevation: 1,
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -284,7 +293,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           children: [
             SizedBox(height: 0,),
             headerContent,
-            myBaby(getBabyData()),
+            // myBaby(getBabyData()),
             myClasses(),
             _buildFitnessTips(context),
             // myNutritionTips(),  
@@ -309,7 +318,7 @@ Widget _buildFitnessTips(BuildContext context) {
 Widget _myFitnessTips(BuildContext context, List documents) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
     // color: Colors.white,
     child: Column( 
       mainAxisAlignment: MainAxisAlignment.start,
@@ -322,7 +331,7 @@ Widget _myFitnessTips(BuildContext context, List documents) {
         ),
         Column(
           children:
-            documents.map((element) => Container(
+            documents.map((element) => Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
               child: Container(
