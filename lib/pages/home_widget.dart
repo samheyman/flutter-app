@@ -117,7 +117,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           height: MediaQuery.of(context).size.height * 0.35,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/exercise2.jpg"),
+              image: AssetImage("images/exercise5.jpg"),
               fit: BoxFit.cover,
             ),
           )
@@ -239,7 +239,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           MaterialPageRoute(builder: (context) => ClassesWidget()),
                         );
                       },
-                      color: Colors.purple[200],
+                      color: Theme.of(context).accentColor,
                       textColor: Colors.white,
                       elevation: 1,
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
@@ -281,7 +281,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   // }
 
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
         elevation: 0,

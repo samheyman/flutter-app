@@ -36,7 +36,7 @@ class GymClassDetails extends StatelessWidget {
         SizedBox(height: 20.0),
         Text(
           gymClass.name,
-          style: TextStyle(color: Colors.white, fontSize: 35.0),
+          style: TextStyle(color: Colors.white, fontSize: 30.0),
         ),
         SizedBox(height: 30.0),
         Row(
@@ -63,10 +63,11 @@ class GymClassDetails extends StatelessWidget {
           padding: EdgeInsets.only(left: 10.0, right: 10.0),
           height: MediaQuery.of(context).size.height * 0.4,
           decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("images/yoga.jpg"),
-              fit: BoxFit.cover,
-            ),
+            color: Colors.white,
+            // image: DecorationImage(
+            //   // image: AssetImage("images/yoga.jpg"),
+            //   fit: BoxFit.cover,
+            // ),
           )
         ),
         Container(
@@ -116,7 +117,7 @@ class GymClassDetails extends StatelessWidget {
         onPressed: () => {},
         color: Theme. of(context).primaryColor,
         child:
-            Text("BOOK THIS CLASS", style: TextStyle(color: Colors.white)),
+            Text("ADD TO SCHEDULE", style: TextStyle(color: Colors.white)),
       ));
 
     final spacesLeft = Column(
@@ -139,7 +140,9 @@ class GymClassDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(gymClass.name),
+        backgroundColor: Colors.transparent,
+        title: Text(gymClass.name,
+        style: TextStyle(color: Colors.black),),
       ),
       body: Column(
         crossAxisAlignment:  CrossAxisAlignment.center,

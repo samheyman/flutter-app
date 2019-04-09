@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../model/gym_class.dart';
 import 'package:intl/intl.dart';
+import '../gym_class_details.dart';
 
 class GymClassCard extends StatelessWidget {
   final GymClass gymClass;
@@ -16,20 +17,20 @@ class GymClassCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // RawMaterialButton _buildFavoriteButton() {
-    //   return RawMaterialButton(
-    //     constraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
-    //     onPressed: () => onFavoritesButtonPressed(gymClass.id),
-    //     child: Icon(
-    //       // Conditional expression:
-    //       // show "favorite" icon or "favorite border" icon depending on widget.inFavorites:
-    //       inFavorites == true ? Icons.favorite : Icons.favorite_border,
-    //     ),
-    //     elevation: 2.0,
-    //     fillColor: Colors.white,
-    //     shape: CircleBorder(),
-    //   );
-    // }
+    RawMaterialButton _buildFavoriteButton() {
+      return RawMaterialButton(
+        constraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
+        onPressed: () => onFavoritesButtonPressed(gymClass.id),
+        child: Icon(
+          // Conditional expression:
+          // show "favorite" icon or "favorite border" icon depending on widget.inFavorites:
+          inFavorites == true ? Icons.check_box_outline_blank : Icons.check_circle,
+        ),
+        elevation: 2.0,
+        fillColor: Colors.white,
+        shape: CircleBorder(),
+      );
+    }
 
     Padding _buildListTile() {
       return Padding(
@@ -55,9 +56,10 @@ class GymClassCard extends StatelessWidget {
                     // (gymClass['date'].toDate()).DateFormat.Hm,
                     style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16, )),
                 ),
+                // _buildFavoriteButton(),
                 Row(
                     children: [
-                      Icon(Icons.access_time, color: Colors.grey, size: 14,),
+                      Icon(Icons.timer, color: Colors.grey, size: 14,),
                       Text(
                         " " + gymClass.duration.toString() + "min",
                         style: TextStyle(fontSize: 12, color: Colors.black54)),
@@ -80,7 +82,12 @@ class GymClassCard extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: () => print("Tapped!"),
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => GymClassDetails(gymClass)),
+        )
+      },
       child: Padding(
         padding: EdgeInsets.only(left: 5.0, top: 5.0, right: 5.0, bottom: 0),
         child: Card(

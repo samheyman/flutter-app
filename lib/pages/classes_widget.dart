@@ -5,6 +5,7 @@ import '../data/gym_classes.dart';
 import '../model/gym_class.dart';
 import '../utils/theme.dart';
 import './widgets/gym_class_card.dart';
+import './gym_class_details.dart';
 
 class ClassesWidget extends StatefulWidget {
   @override
@@ -101,7 +102,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
               _buildGymClasses(gymClasses
                   .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:6)).day)
                   .toList()),
-              Center(child: Icon(Icons.settings)),
+              // Center(child: Icon(Icons.settings)),
             ],
           ),
         ),
@@ -133,7 +134,7 @@ Widget _buildTab(int daysFromNow) {
           ),
           Text(
             DateFormat('d').format(DateTime.now().add(Duration(days: daysFromNow))).toString(), 
-            style: TextStyle(fontSize: _calendarDateSize, fontWeight: FontWeight.normal), 
+            style: TextStyle(fontSize: _calendarDateSize, fontWeight: FontWeight.bold), 
           ),
         ],
       ),
@@ -141,10 +142,10 @@ Widget _buildTab(int daysFromNow) {
   );
 }
 
-// _goToClassDetails(BuildContext context, DocumentSnapshot gymClass) {
-//   Navigator.of(context).push(
-//     new MaterialPageRoute(
-//       builder: (context) => GymClassDetails(gymClass)
-//     )
-//   );
-// }
+_goToClassDetails(BuildContext context, GymClass gymClass) {
+  Navigator.of(context).push(
+    new MaterialPageRoute(
+      builder: (context) => GymClassDetails(gymClass)
+    )
+  );
+}

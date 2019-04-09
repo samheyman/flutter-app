@@ -17,12 +17,13 @@ ThemeData buildTheme() {
   return base.copyWith(
     textTheme: _buildTextTheme(base.textTheme),
     // New code:
-    primaryColor: Colors.red[700],
+    primaryColor: Colors.redAccent,
     indicatorColor: Colors.red,
     scaffoldBackgroundColor: const Color(0xFFF5F5F5),
-    accentColor: Colors.red,
+    accentColor: Colors.purple[200],
+    backgroundColor: Colors.grey[200],
     iconTheme: IconThemeData(
-      color: Colors.red,
+      color: Colors.redAccent,
       size: 20.0,
     ),
     buttonColor: Colors.white,
