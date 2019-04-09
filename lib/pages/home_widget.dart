@@ -117,7 +117,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           height: MediaQuery.of(context).size.height * 0.35,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/exercise5.jpg"),
+              image: AssetImage("images/exercise2.jpg"),
               fit: BoxFit.cover,
             ),
           )
@@ -198,12 +198,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                 margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                 padding: EdgeInsets.symmetric(vertical:20, horizontal: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Row(
-                      children: [
-                        Text("You have no upcoming classes.",
+                    Text("You have no upcoming classes.",
                           style: 
                             TextStyle(
                               fontSize: 13,
@@ -211,39 +209,37 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                      ],
-                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                     ),
-                    RaisedButton(
-                      child: SizedBox(
-                        width: 120,
-                        child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.search),
-                          Text(
-                            " Search classes", 
-                            style: TextStyle( 
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ClassesWidget()),
-                        );
-                      },
-                      color: Theme.of(context).accentColor,
-                      textColor: Colors.white,
-                      elevation: 1,
-                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
-                    ),
+                    // RaisedButton(
+                    //   child: SizedBox(
+                    //     width: 120,
+                    //     child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Icon(Icons.search),
+                    //       Text(
+                    //         " Search classes", 
+                    //         style: TextStyle( 
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: 12,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //     ),
+                    //   ),
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => ClassesWidget()),
+                    //     );
+                    //   },
+                    //   color: Colors.purple[200],
+                    //   textColor: Colors.white,
+                    //   elevation: 1,
+                    //   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+                    // ),
                   ],
                 ),
               ),
@@ -281,7 +277,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   // }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
         elevation: 0,

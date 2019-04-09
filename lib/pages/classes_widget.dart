@@ -56,6 +56,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
           preferredSize: Size.fromHeight(50.0), // New code
           child: AppBar(
             backgroundColor: Colors.white,
+            textTheme: TextTheme(),
             elevation: 1.0,
             bottom: TabBar(
               isScrollable: true,

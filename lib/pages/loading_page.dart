@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/google_sign_in_button.dart';
-import '../state_widget.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
@@ -22,7 +20,7 @@ class LoginScreen extends StatelessWidget {
 
     Container _logo() {
       return Container(
-        child: Text("Mama Fit Club",
+        child: Text("Mama\nFit Club",
           style: Theme.of(context).textTheme.headline,
         ),
       );
@@ -37,28 +35,10 @@ class LoginScreen extends StatelessWidget {
             children: <Widget>[
               _logo(),
               SizedBox(height: 50,),
-              GoogleSignInButton( // New code
-                onPressed: () => 
-                  StateWidget.of(context).signInWithGoogle(), // New code
-              ),
-              MaterialButton(
-                color: Colors.white,
-                child: Text("Sign in with Facebook"),
-                onPressed: () => print("Button pressed"),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pushReplacementNamed('/homepage'),
-                child: Text("I'll join later.",
-                  style: TextStyle(color: Colors.white) ,) ,
-              ),
             ],
           ),
         ),
       ),
-      
     );
   }
 }

@@ -1,26 +1,28 @@
   import 'package:flutter/material.dart';
   import 'package:scoped_model/scoped_model.dart';
+  
+  import './state_widget.dart';
   import './bottom_navigation.dart';
   import './pages/app_pages.dart';
-  import './model/bookings_model.dart';
+  import './model/state.dart';
   import './utils/theme.dart';
   import './pages/login.dart';
   import './pages/classes_widget.dart';
   import './pages/home_widget.dart';
+  import './pages/loading_page.dart';
 
-  void main() => runApp(
-    Login(),
-  );
+  void main() => runApp(StateWidget(
+    child: Initialize(),
+  ));
 
-  class Login extends StatelessWidget {
+  class Initialize extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
       return MaterialApp(
         title: 'Mama Fit Club',
-        initialRoute: '/login',
         routes: {
           '/': (context) => MamaFitClub(),
-          '/homepage': (context) => MamaFitClub(),
+          '/homepage': (context) => HomeWidget(),
           '/login': (context) => LoginScreen(),
         },
         theme: buildTheme(),
@@ -34,28 +36,42 @@
   }
 
   class _MamaFitClubState extends State<MamaFitClub> {
+    StateModel appState;
     int _currentIndex = 0;
     final List<AppPage> _appPages = appPages;
+    
+    Center _buildLoadingIndicator() {
+      return Center(
+        child: new CircularProgressIndicator(),
+      );
+    }
 
     @override
     Widget build(BuildContext context) {
-      return MaterialApp(
-        home: Scaffold(
-          backgroundColor: Colors.red[50],
-          // appBar: AppBar(
-          //   title: Text((appPages[_currentIndex]).pageTitle),
-          // ),
-          body: _appPages[_currentIndex].pageWidget,
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentIndex,
-            onTap: onTabTapped,
-            items: bottomNavigationItems,
-            
+      appState = StateWidget.of(context).state;
+      if (appState.isLoading) {
+        return LoadingScreen();
+      } else if (!appState.isLoading && appState.user == null) {
+        return new LoginScreen();
+      } else {
+        return MaterialApp(
+          home: Scaffold(
+            backgroundColor: Theme.of(context).accentColor,
+            // appBar: AppBar(
+            //   title: Text((appPages[_currentIndex]).pageTitle),
+            // ),
+            body: _appPages[_currentIndex].pageWidget,
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: _currentIndex,
+              onTap: onTabTapped,
+              items: bottomNavigationItems,
+              
+            ),
           ),
-        ),
-        theme: buildTheme(),
-      );
+          theme: buildTheme(),
+        );
+      }
     }
 
     // Simple function to handle the bottom naviation  
