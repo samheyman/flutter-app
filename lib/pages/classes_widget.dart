@@ -17,6 +17,7 @@ class ClassesWidget extends StatefulWidget {
 class _ClassesWidgetState extends State<ClassesWidget> {
   List<GymClass> gymClasses = getGymClasses();
   List<String> userFavorites = getFavoritesIDs();
+
   void _handleFavoritesListChanged(String recipeID) {
     // Set new state and refresh the widget:
     setState(() {
@@ -52,16 +53,12 @@ class _ClassesWidgetState extends State<ClassesWidget> {
     return DefaultTabController(
       length: 7,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50.0), // New code
-          child: AppBar(
-            backgroundColor: Colors.white,
-            textTheme: TextTheme(),
+        appBar: AppBar(
+          title: Text('Classes'),
+            backgroundColor: Theme.of(context).primaryColor,
             elevation: 1.0,
             bottom: TabBar(
               isScrollable: true,
-              labelColor: Theme.of(context).primaryColor,
-              indicatorColor: Theme.of(context).primaryColor,
               tabs: [
                 _buildTab(0),
                 _buildTab(1),
@@ -72,7 +69,6 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                 _buildTab(6),
               ],
             ),
-          ),
         ),
         body: Padding(
           padding: EdgeInsets.all(0.0),
@@ -113,9 +109,6 @@ class _ClassesWidgetState extends State<ClassesWidget> {
 }
 
 Widget _buildTab(int daysFromNow) {
-  double _calendarDaySize = 9.0;
-  double _calendarDateSize = 16.0;
-  double _calendarPadding = 3;
   String day = 'today';
 
   if (daysFromNow != 0) {
@@ -128,14 +121,14 @@ Widget _buildTab(int daysFromNow) {
         children: [
           Text(
             day.toUpperCase(), 
-            style: TextStyle(fontSize: _calendarDaySize), 
+            style: TextStyle(fontSize: 9), 
           ),
           Padding(
-            padding: EdgeInsets.only(top: _calendarPadding),
+            padding: EdgeInsets.only(top: 3),
           ),
           Text(
             DateFormat('d').format(DateTime.now().add(Duration(days: daysFromNow))).toString(), 
-            style: TextStyle(fontSize: _calendarDateSize, fontWeight: FontWeight.bold), 
+            style: TextStyle(fontSize: 16,), 
           ),
         ],
       ),
@@ -145,7 +138,7 @@ Widget _buildTab(int daysFromNow) {
 
 _goToClassDetails(BuildContext context, GymClass gymClass) {
   Navigator.of(context).push(
-    new MaterialPageRoute(
+    MaterialPageRoute(
       builder: (context) => GymClassDetails(gymClass)
     )
   );

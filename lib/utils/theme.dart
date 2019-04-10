@@ -7,6 +7,7 @@ ThemeData buildTheme() {
         fontSize: 40.0,
         color: Colors.white,
       ),
+      
     );
   }
 
@@ -18,12 +19,18 @@ ThemeData buildTheme() {
     textTheme: _buildTextTheme(base.textTheme),
     // New code:
     primaryColor: Colors.redAccent,
-    indicatorColor: Colors.red,
-    scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+    tabBarTheme: TabBarTheme(
+      labelColor: Colors.white,
+      unselectedLabelColor: Colors.white,
+      unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+      labelStyle: TextStyle(fontWeight: FontWeight.bold)
+    ),
+    indicatorColor: Colors.red[50],
+    // scaffoldBackgroundColor: const Color(0xFFF5F5F5),
     accentColor: Colors.purple[200],
     backgroundColor: Colors.grey[200],
     iconTheme: IconThemeData(
-      color: Colors.redAccent,
+      color: Colors.red[50],
       size: 20.0,
     ),
     buttonColor: Colors.white,
