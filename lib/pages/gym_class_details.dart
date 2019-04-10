@@ -99,7 +99,7 @@ class GymClassDetails extends StatelessWidget {
                     style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                   Padding(padding: EdgeInsets.only(top: 4),),
-                  Text(DateFormat('EE dd MMM').format(gymClass.dateTime))
+                  Text(DateFormat('EE dd MMM').format(gymClass.date_time))
                 ],
               ),
             ),
@@ -127,7 +127,7 @@ class GymClassDetails extends StatelessWidget {
                     style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                   Padding(padding: EdgeInsets.only(top: 4),),
-                  Text(DateFormat('Hm').format(gymClass.dateTime))
+                  Text(DateFormat('Hm').format(gymClass.date_time))
                 ],
               ),
             ),

@@ -6,6 +6,10 @@ import '../model/gym_class.dart';
 import '../utils/theme.dart';
 import './widgets/gym_class_card.dart';
 import './gym_class_details.dart';
+import '../model/state.dart';
+import '../state_widget.dart';
+import '../pages/login.dart';
+
 
 class ClassesWidget extends StatefulWidget {
   @override
@@ -15,40 +19,26 @@ class ClassesWidget extends StatefulWidget {
 }
 
 class _ClassesWidgetState extends State<ClassesWidget> {
-  List<GymClass> gymClasses = getGymClasses();
-  List<String> userFavorites = getFavoritesIDs();
+  // List<GymClass> gymClasses = getGymClasses();
+  StateModel appState;
+  List<String> userSavedClasses = getSavedClassesIds();
 
-  void _handleFavoritesListChanged(String recipeID) {
-    // Set new state and refresh the widget:
-    setState(() {
-      if (userFavorites.contains(recipeID)) {
-        userFavorites.remove(recipeID);
-      } else {
-        userFavorites.add(recipeID);
+  void _handleSavedClassesListChanged(String savedClassId) {
+    updateSavedClasses(appState.user.uid, savedClassId).then((result) {
+      // Update the state:
+      if (result == true) {
+        setState(() {
+          if (!appState.savedClasses.contains(savedClassId))
+            appState.savedClasses.add(savedClassId);
+          else
+            appState.savedClasses.remove(savedClassId);
+        });
       }
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-
-    Column _buildGymClasses(List<GymClass> gymClassList) {
-      return Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              itemCount: gymClassList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GymClassCard(
-                  gymClass: gymClassList[index],
-                  inFavorites: userFavorites.contains(gymClassList[index].id),
-                  onFavoritesButtonPressed: _handleFavoritesListChanged,);
-              },
-            ),
-          ),
-        ],
-      );
-    }
+  DefaultTabController _buildTabView({Widget body}) {
+    const double _iconSize = 20.0;
 
     return DefaultTabController(
       length: 7,
@@ -69,41 +59,175 @@ class _ClassesWidgetState extends State<ClassesWidget> {
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.all(0.0),
-          child: TabBarView(
-            // Replace placeholders:
-            children: [
-              // Display recipes of type food:
-              _buildGymClasses(gymClasses
-                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().day)
-                  .toList()),
-              // Display recipes of type drink:
-              _buildGymClasses(gymClasses
-                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:1)).day)
-                  .toList()),
-              // Display favorite recipes:
-              _buildGymClasses(gymClasses
-                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:2)).day)
-                  .toList()),
-              _buildGymClasses(gymClasses
-                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:3)).day)
-                  .toList()),
-              _buildGymClasses(gymClasses
-                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:4)).day)
-                  .toList()),
-              _buildGymClasses(gymClasses
-                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:5)).day)
-                  .toList()),
-              _buildGymClasses(gymClasses
-                  .where((gymClass) => gymClass.dateTime.day == DateTime.now().add(Duration(days:6)).day)
-                  .toList()),
-              // Center(child: Icon(Icons.settings)),
-            ],
-          ),
+          padding: EdgeInsets.all(5.0),
+          child: body,
         ),
       ),
     );
   }
+
+  TabBarView _buildTabsContent() {
+    Padding _buildGymClasses({DateTime gymClassDate, List<String> ids}) {
+      print("hello");
+      CollectionReference collectionReference =
+          Firestore.instance.collection('gymClasses');
+      Stream<QuerySnapshot> stream;
+      // The argument recipeType is set
+      if (gymClassDate != null) {
+        print(gymClassDate);
+        stream = collectionReference 
+            .where("date_time", isGreaterThan: gymClassDate)
+            .where("date_time", isLessThanOrEqualTo: gymClassDate.add(Duration(days: 1)))
+            .snapshots();
+      } else {
+        print("Gym class found");
+        // Use snapshots of all recipes if recipeType has not been passed
+        stream = collectionReference.snapshots();
+      }
+      print(stream);
+
+      // Define query depeneding on passed args
+                  print('Documents: ');
+
+      return Padding(
+        // Padding before and after the list view:
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: StreamBuilder(
+                stream: stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) return _buildLoadingIndicator();
+                  return ListView(
+                    children: snapshot.data.documents
+                        // Check if the argument ids contains document ID if ids has been passed:
+                        .where((d) => ids == null || ids.contains(d.documentID))
+                        .map((document) {
+                          // print(snapshot.data.documents[0]['created_date'].toString());
+                      return new GymClassCard(
+                        gymClass:
+                            GymClass.fromMap(document.data, document.documentID),
+                        // inSavedClasses:
+                        //     appState.savedClasses.contains(document.documentID),
+                        // onSaveButtonPressed: _handleSavedClassesListChanged,
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return TabBarView(
+      children: [
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 1))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 2))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 3))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 4))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 5))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 6))),
+      ],
+    );
+  }
+  
+  Widget _buildContent() {
+    if (appState.isLoading) {
+      return _buildTabView(
+        body: _buildLoadingIndicator(),
+      );
+    } else if (!appState.isLoading && appState.user == null) {
+      return LoginScreen();
+    } else {
+      return _buildTabView(
+        body: _buildTabsContent(),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    appState = StateWidget.of(context).state;
+    return _buildContent();
+  }
+
+    // Column _buildGymClasses(List<GymClass> gymClassList) {
+    //   return Column(
+    //     children: <Widget>[
+    //       Expanded(
+    //         child: ListView.builder(
+    //           itemCount: gymClassList.length,
+    //           itemBuilder: (BuildContext context, int index) {
+    //             return GymClassCard(
+    //               gymClass: gymClassList[index],
+    //               inSavedClasses: userSavedClasses.contains(gymClassList[index].id),
+    //               onSaveButtonPressed: _handleSavedClassesListChanged,);
+    //           },
+    //         ),
+    //       ),
+    //     ],
+    //   );
+    // }
+
+    // return DefaultTabController(
+    //   length: 7,
+    //   child: Scaffold(
+    //     appBar: AppBar(
+    //       title: Text('Classes'),
+    //       bottom: TabBar(
+    //         isScrollable: true,
+    //         tabs: [
+    //           _buildTab(0),
+    //           _buildTab(1),
+    //           _buildTab(2),
+    //           _buildTab(3),
+    //           _buildTab(4),
+    //           _buildTab(5),
+    //           _buildTab(6),
+    //         ],
+    //       ),
+    //     ),
+    //     body: Padding(
+    //       padding: EdgeInsets.all(0.0),
+    //       child: TabBarView(
+    //         // Replace placeholders:
+    //         children: [
+    //           // Display recipes of type food:
+    //           _buildGymClasses(
+    //               .where((gymClass) => gymClass.date_time.day == DateTime.now().day)
+    //               .toList()),
+    //           // Display recipes of type drink:
+    //           _buildGymClasses(gymClasses
+    //               .where((gymClass) => gymClass.date_time.day == DateTime.now().add(Duration(days:1)).day)
+    //               .toList()),
+    //           // Display favorite recipes:
+    //           _buildGymClasses(gymClasses
+    //               .where((gymClass) => gymClass.date_time.day == DateTime.now().add(Duration(days:2)).day)
+    //               .toList()),
+    //           _buildGymClasses(gymClasses
+    //               .where((gymClass) => gymClass.date_time.day == DateTime.now().add(Duration(days:3)).day)
+    //               .toList()),
+    //           _buildGymClasses(gymClasses
+    //               .where((gymClass) => gymClass.date_time.day == DateTime.now().add(Duration(days:4)).day)
+    //               .toList()),
+    //           _buildGymClasses(gymClasses
+    //               .where((gymClass) => gymClass.date_time.day == DateTime.now().add(Duration(days:5)).day)
+    //               .toList()),
+    //           _buildGymClasses(gymClasses
+    //               .where((gymClass) => gymClass.date_time.day == DateTime.now().add(Duration(days:6)).day)
+    //               .toList()),
+    //           // Center(child: Icon(Icons.settings)),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+  
 }
 
 Widget _buildTab(int daysFromNow) {
@@ -131,6 +255,12 @@ Widget _buildTab(int daysFromNow) {
         ],
       ),
     ),
+  );
+}
+
+Center _buildLoadingIndicator() {
+  return Center(
+    child: new CircularProgressIndicator(),
   );
 }
 

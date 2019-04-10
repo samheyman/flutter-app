@@ -5,13 +5,13 @@ import '../gym_class_details.dart';
 
 class GymClassCard extends StatelessWidget {
   final GymClass gymClass;
-  final bool inFavorites;
-  final Function onFavoritesButtonPressed;
+  final bool inSavedClasses;
+  final Function onSaveButtonPressed;
 
   GymClassCard(
     {@required this.gymClass,
-    @required this.inFavorites,
-    @required this.onFavoritesButtonPressed,}
+    @required this.inSavedClasses,
+    @required this.onSaveButtonPressed,}
   );
 
   @override
@@ -20,11 +20,11 @@ class GymClassCard extends StatelessWidget {
     RawMaterialButton _buildFavoriteButton() {
       return RawMaterialButton(
         constraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
-        onPressed: () => onFavoritesButtonPressed(gymClass.id),
+        onPressed: () => onSaveButtonPressed(gymClass.id),
         child: Icon(
           // Conditional expression:
           // show "favorite" icon or "favorite border" icon depending on widget.inFavorites:
-          inFavorites == true ? Icons.check_box_outline_blank : Icons.check_circle,
+          inSavedClasses == true ? Icons.check_box_outline_blank : Icons.check_circle,
         ),
         elevation: 2.0,
         fillColor: Colors.white,
@@ -52,7 +52,7 @@ class GymClassCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(bottom: 5),
                   child: Text(
-                    DateFormat('Hm').format(gymClass.dateTime),
+                    DateFormat('Hm').format(gymClass.date_time).toString(),
                     // (gymClass['date'].toDate()).DateFormat.Hm,
                     style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16, )),
                 ),

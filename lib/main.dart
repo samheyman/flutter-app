@@ -22,7 +22,7 @@
         title: 'Mama Fit Club',
         routes: {
           '/': (context) => MamaFitClub(),
-          '/homepage': (context) => MamaFitClub(),
+          '/homepage': (context) => HomeWidget(),
           '/login': (context) => LoginScreen(),
         },
         theme: buildTheme(),
@@ -42,7 +42,7 @@
     
     Center _buildLoadingIndicator() {
       return Center(
-        child: new CircularProgressIndicator(),
+        child: CircularProgressIndicator(),
       );
     }
 
@@ -51,15 +51,12 @@
       appState = StateWidget.of(context).state;
       if (appState.isLoading) {
         return LoadingScreen();
-      // } else if (!appState.isLoading && appState.user == null) {
-      //   return new LoginScreen();
+      } else if (!appState.isLoading && appState.user == null) {
+        return LoginScreen();
       } else {
         return MaterialApp(
           home: Scaffold(
             backgroundColor: Theme.of(context).accentColor,
-            // appBar: AppBar(
-            //   title: Text((appPages[_currentIndex]).pageTitle),
-            // ),
             body: _appPages[_currentIndex].pageWidget,
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,

@@ -248,33 +248,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         ),
       );
     }
-    // Container myNutritionTips() {
-    // return Container(
-    //   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-    //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-    //   // color: Colors.white,
-    //   child: Column( 
-    //     mainAxisAlignment: MainAxisAlignment.start,
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       Padding(
-    //         padding: EdgeInsets.all(0),
-    //         child: Text('Nutrition tips'.toUpperCase(), 
-    //           style: sectionHeaderStyle()),
-    //       ),
-    //       Container(
-    //         color: Colors.white,
-    //         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-    //         child: Column(
-    //           children: <Widget>[
-    //             makeTipContainer(getPregnancyTips()[1]),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
-  // }
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
