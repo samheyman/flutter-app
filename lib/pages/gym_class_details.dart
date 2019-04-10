@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../model/gym_class.dart';
+import '../utils/mama_fit_club_icons.dart';
 
 class GymClassDetails extends StatelessWidget {
   final GymClass gymClass;
@@ -20,105 +23,178 @@ class GymClassDetails extends StatelessWidget {
       ),
     );
 
-    final headerContentText = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 60.0),
-        Icon(
-          Icons.pregnant_woman,
+    final headerContentIcon = Container(
+        height: 70,
+        width: 70,
+        decoration: new BoxDecoration(
           color: Colors.white,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          MyIcons.stretch,
+          color: Theme.of(context).primaryColor,
           size: 40.0,
         ),
-        Container(
-          width: 90.0,
-          child: new Divider(color: Colors.white),
-        ),
-        SizedBox(height: 20.0),
-        Text(
-          gymClass.name,
-          style: TextStyle(color: Colors.white, fontSize: 30.0),
-        ),
-        SizedBox(height: 30.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            // Expanded(flex: 5, child: Text("")),
-            // Expanded(
-            //     flex: 6,
-            //     child: Padding(
-            //         padding: EdgeInsets.only(left: 10.0),
-            //         child: Text(
-            //           lesson.level,
-            //           style: TextStyle(color: Colors.white),
-            //         ))),
-            Expanded(flex: 0, child: gymClassPrice ),
-          ],
-        ),
-      ],
     );
 
     final headerContent = Stack(
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(left: 10.0, right: 10.0),
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: 250,
           decoration: BoxDecoration(
             color: Colors.white,
-            // image: DecorationImage(
-            //   // image: AssetImage("images/yoga.jpg"),
-            //   fit: BoxFit.cover,
-            // ),
+            image: DecorationImage(
+              image: NetworkImage(gymClass.image_url),
+              fit: BoxFit.cover,
+            ),
           )
         ),
         Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: 280,
           padding: EdgeInsets.only(left: 40.0, right: 40.0),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .7)),
-          child: Center(
-            child: headerContentText,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              headerContentIcon,
+            ]
           ),
         ),
       ],
     );
 
+    final bookButton = RaisedButton(
+      onPressed: () => {},
+      color: Theme. of(context).primaryColor,
+      child:
+          Text("SAVE", style: TextStyle(color: Colors.white)),
+    );
+
     final bottomContentText = Column(
       children: [
-        Text(
-          "Location",
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        Text(gymClass.class_name,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
         ),
+        Padding(padding: EdgeInsets.only(top:5),),
         Text(
-          gymClass.location,
-          style: TextStyle(fontSize: 18.0),
+          gymClass.gym_name,
+          style: TextStyle(fontSize: 14.0),
         ),
-        Text(
-          "\nDate",
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        Padding(padding: EdgeInsets.only(top: 8)),
+        bookButton,
+        Padding(padding: EdgeInsets.only(top: 15),),
+        Row( 
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: <Widget>[
+                  Icon(MyIcons.bookings, color: Theme.of(context).secondaryHeaderColor, size: 24,),
+                  Padding(padding: EdgeInsets.only(top: 8),),
+                  Text("Date",
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 4),),
+                  Text(DateFormat('EE dd MMM').format(gymClass.dateTime))
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: <Widget>[
+                  Icon(Icons.timer, color: Theme.of(context).secondaryHeaderColor, size: 24,),
+                  Padding(padding: EdgeInsets.only(top: 8),),
+                  Text("Duration",
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 4),),
+                  Text(gymClass.duration.toString() + " mins")
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: <Widget>[
+                  Icon(Icons.access_time, color: Theme.of(context).secondaryHeaderColor, size: 24,),
+                  Padding(padding: EdgeInsets.only(top: 8),),
+                  Text("Time",
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 4),),
+                  Text(DateFormat('Hm').format(gymClass.dateTime))
+                ],
+              ),
+            ),
+          ],
         ),
-        Text(
-          gymClass.dateTime.toString(),
-          style: TextStyle(fontSize: 18.0),
+        Padding(padding: EdgeInsets.only(top: 30),),
+        Container(
+          // decoration: BoxDecoration(color: Colors.white),
+          child: DefaultTabController(    
+            length: 2,
+            initialIndex: 0,  
+            child: Column(
+              children: [
+                Container(
+                  constraints: BoxConstraints.expand(height: 50),
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: TabBar(
+                    indicator: BoxDecoration(
+                      border: BorderDirectional(
+                        top: BorderSide(color: Colors.grey[400], width: 3),
+                        end: BorderSide(color: Colors.grey[200], width: 1),
+                      ),
+                      color: Colors.white),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey[400],
+                    indicatorColor: Colors.black,
+                    tabs: <Widget>[
+                      Text(
+                        "Details".toUpperCase(),
+                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Map".toUpperCase(),
+                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                // Expanded(
+                //   child: Container(
+                //     child: TabBarView(
+                //       children: [
+                //         Container(
+                //           child: Text("Home Body"),
+                //         ),
+                //         Container(
+                //           child: Text("Articles Body"),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
         ),
-        Text(
-          "\nTime",
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          gymClass.dateTime.toString() + " (" + gymClass.duration.toString() + " mins)",
-          style: TextStyle(fontSize: 18.0),
+        // Padding(padding: EdgeInsets.only(top: 20),),
+        Container(
+          decoration: BoxDecoration(
+            border: BorderDirectional(top: BorderSide(color: Colors.grey[200], width: 1)),
+            color: Colors.white),
+          padding: EdgeInsets.all(20),
+          child: Text(gymClass.details[0]),
         ),
       ],
     );
-
-    final bookButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        onPressed: () => {},
-        color: Theme. of(context).primaryColor,
-        child:
-            Text("ADD TO SCHEDULE", style: TextStyle(color: Colors.white)),
-      ));
 
     final spacesLeft = Column(
       children: <Widget>[
@@ -130,28 +206,25 @@ class GymClassDetails extends StatelessWidget {
       // height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       // color: Theme.of(context).primaryColor,
-      padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(0.0),
       child: Center(
         child: Column(
-          children: <Widget>[bottomContentText, bookButton, spacesLeft],
+          children: <Widget>[bottomContentText],
         ),
       ),
     );
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text(gymClass.name,
-        style: TextStyle(color: Colors.black),),
+        title: Text(gymClass.class_name),
       ),
-      body: Column(
-        crossAxisAlignment:  CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
+      body: ListView(
+        children: <Widget>[
           headerContent,
           bottomContent,
         ],
-      ),
+      ), 
     );
   }
 }

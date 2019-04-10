@@ -22,7 +22,7 @@
         title: 'Mama Fit Club',
         routes: {
           '/': (context) => MamaFitClub(),
-          '/homepage': (context) => HomeWidget(),
+          '/homepage': (context) => MamaFitClub(),
           '/login': (context) => LoginScreen(),
         },
         theme: buildTheme(),
@@ -51,8 +51,8 @@
       appState = StateWidget.of(context).state;
       if (appState.isLoading) {
         return LoadingScreen();
-      } else if (!appState.isLoading && appState.user == null) {
-        return new LoginScreen();
+      // } else if (!appState.isLoading && appState.user == null) {
+      //   return new LoginScreen();
       } else {
         return MaterialApp(
           home: Scaffold(

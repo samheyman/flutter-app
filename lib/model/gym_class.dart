@@ -12,11 +12,14 @@ class GymClass {
   final GymClassType type;
   final DateTime dateTime;
   final int duration;
-  final String name;
-  final String location;
+  final String class_name;
+  final String gym_name;
+  final String address;
   final int places;
   final double price;
   final List<String> details;
+  final String source_url;
+  final String image_url;
 
   // GymClass.fromMap(Map<String, dynamic> map, {this.date}, {this.name}, {this.location})
   //    : assert(map['name'] != null),
@@ -33,11 +36,14 @@ class GymClass {
       this.dateTime,
       this.type,
       this.duration,
-      this.name,
-      this.location,
+      this.class_name,
+      this.gym_name,
+      this.address,
       this.places,
       this.price,
       this.details,
+      this.source_url,
+      this.image_url,
     }
   );
 }

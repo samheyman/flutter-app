@@ -70,11 +70,11 @@ class GymClassCard extends StatelessWidget {
           ),
         ),
         title: Text(
-          gymClass.name,
+          gymClass.class_name,
           style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          gymClass.location,
+          gymClass.gym_name,
           style: TextStyle(color: Colors.black54, fontSize: 12)
           ),
         ),

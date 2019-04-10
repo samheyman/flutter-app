@@ -55,20 +55,18 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Classes'),
-            backgroundColor: Theme.of(context).primaryColor,
-            elevation: 1.0,
-            bottom: TabBar(
-              isScrollable: true,
-              tabs: [
-                _buildTab(0),
-                _buildTab(1),
-                _buildTab(2),
-                _buildTab(3),
-                _buildTab(4),
-                _buildTab(5),
-                _buildTab(6),
-              ],
-            ),
+          bottom: TabBar(
+            isScrollable: true,
+            tabs: [
+              _buildTab(0),
+              _buildTab(1),
+              _buildTab(2),
+              _buildTab(3),
+              _buildTab(4),
+              _buildTab(5),
+              _buildTab(6),
+            ],
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.all(0.0),

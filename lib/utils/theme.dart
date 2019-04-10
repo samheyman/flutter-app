@@ -19,6 +19,7 @@ ThemeData buildTheme() {
     textTheme: _buildTextTheme(base.textTheme),
     // New code:
     primaryColor: Colors.redAccent,
+    secondaryHeaderColor: Colors.grey,
     tabBarTheme: TabBarTheme(
       labelColor: Colors.white,
       unselectedLabelColor: Colors.white,
