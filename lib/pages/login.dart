@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/google_sign_in_button.dart';
 import '../state_widget.dart';
+import '../utils/mama_fit_club_icons.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -22,8 +23,13 @@ class LoginScreen extends StatelessWidget {
 
     Container _logo() {
       return Container(
-        child: Text("Mama Fit Club",
-          style: Theme.of(context).textTheme.headline,
+        child: Column(
+          children: [
+            Icon(Icons.pregnant_woman, size: 42),
+            Text("Mama\nFit Club",
+              style: Theme.of(context).textTheme.headline,
+            ),
+          ],
         ),
       );
     }
@@ -51,7 +57,7 @@ class LoginScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () => Navigator.of(context).pushReplacementNamed('/homepage'),
-                child: Text("I'll join later.",
+                child: Text("No thank you, I'll join later.",
                   style: TextStyle(color: Colors.white) ,) ,
               ),
             ],

@@ -7,22 +7,22 @@ Future<bool> updateSavedClasses(String uid, String classId) {
   return Firestore.instance.runTransaction((Transaction tx) async {
     DocumentSnapshot postSnapshot = await tx.get(savedClassesReference);
     if (postSnapshot.exists) {
-      // Extend 'favorites' if the list does not contain the recipe ID:
-      if (!postSnapshot.data['saved_classes'].contains(classId)) {
+      // Extend 'savedClasses' if the list does not contain the recipe ID:
+      if (!postSnapshot.data['savedClasses'].contains(classId)) {
         await tx.update(savedClassesReference, <String, dynamic>{
-          'saved_classes': FieldValue.arrayUnion([classId])
+          'savedClasses': FieldValue.arrayUnion([classId])
         });
-      // Delete the recipe ID from 'favorites':
+      // Delete the recipe ID from 'savedClasses':
       } else {
         await tx.update(savedClassesReference, <String, dynamic>{
-          'saved_classes': FieldValue.arrayRemove([classId])
+          'savedClasses': FieldValue.arrayRemove([classId])
         });
       }
     } else {
       // Create a document for the current user in collection 'users'
-      // and add a new array 'favorites' to the document:
+      // and add a new array 'savedClasses' to the document:
       await tx.set(savedClassesReference, {
-        'saved_classes': [classId]
+        'savedClasses': [classId]
       });
     }
   }).then((result) {
@@ -31,12 +31,4 @@ Future<bool> updateSavedClasses(String uid, String classId) {
     print('Error: $error');
     return false;
   });
-}
-
-List<String> getSavedClassesIds() {
-  return [
-    '0',
-    '2',
-    '3',
-  ];
 }

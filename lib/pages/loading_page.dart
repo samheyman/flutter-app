@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/mama_fit_club_icons.dart';
 
 class LoadingScreen extends StatelessWidget {
   @override
@@ -20,8 +21,13 @@ class LoadingScreen extends StatelessWidget {
 
     Container _logo() {
       return Container(
-        child: Text("Mama\nFit Club",
-          style: Theme.of(context).textTheme.headline,
+        child: Column(
+          children: [
+            Icon(MyIcons.stretch),
+            Text("Mama\nFit Club",
+              style: Theme.of(context).textTheme.headline,
+            ),
+          ],
         ),
       );
     }

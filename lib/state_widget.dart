@@ -56,16 +56,16 @@ class _StateWidgetState extends State<StateWidget> {
     }
   }
 
-  Future<List<String>> getFavorites() async {
+  Future<List<String>> getSavedClasses() async {
     DocumentSnapshot querySnapshot = await Firestore.instance
         .collection('users')
         .document(state.user.uid)
         .get();
     if (querySnapshot.exists &&
-        querySnapshot.data.containsKey('favorites') &&
-        querySnapshot.data['favorites'] is List) {
+        querySnapshot.data.containsKey('savedClasses') &&
+        querySnapshot.data['savedClasses'] is List) {
       // Create a new List<String> from List<dynamic>
-      return List<String>.from(querySnapshot.data['favorites']);
+      return List<String>.from(querySnapshot.data['savedClasses']);
     }
     return [];
   }
@@ -77,10 +77,10 @@ class _StateWidgetState extends State<StateWidget> {
     }
     FirebaseUser firebaseUser = await signIntoFirebase(googleAccount);
     state.user = firebaseUser; // new
-    List<String> favorites = await getFavorites(); // new
+    List<String> savedClasses = await getSavedClasses(); // new
     setState(() {
       state.isLoading = false;
-      // state.favorites = favorites; // new
+      state.savedClasses = savedClasses; // new
     });
   }
 

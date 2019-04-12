@@ -21,24 +21,22 @@ class ClassesWidget extends StatefulWidget {
 class _ClassesWidgetState extends State<ClassesWidget> {
   // List<GymClass> gymClasses = getGymClasses();
   StateModel appState;
-  List<String> userSavedClasses = getSavedClassesIds();
 
-  void _handleSavedClassesListChanged(String savedClassId) {
-    updateSavedClasses(appState.user.uid, savedClassId).then((result) {
-      // Update the state:
-      if (result == true) {
-        setState(() {
-          if (!appState.savedClasses.contains(savedClassId))
-            appState.savedClasses.add(savedClassId);
-          else
-            appState.savedClasses.remove(savedClassId);
-        });
-      }
-    });
-  }
+  // void _handleSavedClassesListChanged(String savedClassId) {
+  //   updateSavedClasses(appState.user.uid, savedClassId).then((result) {
+  //     // Update the state:
+  //     if (result == true) {
+  //       setState(() {
+  //         if (!appState.savedClasses.contains(savedClassId))
+  //           appState.savedClasses.add(savedClassId);
+  //         else
+  //           appState.savedClasses.remove(savedClassId);
+  //       });
+  //     }
+  //   });
+  // }
 
   DefaultTabController _buildTabView({Widget body}) {
-    const double _iconSize = 20.0;
 
     return DefaultTabController(
       length: 7,
@@ -67,8 +65,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
   }
 
   TabBarView _buildTabsContent() {
-    Padding _buildGymClasses({DateTime gymClassDate, List<String> ids}) {
-      print("hello");
+    Padding _buildGymClasses({DateTime gymClassDate}) {
       CollectionReference collectionReference =
           Firestore.instance.collection('gymClasses');
       Stream<QuerySnapshot> stream;
@@ -103,7 +100,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                   return ListView(
                     children: snapshot.data.documents
                         // Check if the argument ids contains document ID if ids has been passed:
-                        .where((d) => ids == null || ids.contains(d.documentID))
+                        // .where((d) => ids == null || ids.contains(d.documentID))
                         .map((document) {
                           // print(snapshot.data.documents[0]['created_date'].toString());
                       return new GymClassCard(

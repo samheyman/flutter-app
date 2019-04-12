@@ -11,9 +11,10 @@
   import './pages/home_widget.dart';
   import './pages/loading_page.dart';
 
-  void main() => runApp(StateWidget(
-    child: Initialize(),
-  ));
+  void main() {
+    StateWidget stateWidget = StateWidget(child: Initialize());
+    runApp(stateWidget);
+  }
 
   class Initialize extends StatelessWidget {
     @override

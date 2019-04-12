@@ -3,14 +3,45 @@ import 'package:intl/intl.dart';
 
 import '../model/gym_class.dart';
 import '../utils/mama_fit_club_icons.dart';
+import '../model/state.dart';
+import '../data/gym_classes.dart';
+import '../pages/login.dart';
+import '../state_widget.dart';
 
-class GymClassDetails extends StatelessWidget {
+class GymClassDetails extends StatefulWidget {
+
   final GymClass gymClass;
 
-  GymClassDetails(this.gymClass);
+  GymClassDetails(this.gymClass); 
+  
+  @override
+  State<StatefulWidget> createState() {
+    return _GymClassDetailsState();
+  }
+}
+
+class _GymClassDetailsState extends State<GymClassDetails> {
+  StateModel appState;
+
+  _handleSavedClassesListChanged(String gymClassId) {
+      print("Button pressed to save class");
+      print("User ID: " + appState.user.uid.toString());
+      updateSavedClasses(appState.user.uid, gymClassId).then((result) {
+      if (result == true) {
+        setState(() {
+          if (!appState.savedClasses.contains(gymClassId))
+            appState.savedClasses.add(gymClassId);
+          else
+            appState.savedClasses.remove(gymClassId);
+        });
+      }
+      print(appState.savedClasses[0].toString());
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
+    appState = StateWidget.of(context).state;
 
     final gymClassPrice = Container(
       padding: const EdgeInsets.all(7.0),
@@ -18,7 +49,7 @@ class GymClassDetails extends StatelessWidget {
           border: new Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(5.0)),
       child: new Text(
-        "SEK " + gymClass.price.toString(),
+        "SEK " + widget.gymClass.price.toString(),
         style: TextStyle(color: Colors.white),
       ),
     );
@@ -45,7 +76,7 @@ class GymClassDetails extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
-              image: NetworkImage(gymClass.image_url),
+              image: NetworkImage(widget.gymClass.image_url),
               fit: BoxFit.cover,
             ),
           )
@@ -65,21 +96,23 @@ class GymClassDetails extends StatelessWidget {
       ],
     );
 
-    final bookButton = RaisedButton(
-      onPressed: () => {},
-      color: Theme. of(context).primaryColor,
+    final bookButton = FloatingActionButton(
+      onPressed: (){
+        _handleSavedClassesListChanged(widget.gymClass.id);
+      },
+      backgroundColor: Theme.of(context).accentColor,
       child:
           Text("SAVE", style: TextStyle(color: Colors.white)),
     );
 
     final bottomContentText = Column(
       children: [
-        Text(gymClass.class_name,
+        Text(widget.gymClass.class_name,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
         ),
         Padding(padding: EdgeInsets.only(top:5),),
         Text(
-          gymClass.gym_name,
+          widget.gymClass.gym_name,
           style: TextStyle(fontSize: 14.0),
         ),
         Padding(padding: EdgeInsets.only(top: 8)),
@@ -99,7 +132,7 @@ class GymClassDetails extends StatelessWidget {
                     style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                   Padding(padding: EdgeInsets.only(top: 4),),
-                  Text(DateFormat('EE dd MMM').format(gymClass.date_time))
+                  Text(DateFormat('EE dd MMM').format(widget.gymClass.date_time))
                 ],
               ),
             ),
@@ -113,7 +146,7 @@ class GymClassDetails extends StatelessWidget {
                     style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                   Padding(padding: EdgeInsets.only(top: 4),),
-                  Text(gymClass.duration.toString() + " mins")
+                  Text(widget.gymClass.duration.toString() + " mins")
                 ],
               ),
             ),
@@ -127,7 +160,7 @@ class GymClassDetails extends StatelessWidget {
                     style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                   Padding(padding: EdgeInsets.only(top: 4),),
-                  Text(DateFormat('Hm').format(gymClass.date_time))
+                  Text(DateFormat('Hm').format(widget.gymClass.date_time))
                 ],
               ),
             ),
@@ -191,16 +224,18 @@ class GymClassDetails extends StatelessWidget {
             border: BorderDirectional(top: BorderSide(color: Colors.grey[200], width: 1)),
             color: Colors.white),
           padding: EdgeInsets.all(20),
-          child: Text(gymClass.details[0]),
+          child: Text(widget.gymClass.details[0]),
         ),
       ],
     );
 
-    final spacesLeft = Column(
-      children: <Widget>[
-        Text("(" + gymClass.places.toString() + " places left)")
-      ],
-    );
+    
+
+    // final spacesLeft = Column(
+    //   children: <Widget>[
+    //     Text("(" + gymClass.places.toString() + " places left)")
+    //   ],
+    // );
 
     final bottomContent = Container(
       // height: MediaQuery.of(context).size.height,
@@ -214,18 +249,36 @@ class GymClassDetails extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        title: Text(gymClass.class_name),
-      ),
-      body: ListView(
-        children: <Widget>[
-          headerContent,
-          bottomContent,
-        ],
-      ), 
-    );
+    Center _buildLoadingIndicator() {
+      return Center(
+        child: new CircularProgressIndicator(),
+      );
+    } 
+
+    if (appState.isLoading) {
+      return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          title: Text(widget.gymClass.class_name),
+        ),
+        body: _buildLoadingIndicator(),
+      );
+    } else if (!appState.isLoading && appState.user == null) {
+      return LoginScreen();
+    } else {
+      return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          title: Text(widget.gymClass.class_name),
+        ),
+        body: ListView(
+          children: <Widget>[
+            headerContent,
+            bottomContent,
+          ],
+        ), 
+      );
+    }
   }
 }
 
