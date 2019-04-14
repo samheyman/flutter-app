@@ -67,3 +67,7 @@ post_install do |installer|
     end
   end
 end
+
+# Pluggin for Facebook login
+pod 'FBSDKCoreKit', '4.39.1'
+pod 'FBSDKLoginKit', '4.39.1'

@@ -292,6 +292,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates.bundle",
 			);
@@ -299,6 +300,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 			);
@@ -572,6 +574,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				"OTHER_LDFLAGS[arch=*]" = "$(inherited) -ObjC -l\"Bolts\" -l\"BoringSSL-GRPC\" -l\"FBSDKCoreKit\" -l\"FBSDKLoginKit\" -l\"FirebaseAuth\" -l\"FirebaseCore\" -l\"FirebaseDatabase\" -l\"FirebaseFirestore\" -l\"FirebaseInstanceID\" -l\"GTMSessionFetcher\" -l\"GoogleToolboxForMac\" -l\"GoogleUtilities\" -l\"Protobuf\" -l\"c++\" -l\"cloud_firestore\" -l\"firebase_auth\" -l\"firebase_core\" -l\"flutter_facebook_login\" -l\"gRPC-C++\" -l\"gRPC-Core\" -l\"google_sign_in\" -l\"icucore\" -l\"leveldb-library\" -l\"nanopb\" -l\"sqlite3\" -l\"z\" -framework \"CFNetwork\" -framework \"CoreGraphics\" -framework \"CoreText\" -framework \"FIRAnalyticsConnector\" -framework \"FirebaseAnalytics\" -framework \"FirebaseCoreDiagnostics\" -framework \"Flutter\" -framework \"Foundation\" -framework \"GoogleAppMeasurement\" -framework \"GoogleSignIn\" -framework \"LocalAuthentication\" -framework \"MobileCoreServices\" -framework \"SafariServices\" -framework \"Security\" -framework \"StoreKit\" -framework \"SystemConfiguration\" -weak_framework \"Accounts\" -weak_framework \"AudioToolbox\" -weak_framework \"CoreGraphics\" -weak_framework \"CoreLocation\" -weak_framework \"Foundation\" -weak_framework \"QuartzCore\" -weak_framework \"Security\" -weak_framework \"Social\" -weak_framework \"UIKit\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mamafitclub.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -3,11 +3,13 @@ import './home_widget.dart';
 import './classes_widget.dart';
 import './schedule_widget.dart';
 import './profile_widget.dart';
+import './guide_widget.dart';
 
 List<AppPage> appPages = [
   AppPage(pageTitle: 'Mama Fit Club', pageWidget: HomeWidget()),
   AppPage(pageTitle: 'Classes', pageWidget: ClassesWidget()),
   AppPage(pageTitle: 'Schedule', pageWidget: ScheduleWidget()),
+  AppPage(pageTitle: 'Guide', pageWidget: GuideWidget()),
   AppPage(pageTitle: 'Profile', pageWidget: ProfileWidget()),
 ];
 
