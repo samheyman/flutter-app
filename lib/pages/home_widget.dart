@@ -393,16 +393,6 @@ _goToTipPage(BuildContext context, pregnancyTip) {
   );
 }
 
-UserProfile getUserProfile() {
-  return UserProfile(
-    firstName: "Eline",
-    lastName: "Lund",
-    email: "email.com",
-    dueDate: "2019-09-21",
-    fitnessLevel: "Intermediate",
-  );
-}
-
 // PregnancyTip(
 //       name: 'Magnesium',
 //       content: 'If you’re not getting enough of this essential mineral in your diet, you could be more prone to stress – as a mom or mom-to-be, getting help in the stress-reduction space is always welcome.',

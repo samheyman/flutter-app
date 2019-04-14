@@ -17,6 +17,10 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.pregnant_woman),
+      title: Text('Guide')
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.account_circle),
       title: Text('Profile')
     ),  
   ];

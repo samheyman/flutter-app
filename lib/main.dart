@@ -50,9 +50,14 @@
     @override
     Widget build(BuildContext context) {
       appState = StateWidget.of(context).state;
+      print("Current app state: " + appState.isLoading.toString());
+      print("User: " + appState.user.toString());
+      print("Current index: " + _currentIndex.toString());
       if (appState.isLoading) {
+        print("Showing loading page");
         return LoadingScreen();
       } else if (!appState.isLoading && appState.user == null) {
+        _currentIndex = 0;
         return LoginScreen();
       } else {
         return MaterialApp(

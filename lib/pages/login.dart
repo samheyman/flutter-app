@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/google_sign_in_button.dart';
+import '../utils/facebook_sign_in_button.dart';
 import '../state_widget.dart';
 import '../utils/mama_fit_club_icons.dart';
 
@@ -15,7 +16,7 @@ class LoginScreen extends StatelessWidget {
           end: FractionalOffset.bottomCenter,
           colors: [
             Color(0xffff5252).withOpacity(0.0),
-            Color(0xff0069ff).withOpacity(0.8),
+            Color(0xff0069ff).withOpacity(0.3),
           ],
         ),
       );
@@ -24,10 +25,13 @@ class LoginScreen extends StatelessWidget {
     Container _logo() {
       return Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(Icons.pregnant_woman, size: 42),
+            Image.asset('images/gestantes.png', height: 60,),
             Text("Mama\nFit Club",
-              style: Theme.of(context).textTheme.headline,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline, 
             ),
           ],
         ),
@@ -40,6 +44,7 @@ class LoginScreen extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _logo(),
               SizedBox(height: 50,),
@@ -47,10 +52,10 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () => 
                   StateWidget.of(context).signInWithGoogle(), // New code
               ),
-              MaterialButton(
-                color: Colors.white,
-                child: Text("Sign in with Facebook"),
-                onPressed: () => print("Button pressed"),
+              FacebookSignInButton( // New code
+                onPressed: () => {
+                  print("Clicked sign in with Facebook"),
+                  StateWidget.of(context).signInWithFacebook(),} // New code
               ),
               SizedBox(
                 height: 50,

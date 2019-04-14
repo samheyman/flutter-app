@@ -22,10 +22,13 @@ class LoadingScreen extends StatelessWidget {
     Container _logo() {
       return Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(MyIcons.stretch),
+            Image.asset('images/gestantes.png', height: 60,),
             Text("Mama\nFit Club",
-              style: Theme.of(context).textTheme.headline,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline, 
             ),
           ],
         ),

@@ -39,7 +39,6 @@
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:flutter/material.dart';
 
-
 List<CircularStackEntry> data = <CircularStackEntry>[
   CircularStackEntry(
     <CircularSegmentEntry>[

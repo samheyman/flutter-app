@@ -21,6 +21,20 @@ class ScheduleWidget extends StatefulWidget {
 class _ScheduleWidgetState extends State<ScheduleWidget> {
   StateModel appState;
 
+  void _handleSavedClassesChanged(String gymID) {
+    updateSavedClasses(appState.user.uid, gymID).then((result) {
+      // Update the state:
+      if (result == true) {
+        setState(() {
+          if (!appState.savedClasses.contains(gymID))
+            appState.savedClasses.add(gymID);
+          else
+            appState.savedClasses.remove(gymID);
+        });
+      }
+    });
+  }
+
   DefaultTabController _buildTabView({Widget body}) {
 
     return DefaultTabController(
@@ -75,15 +89,10 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
             .where("date_time", isGreaterThanOrEqualTo: startDate)
             .snapshots();
       } else {
-        print("Gym class found");
         // Use snapshots of all recipes if recipeType has not been passed
         stream = collectionReference.snapshots();
       }
-      print(stream);
-
       // Define query depeneding on passed args
-                  print('Documents: ');
-
       return Padding(
         // Padding before and after the list view:
         padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -100,14 +109,15 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                         // Check if the argument ids contains document ID if ids has been passed:
                         .where((d) => ids == null || ids.contains(d.documentID))
                         .map((document) {
-                          // print(snapshot.data.documents[0]['created_date'].toString());
-                      return new GymClassCard(
-                        gymClass:
-                            GymClass.fromMap(document.data, document.documentID),
-                        // inSavedClasses:
-                        //     appState.savedClasses.contains(document.documentID),
-                        // onSaveButtonPressed: _handleSavedClassesListChanged,
-                      );
+                          print(ids);
+                          print("Gym class ID: " + document.documentID.toString());
+                          return new GymClassCard(
+                            gymClass:
+                                GymClass.fromMap(document.data, document.documentID),
+                            // inSavedClasses:
+                            //     appState.savedClasses.contains(document.documentID),
+                            // onSaveButtonPressed: _handleSavedClassesListChanged,
+                          );
                     }).toList(),
                   );
                 },
@@ -122,10 +132,14 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       children: [
         _buildGymClasses(
           startDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-          endDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days:3650))),
+          endDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days:3650)),
+          ids: appState.savedClasses,
+        ),
         _buildGymClasses(
           endDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).subtract(Duration(days:0)),
-          startDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).subtract(Duration(days:3650))),
+          startDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).subtract(Duration(days:3650)),
+          ids: appState.savedClasses,
+        ),
       ],
     );
   }

@@ -11,7 +11,7 @@ import '../state_widget.dart';
 class GymClassDetails extends StatefulWidget {
 
   final GymClass gymClass;
-
+  // final bool savedClass;
   GymClassDetails(this.gymClass); 
   
   @override
@@ -96,14 +96,23 @@ class _GymClassDetailsState extends State<GymClassDetails> {
       ],
     );
 
-    final bookButton = FloatingActionButton(
-      onPressed: (){
-        _handleSavedClassesListChanged(widget.gymClass.id);
-      },
-      backgroundColor: Theme.of(context).accentColor,
-      child:
-          Text("SAVE", style: TextStyle(color: Colors.white)),
-    );
+    RawMaterialButton _buildFavoriteButton() {
+      return RawMaterialButton(
+        constraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
+        onPressed: (){
+          _handleSavedClassesListChanged(widget.gymClass.id);
+        },
+        child: Icon(
+          // Conditional expression:
+          // show "favorite" icon or "favorite border" icon depending on widget.inFavorites:
+          appState.savedClasses.contains(widget.gymClass.id) == true ? Icons.favorite : Icons.favorite_border,
+          color: Theme.of(context).primaryColor, // New code
+        ),
+        elevation: 0.0,
+        fillColor: Theme.of(context).buttonColor, // New code
+        shape: CircleBorder(),
+      );
+    }
 
     final bottomContentText = Column(
       children: [
@@ -116,7 +125,12 @@ class _GymClassDetailsState extends State<GymClassDetails> {
           style: TextStyle(fontSize: 14.0),
         ),
         Padding(padding: EdgeInsets.only(top: 8)),
-        bookButton,
+        Text(
+          "Price " + widget.gymClass.price.toString(),
+          style: TextStyle(fontSize: 14.0),
+        ),
+        _buildFavoriteButton(),
+        
         Padding(padding: EdgeInsets.only(top: 15),),
         Row( 
           mainAxisAlignment: MainAxisAlignment.start,

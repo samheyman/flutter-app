@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -26,13 +27,15 @@ class StateWidget extends StatefulWidget {
   }
 
   @override
-  _StateWidgetState createState() => new _StateWidgetState();
+  _StateWidgetState createState() => _StateWidgetState();
 }
 
 class _StateWidgetState extends State<StateWidget> {
   StateModel state;
   GoogleSignInAccount googleAccount;
-  final GoogleSignIn googleSignIn = new GoogleSignIn();
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final FacebookLogin facebookLogin = FacebookLogin();
+  FacebookLoginResult facebookLoginResult;
 
   @override
   void initState() {
@@ -41,18 +44,30 @@ class _StateWidgetState extends State<StateWidget> {
       state = widget.state;
     } else {
       state = new StateModel(isLoading: true);
-      initUser();
+      // initUserGoogle();
+      initUserFacebook();
     }
   }
 
-  Future<Null> initUser() async {
-    googleAccount = await getSignedInAccount(googleSignIn);
+  Future<Null> initUserGoogle() async {
+    googleAccount = await getGoogleSignedInAccount(googleSignIn);
     if (googleAccount == null) {
       setState(() {
         state.isLoading = false;
       });
     } else {
       await signInWithGoogle();
+    }
+  }
+
+  Future<Null> initUserFacebook() async {
+    facebookLoginResult = await facebookLogin.logInWithReadPermissions(['email']);
+    if (facebookLoginResult == null) {
+      setState(() {
+        state.isLoading = false;
+      });
+    } else {
+      await signInWithFacebook();
     }
   }
 
@@ -70,12 +85,60 @@ class _StateWidgetState extends State<StateWidget> {
     return [];
   }
 
+  Future<Null> signInWithFacebook() async {
+    print("Facebook login result is : " + facebookLoginResult.status.toString());
+    if (facebookLoginResult.status != FacebookLoginStatus.loggedIn) {
+      // Start the sign-in process:
+      facebookLoginResult = await facebookLogin.logInWithReadPermissions(['email']);
+    }
+    print("Signing in with Facebook. Status: " + facebookLoginResult.status.toString());
+    switch (facebookLoginResult.status) {
+      case FacebookLoginStatus.loggedIn:
+        print("User logged in via Facebook.");
+        FacebookAccessToken myToken = facebookLoginResult.accessToken;
+        AuthCredential credential= FacebookAuthProvider.getCredential(accessToken: myToken.token);
+        state.user = await FirebaseAuth.instance.signInWithCredential(credential);
+        List<String> savedClasses = await getSavedClasses();
+        setState(() {
+          state.isLoading = false;
+          state.savedClasses = savedClasses;
+        });
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        setState(() {
+          state.isLoading = false;
+          state.user = null;
+        });
+        break;
+      case FacebookLoginStatus.error:
+        state.user = null;
+        state.isLoading = false;
+        print(facebookLoginResult.errorMessage);
+        break;
+    List<String> savedClasses = await getSavedClasses(); // new
+
+    setState(() {
+      state.isLoading = false;
+      state.savedClasses = savedClasses; // new
+    });
+    return null;
+    }
+  }
+
+  Future<Null> signOutOfFacebook() async {
+    await facebookLogin.logOut();
+    state.user = null;
+    setState(() {
+      state = StateModel(user: null);
+    });
+  }
+
   Future<Null> signInWithGoogle() async {
     if (googleAccount == null) {
       // Start the sign-in process:
       googleAccount = await googleSignIn.signIn();
     }
-    FirebaseUser firebaseUser = await signIntoFirebase(googleAccount);
+    FirebaseUser firebaseUser = await signIntoFirebaseWithGoogle(googleAccount);
     state.user = firebaseUser; // new
     List<String> savedClasses = await getSavedClasses(); // new
     setState(() {
