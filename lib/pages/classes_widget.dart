@@ -81,37 +81,45 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         // Use snapshots of all recipes if recipeType has not been passed
         stream = collectionReference.snapshots();
       }
-      print(stream);
 
       // Define query depeneding on passed args
-                  print('Documents: ');
-
       return Padding(
         // Padding before and after the list view:
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text(DateFormat('d MMMM').format(gymClassDate).toString().toUpperCase(),
+              style: TextStyle(
+                fontWeight: FontWeight.bold, 
+                color: Colors.grey[500],
+                fontSize: 18),
+              textAlign: TextAlign.start,),
             Expanded(
               child: StreamBuilder(
                 stream: stream,
                 builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) return _buildLoadingIndicator();
-                  return ListView(
-                    children: snapshot.data.documents
-                        // Check if the argument ids contains document ID if ids has been passed:
-                        // .where((d) => ids == null || ids.contains(d.documentID))
-                        .map((document) {
-                          // print(snapshot.data.documents[0]['created_date'].toString());
-                      return new GymClassCard(
-                        gymClass:
-                            GymClass.fromMap(document.data, document.documentID),
-                        // inSavedClasses:
-                        //     appState.savedClasses.contains(document.documentID),
-                        // onSaveButtonPressed: _handleSavedClassesListChanged,
-                      );
-                    }).toList(),
-                  );
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) return _buildLoadingIndicator();
+                    return 
+                        ListView(
+                          padding: EdgeInsets.all(0),
+                          children: 
+                            snapshot.data.documents
+                              // Check if the argument ids contains document ID if ids has been passed:
+                              // .where((d) => ids == null || ids.contains(d.documentID))
+                              .map((document) {
+                                // print(snapshot.data.documents[0]['created_date'].toString());
+                            return GymClassCard(
+                              gymClass:
+                                  GymClass.fromMap(document.data, document.documentID),
+                              // inSavedClasses:
+                              //     appState.savedClasses.contains(document.documentID),
+                              // onSaveButtonPressed: _handleSavedClassesListChanged,
+                            );
+                          }).toList(),
+                        );
                 },
               ),
             ),

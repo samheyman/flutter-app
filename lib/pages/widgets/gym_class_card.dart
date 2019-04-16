@@ -17,21 +17,6 @@ class GymClassCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    RawMaterialButton _buildFavoriteButton() {
-      return RawMaterialButton(
-        constraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
-        onPressed: () => onSaveButtonPressed(gymClass.id),
-        child: Icon(
-          // Conditional expression:
-          // show "favorite" icon or "favorite border" icon depending on widget.inFavorites:
-          inSavedClasses == true ? Icons.check_box_outline_blank : Icons.check_circle,
-        ),
-        elevation: 2.0,
-        fillColor: Colors.white,
-        shape: CircleBorder(),
-      );
-    }
-
     Padding _buildListTile() {
       return Padding(
         padding: EdgeInsets.all(10.0),
@@ -40,11 +25,11 @@ class GymClassCard extends StatelessWidget {
             EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
         leading: Container(
           padding: EdgeInsets.only(right: 2.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.white24))),
+          decoration: BoxDecoration(
+              border: Border(
+                  right: BorderSide(width: 1.0, color: Colors.white24))),
           child: Container(
-            width: 60,
+            width: 80,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,16 +38,19 @@ class GymClassCard extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 5),
                   child: Text(
                     DateFormat('Hm').format(gymClass.date_time).toString(),
-                    // (gymClass['date'].toDate()).DateFormat.Hm,
-                    style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16, )),
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor, 
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold )),
                 ),
-                // _buildFavoriteButton(),
                 Row(
                     children: [
                       Icon(Icons.timer, color: Colors.grey, size: 14,),
                       Text(
-                        " " + gymClass.duration.toString() + "min",
-                        style: TextStyle(fontSize: 12, color: Colors.black54)),
+                        " " + gymClass.duration.toString() + " min",
+                        style: TextStyle(
+                          fontSize: 12, 
+                          color: Colors.black54)),
                     ],
                 ),
               ],
@@ -70,12 +58,18 @@ class GymClassCard extends StatelessWidget {
           ),
         ),
         title: Text(
-          gymClass.class_name,
-          style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
+          gymClass.class_name.toUpperCase(),
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor, 
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
         ),
         subtitle: Text(
           gymClass.gym_name,
-          style: TextStyle(color: Colors.black54, fontSize: 12)
+          style: TextStyle(
+            color: Colors.black54, 
+            fontSize: 14  )
           ),
         ),
       );
@@ -89,8 +83,9 @@ class GymClassCard extends StatelessWidget {
         )
       },
       child: Padding(
-        padding: EdgeInsets.only(left: 5.0, top: 5.0, right: 5.0, bottom: 0),
+        padding: EdgeInsets.only(top:10),
         child: Card(
+          margin: EdgeInsets.all(0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,15 +97,15 @@ class GymClassCard extends StatelessWidget {
               //     AspectRatio(
               //       aspectRatio: 16.0 / 9.0,
               //       child: Image.network(
-              //         recipe.imageURL,
+              //         gymClass.image_url,
               //         fit: BoxFit.cover,
               //       ),
               //     ),
-              //     Positioned(
-              //       child: _buildFavoriteButton(),
-              //       top: 2.0,
-              //       right: 2.0,
-              //     ),
+              //     // Positioned(
+              //     //   child: _buildFavoriteButton(),
+              //     //   top: 2.0,
+              //     //   right: 2.0,
+              //     // ),
               //   ],
               // ),
               _buildListTile(),
