@@ -85,6 +85,21 @@ class _StateWidgetState extends State<StateWidget> {
     return [];
   }
 
+  Future<DateTime> getFirstDayLastPeriod() async {
+    DocumentSnapshot querySnapshot = await Firestore.instance
+        .collection('users')
+        .document(state.user.uid)
+        .get();
+    if (querySnapshot.exists &&
+        querySnapshot.data.containsKey('firstDayLastPeriod') &&
+        querySnapshot.data['firstDayLastPeriod'] != null) {
+      // Create a new List<String> from List<dynamic>
+      return DateTime.fromMicrosecondsSinceEpoch((querySnapshot.data['firstDayLastPeriod'].microsecondsSinceEpoch));
+    }
+    return DateTime(null);
+  }
+
+
   Future<Null> signInWithFacebook() async {
     print("Facebook login result is : " + facebookLoginResult.status.toString());
     if (facebookLoginResult.status != FacebookLoginStatus.loggedIn) {
@@ -99,9 +114,11 @@ class _StateWidgetState extends State<StateWidget> {
         AuthCredential credential= FacebookAuthProvider.getCredential(accessToken: myToken.token);
         state.user = await FirebaseAuth.instance.signInWithCredential(credential);
         List<String> savedClasses = await getSavedClasses();
+        DateTime firstDayLastPeriod = await getFirstDayLastPeriod();
         setState(() {
           state.isLoading = false;
           state.savedClasses = savedClasses;
+          state.firstDayLastPeriod = firstDayLastPeriod;
         });
         break;
       case FacebookLoginStatus.cancelledByUser:
@@ -115,13 +132,6 @@ class _StateWidgetState extends State<StateWidget> {
         state.isLoading = false;
         print(facebookLoginResult.errorMessage);
         break;
-    List<String> savedClasses = await getSavedClasses(); // new
-
-    setState(() {
-      state.isLoading = false;
-      state.savedClasses = savedClasses; // new
-    });
-    return null;
     }
   }
 

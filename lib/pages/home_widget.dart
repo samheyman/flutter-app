@@ -9,16 +9,8 @@ import '../utils/helper_functions.dart';
 import '../pages/pregnancy_tip_page.dart';
 import '../utils/animated_chart.dart';
 import '../pages/classes_widget.dart';
-
-BabyData getBabyData() {
-  return BabyData(
-    firstDayLastPeriod: DateTime.parse('2018-12-23'),
-    daysOfDevelopment: 92,
-    sizeCm:  2.5,
-    fruitSize: "lemon",
-    weightG: 3,
-  );
-}
+import '../model/state.dart';
+import '../state_widget.dart';
 
 TextStyle sectionHeaderStyle() {
   return TextStyle(
@@ -36,8 +28,24 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+
+  StateModel appState;
+
+
   @override
   Widget build(BuildContext context) {
+    appState = StateWidget.of(context).state;
+
+    BabyData getBabyData() {
+      print("Baby due date: " + appState.firstDayLastPeriod.toString());
+      return BabyData(
+        firstDayLastPeriod: appState.firstDayLastPeriod,
+        daysOfDevelopment: 92,
+        sizeCm:  2.5,
+        fruitSize: "lemon",
+        weightG: 3,
+      );
+    }
     
     Container myDates(BabyData babyDetails) {
       return Container(
@@ -105,7 +113,10 @@ class _HomeWidgetState extends State<HomeWidget> {
         SizedBox(
           height: 150,
           width: 150,
-          child: AnimatedPieChart(),
+          child: AnimatedPieChart(
+            ellapsedWeeks: getBabyData().weeksElapsed.toDouble(), 
+            remainingWeeks: getBabyData().weeksLeft.toDouble(),
+          ),
         )
       ],
     );
