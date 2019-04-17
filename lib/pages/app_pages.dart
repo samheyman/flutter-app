@@ -8,8 +8,8 @@ import './guide_widget.dart';
 List<AppPage> appPages = [
   AppPage(pageTitle: 'Mama Fit Club', pageWidget: HomeWidget()),
   AppPage(pageTitle: 'Classes', pageWidget: ClassesWidget()),
-  AppPage(pageTitle: 'Schedule', pageWidget: ScheduleWidget()),
-  AppPage(pageTitle: 'Guide', pageWidget: GuideWidget()),
+  AppPage(pageTitle: 'Favorites', pageWidget: ScheduleWidget()),
+  // AppPage(pageTitle: 'Guide', pageWidget: GuideWidget()),
   AppPage(pageTitle: 'Profile', pageWidget: ProfileWidget()),
 ];
 

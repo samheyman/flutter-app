@@ -12,13 +12,13 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       title: Text('Classes')
     ),
     BottomNavigationBarItem(
-      icon: Icon(MyIcons.bookings),
-      title: Text('Schedule')
+      icon: Icon(Icons.favorite),
+      title: Text('Favorites')
     ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.pregnant_woman),
-      title: Text('Guide')
-    ),
+    // BottomNavigationBarItem(
+    //   icon: Icon(Icons.pregnant_woman),
+    //   title: Text('Guide')
+    // ),
     BottomNavigationBarItem(
       icon: Icon(Icons.account_circle),
       title: Text('Profile')
