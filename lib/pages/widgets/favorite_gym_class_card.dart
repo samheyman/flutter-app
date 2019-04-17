@@ -3,12 +3,12 @@ import '../../model/gym_class.dart';
 import 'package:intl/intl.dart';
 import '../gym_class_details.dart';
 
-class GymClassCard extends StatelessWidget {
+class FavoriteGymClassCard extends StatelessWidget {
   final GymClass gymClass;
   final bool inSavedClasses;
   final Function onSaveButtonPressed;
 
-  GymClassCard(
+  FavoriteGymClassCard(
     {@required this.gymClass,
     @required this.inSavedClasses,
     @required this.onSaveButtonPressed,}
@@ -34,24 +34,9 @@ class GymClassCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.only(bottom: 3),
-                  child: Text(
-                    DateFormat('Hm').format(gymClass.date_time).toString(),
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor, 
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal )),
-                ),
-                Row(
-                    children: [
-                      Icon(Icons.timer, color: Colors.grey, size: 14,),
-                      Text(
-                        " " + gymClass.duration.toString() + " min",
-                        style: TextStyle(
-                          fontSize: 12, 
-                          color: Colors.black54)),
-                    ],
+                CircleAvatar(
+                  radius: 35.0,
+                  backgroundImage: NetworkImage(gymClass.image_url),
                 ),
               ],
             ),
@@ -63,7 +48,7 @@ class GymClassCard extends StatelessWidget {
           style: TextStyle(
             color: Theme.of(context).primaryColor, 
             fontWeight: FontWeight.bold,
-            fontSize: 16),
+            fontSize: 18),
         ),
         subtitle: Text(
           gymClass.gym_name,

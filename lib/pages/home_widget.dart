@@ -23,8 +23,8 @@ BabyData getBabyData() {
 TextStyle sectionHeaderStyle() {
   return TextStyle(
     fontWeight: FontWeight.normal,
-    fontSize: 12,
-    color: Colors.grey[600],
+    fontSize: 14,
+    color: Colors.grey[800],
   );
 }
 
@@ -264,7 +264,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             SizedBox(height: 0,),
             headerContent,
             // myBaby(getBabyData()),
-            myClasses(),
+            // myClasses(),
             _buildFitnessTips(context),
             // myNutritionTips(),  
           ],
@@ -287,7 +287,7 @@ Widget _buildFitnessTips(BuildContext context) {
 
 Widget _myFitnessTips(BuildContext context, List documents) {
   return Container(
-    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
     // color: Colors.white,
     child: Column( 

@@ -39,7 +39,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
   DefaultTabController _buildTabView({Widget body}) {
 
     return DefaultTabController(
-      length: 7,
+      length: 14,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Classes'),
@@ -53,6 +53,13 @@ class _ClassesWidgetState extends State<ClassesWidget> {
               _buildTab(4),
               _buildTab(5),
               _buildTab(6),
+              _buildTab(7),
+              _buildTab(8),
+              _buildTab(9),
+              _buildTab(10),
+              _buildTab(11),
+              _buildTab(12),
+              _buildTab(13),
             ],
           ),
         ),
@@ -137,6 +144,13 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 4))),
         _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 5))),
         _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 6))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 7))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 8))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 9))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 10))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 11))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 12))),
+        _buildGymClasses(gymClassDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: 13))),      
       ],
     );
   }

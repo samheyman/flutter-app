@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../data/gym_classes.dart';
 import '../model/gym_class.dart';
 import '../utils/theme.dart';
-import './widgets/gym_class_card.dart';
+import './widgets/favorite_gym_class_card.dart';
 import './gym_class_details.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
@@ -41,7 +41,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       length: 7,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Schedule'),
+          title: Text('Favorites'),
           bottom: TabBar(
             isScrollable: false,
             labelStyle: TextStyle(
@@ -111,7 +111,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                         .map((document) {
                           print(ids);
                           print("Gym class ID: " + document.documentID.toString());
-                          return new GymClassCard(
+                          return FavoriteGymClassCard(
                             gymClass:
                                 GymClass.fromMap(document.data, document.documentID),
                             // inSavedClasses:
