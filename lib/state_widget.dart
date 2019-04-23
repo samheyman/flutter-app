@@ -7,7 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './model/state.dart';
+import './model/user_profile.dart';
 import './utils/auth.dart';
+import './pages/root_screen.dart';
 
 class StateWidget extends StatefulWidget {
   final StateModel state;
@@ -40,12 +42,14 @@ class _StateWidgetState extends State<StateWidget> {
   @override
   void initState() {
     super.initState();
+    print("Initialising state");
     if (widget.state != null) {
       state = widget.state;
     } else {
-      state = new StateModel(isLoading: true);
+      print("Creating new State Model");
+      state = StateModel(isLoading: true);
       // initUserGoogle();
-      initUserFacebook();
+      // initUserFacebook();
     }
   }
 
@@ -61,12 +65,15 @@ class _StateWidgetState extends State<StateWidget> {
   }
 
   Future<Null> initUserFacebook() async {
+    print("Initialising Facebook user");
     facebookLoginResult = await facebookLogin.logInWithReadPermissions(['email']);
     if (facebookLoginResult == null) {
+      print("Facebook login result null");
       setState(() {
         state.isLoading = false;
       });
     } else {
+      print("Facebook login result *not* null");    
       await signInWithFacebook();
     }
   }
@@ -99,8 +106,10 @@ class _StateWidgetState extends State<StateWidget> {
     return DateTime(null);
   }
 
-
   Future<Null> signInWithFacebook() async {
+    if (facebookLoginResult==null) {
+      initUserFacebook();
+    }
     print("Facebook login result is : " + facebookLoginResult.status.toString());
     if (facebookLoginResult.status != FacebookLoginStatus.loggedIn) {
       // Start the sign-in process:
@@ -115,11 +124,14 @@ class _StateWidgetState extends State<StateWidget> {
         state.user = await FirebaseAuth.instance.signInWithCredential(credential);
         List<String> savedClasses = await getSavedClasses();
         DateTime firstDayLastPeriod = await getFirstDayLastPeriod();
+        print("First Date: " + state.firstDayLastPeriod.toString());
         setState(() {
           state.isLoading = false;
+          print("Finished loading!");
           state.savedClasses = savedClasses;
           state.firstDayLastPeriod = firstDayLastPeriod;
         });
+        
         break;
       case FacebookLoginStatus.cancelledByUser:
         setState(() {
@@ -132,6 +144,25 @@ class _StateWidgetState extends State<StateWidget> {
         state.isLoading = false;
         print(facebookLoginResult.errorMessage);
         break;
+    }
+  }
+
+  Future<Null> signOut() async {
+    if (state.user!=null && state.user.providerData[0]!=null) {
+      if (state.user.providerData[0].providerId == "facebook.com") {
+        print("Signing out of Facebook");
+        signOutOfFacebook();
+      } else {
+        print("Signing out of Google");
+        signOutOfGoogle();
+      }
+    } else {
+      print("Signing out");
+      state.user = null;
+      setState(() {
+        state = StateModel(user: null);
+      });
+      // return RootScreen();
     }
   }
 

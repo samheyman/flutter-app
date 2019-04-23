@@ -77,7 +77,7 @@ class PregnancyTipPage extends StatelessWidget {
       //width: MediaQuery.of(context).size.width,
       // color: Theme.of(context).primaryColor,
       margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(30.0),
+      padding: EdgeInsets.all(10.0),
       child: Center(
         child: Column(
           children: <Widget>[

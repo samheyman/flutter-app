@@ -7,10 +7,11 @@ import '../model/user_profile.dart';
 import '../model/baby_data.dart';
 import '../utils/helper_functions.dart';
 import '../pages/pregnancy_tip_page.dart';
-import '../utils/animated_chart.dart';
+import './widgets/animated_chart.dart';
 import '../pages/classes_widget.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
+import './app_pages.dart';
 
 TextStyle sectionHeaderStyle() {
   return TextStyle(
@@ -30,20 +31,20 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
 
   StateModel appState;
-
+  int _currentIndex = 0;
+  final List<AppPage> _appPages = appPages;
 
   @override
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
 
     BabyData getBabyData() {
-      print("Baby due date: " + appState.firstDayLastPeriod.toString());
       return BabyData(
         firstDayLastPeriod: appState.firstDayLastPeriod,
-        daysOfDevelopment: 92,
-        sizeCm:  2.5,
-        fruitSize: "lemon",
-        weightG: 3,
+        // daysOfDevelopment: 92,
+        // sizeCm:  2.5,
+        // fruitSize: "lemon",
+        // weightG: 3,
       );
     }
     
@@ -260,26 +261,45 @@ class _HomeWidgetState extends State<HomeWidget> {
       );
     }
 
+    void onTabTapped(int index) {
+      setState(() {
+        _currentIndex = index;
+      });
+    }
+
+    _getBodyContent() {
+      if (_currentIndex!=0) {
+        return _appPages[_currentIndex].pageWidget;
+      } else {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Mama Fit Club'),
+          ),
+          // margin: const EdgeInsets.all(0),
+          body: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              SizedBox(height: 0,),
+              headerContent,
+              // myBaby(getBabyData()),
+              // myClasses(),
+              _buildFitnessTips(context),
+              // myNutritionTips(),  
+            ],
+          ),
+        );
+      }
+    }
+  
+  
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        elevation: 0,
-        title: Text("Mama Fit Club"),
-      ),
-      body: Container(
-        margin: const EdgeInsets.all(0),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: [
-            SizedBox(height: 0,),
-            headerContent,
-            // myBaby(getBabyData()),
-            // myClasses(),
-            _buildFitnessTips(context),
-            // myNutritionTips(),  
-          ],
-        ),
+      body: _getBodyContent(),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+        onTap: onTabTapped,
+        items: bottomNavigationItems, 
       ),
     );
   }
