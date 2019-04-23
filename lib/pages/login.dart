@@ -40,6 +40,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.redAccent,
       body: Container(
+        padding: EdgeInsets.all(20),
         decoration: _buildBackground(),
         child: Center(
           child: Column(
@@ -48,21 +49,29 @@ class LoginScreen extends StatelessWidget {
             children: <Widget>[
               _logo(),
               SizedBox(height: 50,),
+              Text("To continue please login with",
+                style: TextStyle(color: Colors.white),),
+              SizedBox(height: 30,),
               GoogleSignInButton( // New code
-                onPressed: () => 
-                  StateWidget.of(context).signInWithGoogle(), // New code
-              ),
-              FacebookSignInButton( // New code
+                      onPressed: () => 
+                        StateWidget.of(context).signInWithGoogle(), // New code
+                    ),
+              
+              Text("or", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+
+              FacebookSignInButton( 
+                // child: Image.asset('images/facebook-login.png'),// New code
                 onPressed: () => {
                   print("Clicked sign in with Facebook"),
                   StateWidget.of(context).signInWithFacebook(),} // New code
               ),
+                            
               SizedBox(
                 height: 50,
               ),
               GestureDetector(
                 onTap: () => Navigator.of(context).pushReplacementNamed('/homepage'),
-                child: Text("No thank you, I'll join later.",
+                child: Text("No login",
                   style: TextStyle(color: Colors.white) ,) ,
               ),
             ],

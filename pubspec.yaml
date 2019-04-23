@@ -65,7 +65,8 @@ flutter:
     - images/exercise5.jpg
     - images/fitness_ball_squats.jpg
     - images/g-logo.png
-    - images/facebook.png
+    - images/logo.png
+    - images/facebook-logo.png
     - images/gestantes.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

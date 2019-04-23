@@ -9,17 +9,17 @@ class FacebookSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Image _buildLogo() {
       return Image.asset(
-        "images/facebook.png",
-        height: 18.0,
-        width: 18.0,
+        "images/facebook-logo.png",
+        height: 34.0,
+        // width: 18.0,
       );
     }
 
     Opacity _buildText() {
       return Opacity(
-        opacity: 0.7,
+        opacity: 1,
         child: Text(
-          "Sign in with Facebook",
+          "Continue with Facebook",
           style: TextStyle(
             fontFamily: 'Roboto-Medium',
             color: Colors.white,
@@ -29,10 +29,13 @@ class FacebookSignInButton extends StatelessWidget {
     }
 
     return MaterialButton(
+      padding: EdgeInsets.only(left: 3, top: 3, right: 20, bottom: 3),
       height: 40.0,
       onPressed: this.onPressed,
-      color: Colors.indigo[600],
+      color: Color.fromRGBO(73, 103, 175, 1),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           _buildLogo(),
