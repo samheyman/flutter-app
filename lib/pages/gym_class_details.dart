@@ -109,7 +109,7 @@ class _GymClassDetailsState extends State<GymClassDetails> {
           height: MediaQuery.of(context).size.height * 0.4,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/yoga.jpg"),
+              image: NetworkImage(widget.gymClass.image_url),
               fit: BoxFit.cover,
             ),
           )
@@ -353,7 +353,7 @@ class _GymClassDetailsState extends State<GymClassDetails> {
         ),
         body: _buildLoadingIndicator(),
       );
-    } else if (!appState.isLoading && appState.user == null) {
+    } else if (!appState.isLoading && appState.user == null && appState.loginRequired) {
       return LoginScreen();
     } else {
       return Scaffold(
