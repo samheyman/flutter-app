@@ -38,7 +38,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
   DefaultTabController _buildTabView({Widget body}) {
 
     return DefaultTabController(
-      length: 7,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Favorites'),
@@ -104,12 +104,14 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return _buildLoadingIndicator();
+                  print("Displaying favorite classes: " + appState.savedClasses.toString());
+                  print("List of ids: " + ids.toString());
                   return ListView(
                     children: snapshot.data.documents
                         // Check if the argument ids contains document ID if ids has been passed:
-                        .where((d) => ids != null || ids.contains(d.documentID))
+                        .where((d) => ids != null && ids.contains(d.documentID))
                         .map((document) {
-                          print(ids);
+                          // print(ids);
                           print("Gym class ID: " + document.documentID.toString());
                           return FavoriteGymClassCard(
                             gymClass:
@@ -149,8 +151,6 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
       return _buildTabView(
         body: _buildLoadingIndicator(),
       );
-    // } else if (!appState.isLoading && appState.user == null && appState.loginRequired) {
-    //   return LoginScreen();
     } else {
       return _buildTabView(
         body: _buildTabsContent(),
