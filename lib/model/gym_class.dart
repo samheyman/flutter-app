@@ -3,8 +3,6 @@
 enum GymClassType {
   aerobic,
   strength,
-  yoga,
-  pilates,
 }
 
 class GymClass {
@@ -16,11 +14,12 @@ class GymClass {
   final String class_name;
   final String gym_name;
   final String address;
-  final int places;
+  final int spaces_available;
   final double price;
   final List<String> details;
   final String source_url;
   final String image_url;
+  final bool pregnancy_specific;
 
   GymClass.fromMap(Map<String, dynamic> data, String id)
     : this(
@@ -32,7 +31,7 @@ class GymClass {
       class_name: data['class_name'],
       gym_name: data['gym_name'],
       address: data['address'],
-      places: data['places'],
+      spaces_available: data['places'],
       price: data['price'].toDouble(),
       details: List<String>.from(data['details']),
       source_url: data['source_url'],
@@ -49,11 +48,12 @@ class GymClass {
       this.class_name,
       this.gym_name,
       this.address,
-      this.places,
+      this.spaces_available,
       this.price,
       this.details,
       this.source_url,
       this.image_url,
+      this.pregnancy_specific,
     }
   );
 }

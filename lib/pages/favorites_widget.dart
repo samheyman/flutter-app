@@ -11,14 +11,14 @@ import '../state_widget.dart';
 import '../pages/login.dart';
 
 
-class ScheduleWidget extends StatefulWidget {
+class FavoritesWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _ScheduleWidgetState();
+    return _FavoritesWidgetState();
   }
 }
 
-class _ScheduleWidgetState extends State<ScheduleWidget> {
+class _FavoritesWidgetState extends State<FavoritesWidget> {
   StateModel appState;
 
   void _handleSavedClassesChanged(String gymID) {
@@ -107,7 +107,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                   return ListView(
                     children: snapshot.data.documents
                         // Check if the argument ids contains document ID if ids has been passed:
-                        .where((d) => ids == null || ids.contains(d.documentID))
+                        .where((d) => ids != null || ids.contains(d.documentID))
                         .map((document) {
                           print(ids);
                           print("Gym class ID: " + document.documentID.toString());
@@ -149,8 +149,8 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       return _buildTabView(
         body: _buildLoadingIndicator(),
       );
-    } else if (!appState.isLoading && appState.user == null) {
-      return LoginScreen();
+    // } else if (!appState.isLoading && appState.user == null && appState.loginRequired) {
+    //   return LoginScreen();
     } else {
       return _buildTabView(
         body: _buildTabsContent(),

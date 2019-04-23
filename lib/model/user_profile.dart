@@ -27,12 +27,3 @@ class UserProfile {
   );
 }
 
-UserProfile getProfile() {
-  return  UserProfile(
-    firstName: 'Louise',
-    lastName: "Lindblom",
-    dueDate: DateTime.parse('2019-05-01'),
-    fitnessLevel: "Advanced",
-  );
-}
-

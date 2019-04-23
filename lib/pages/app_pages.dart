@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import './home_widget.dart';
 import './classes_widget.dart';
-import './schedule_widget.dart';
+import './favorites_widget.dart';
 import './profile_widget.dart';
 import './guide_widget.dart';
 
 List<AppPage> appPages = [
   AppPage(pageTitle: 'Mama Fit Club', pageWidget: HomeWidget()),
   AppPage(pageTitle: 'Classes', pageWidget: ClassesWidget()),
-  AppPage(pageTitle: 'Favorites', pageWidget: ScheduleWidget()),
+  AppPage(pageTitle: 'Favorites', pageWidget: FavoritesWidget()),
   // AppPage(pageTitle: 'Guide', pageWidget: GuideWidget()),
   AppPage(pageTitle: 'Profile', pageWidget: ProfileWidget()),
 ];
