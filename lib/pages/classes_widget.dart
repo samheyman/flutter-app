@@ -160,8 +160,8 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       return _buildTabView(
         body: _buildLoadingIndicator(),
       );
-    } else if (!appState.isLoading && appState.user == null) {
-      return LoginScreen();
+    // } else if (!appState.isLoading && appState.user == null && appState.loginRequired) {
+    //   return LoginScreen();
     } else {
       return _buildTabView(
         body: _buildTabsContent(),
