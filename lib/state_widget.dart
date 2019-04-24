@@ -7,9 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './model/state.dart';
-import './model/user_profile.dart';
 import './utils/auth.dart';
-import './pages/root_screen.dart';
 
 class StateWidget extends StatefulWidget {
   final StateModel state;
@@ -22,7 +20,7 @@ class StateWidget extends StatefulWidget {
 
   // Returns data of the nearest widget _StateDataWidget
   // in the widget tree.
-  static _StateWidgetState of(BuildContext context) {
+  static _StateWidgetState of (BuildContext context) {
     return (context.inheritFromWidgetOfExactType(_StateDataWidget)
             as _StateDataWidget)
         .data;
@@ -103,7 +101,7 @@ class _StateWidgetState extends State<StateWidget> {
       // Create a new List<String> from List<dynamic>
       return DateTime.fromMicrosecondsSinceEpoch((querySnapshot.data['firstDayLastPeriod'].microsecondsSinceEpoch));
     }
-    return DateTime(null);
+    return null;
   }
 
   Future<Null> signInWithFacebook() async {
@@ -118,13 +116,14 @@ class _StateWidgetState extends State<StateWidget> {
     print("Signing in with Facebook. Status: " + facebookLoginResult.status.toString());
     switch (facebookLoginResult.status) {
       case FacebookLoginStatus.loggedIn:
-        print("User logged in via Facebook.");
         FacebookAccessToken myToken = facebookLoginResult.accessToken;
         AuthCredential credential= FacebookAuthProvider.getCredential(accessToken: myToken.token);
         state.user = await FirebaseAuth.instance.signInWithCredential(credential);
+        print("User logged in via Facebook: " + state.user.uid);
         List<String> savedClasses = await getSavedClasses();
+        print("Saved classes: " + savedClasses.toString());
         DateTime firstDayLastPeriod = await getFirstDayLastPeriod();
-        print("First Date: " + state.firstDayLastPeriod.toString());
+        print("First Date: " + firstDayLastPeriod.toString());
         setState(() {
           state.isLoading = false;
           print("Finished loading!");
@@ -198,6 +197,7 @@ class _StateWidgetState extends State<StateWidget> {
     setState(() {
       state = StateModel(user: null);
     });
+    print("Finished Google signout");
   }
 
   @override

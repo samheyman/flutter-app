@@ -19,7 +19,7 @@ class FacebookSignInButton extends StatelessWidget {
       return Opacity(
         opacity: 1,
         child: Text(
-          "Continue with Facebook",
+          "Login with Facebook",
           style: TextStyle(
             fontFamily: 'Roboto-Medium',
             color: Colors.white,

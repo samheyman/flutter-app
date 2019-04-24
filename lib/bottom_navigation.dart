@@ -8,6 +8,10 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       title: Text('Home')
     ),
     BottomNavigationBarItem(
+      icon: Icon(Icons.pregnant_woman),
+      title: Text('Guide')
+    ),
+    BottomNavigationBarItem(
       icon: Icon(MyIcons.stretch),
       title: Text('Classes')
     ),
@@ -15,10 +19,6 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       icon: Icon(Icons.favorite),
       title: Text('Favorites')
     ),
-    // BottomNavigationBarItem(
-    //   icon: Icon(Icons.pregnant_woman),
-    //   title: Text('Guide')
-    // ),
     BottomNavigationBarItem(
       icon: Icon(Icons.account_circle),
       title: Text('Profile')

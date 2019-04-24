@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:intl/intl.dart';
+
 import '../model/state.dart';
 import '../data/user_info.dart';
 import '../state_widget.dart';
@@ -42,7 +44,7 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
   @override
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
-    print("User: " + appState.user.uid.toString());
+    // print("User: " + appState.user.uid.  toString());
     BoxDecoration _buildBackground() {
       return BoxDecoration(
         color: Colors.redAccent,
@@ -60,11 +62,13 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
     _getDate() {
       String date;
       if (selectedDate!=null) {
-        date = "${selectedDate.toLocal()}";
+        date = "${DateFormat('dd/MM/yyyy').format(selectedDate)}";
       } else {
         date = "--/--/----";
       }
-      return Text(date, style: TextStyle(color: Colors.white,));
+      return Text(date, style: TextStyle(
+        color: Colors.white,
+        fontSize: 22));
     }
 
     return Scaffold(

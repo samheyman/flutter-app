@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('images/gestantes.png', height: 60,),
-            Text("Mama\nFit Club",
+            Text("Mama\nFit\nClub".toUpperCase(),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline, 
             ),
@@ -44,21 +44,20 @@ class LoginScreen extends StatelessWidget {
         decoration: _buildBackground(),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _logo(),
-              SizedBox(height: 50,),
-              Text("To continue please login with",
+              SizedBox(height: 60,),
+              Text("To continue please",
                 style: TextStyle(color: Colors.white),),
               SizedBox(height: 30,),
-              GoogleSignInButton( // New code
-                      onPressed: () => 
-                        StateWidget.of(context).signInWithGoogle(), // New code
-                    ),
-              
-              Text("or", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
-
+              // GoogleSignInButton( // New code
+              //         onPressed: () => 
+              //           StateWidget.of(context).signInWithGoogle(), // New code
+              //       ),
+              // SizedBox(height: 10,),
+              // Text("or", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
               FacebookSignInButton( 
                 // child: Image.asset('images/facebook-login.png'),// New code
                 onPressed: () => {
@@ -67,13 +66,14 @@ class LoginScreen extends StatelessWidget {
               ),
                             
               SizedBox(
-                height: 50,
+                height: 180,
               ),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pushReplacementNamed('/homepage'),
-                child: Text("No login",
-                  style: TextStyle(color: Colors.white) ,) ,
-              ),
+              // Text(data)
+              // GestureDetector(
+              //   onTap: () => Navigator.of(context).pushReplacementNamed('/homepage'),
+              //   child: Text("No login",
+              //     style: TextStyle(color: Colors.white) ,) ,
+              // ),
             ],
           ),
         ),

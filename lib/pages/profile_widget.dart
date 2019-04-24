@@ -137,10 +137,10 @@ class ProfileWidget extends StatelessWidget {
             ],
           ),
           onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => EditName("name")),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EditName("name")),
+            );
           }
         ),
         Padding(padding: EdgeInsets.only(top:20),),
