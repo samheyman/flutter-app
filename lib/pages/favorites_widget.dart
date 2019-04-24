@@ -105,7 +105,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return _buildLoadingIndicator();
                   print("Displaying favorite classes: " + appState.savedClasses.toString());
-                  print("List of ids: " + ids.toString());
+                  print("List of ids : " + ids.toString());
                   return ListView(
                     children: snapshot.data.documents
                         // Check if the argument ids contains document ID if ids has been passed:
