@@ -23,10 +23,15 @@ class _RootScreenState extends State<RootScreen> {
     print("App loading? " + appState.isLoading.toString());
     print("User: " + appState.user.toString());
       // print("Current index: " + _currentIndex.toString());
-    if (appState.isLoading) {
+    
+    if (!appState.loginRequired) {
+      print("No login required. Using fake user.");
+      return HomeWidget();
+    } else if (appState.isLoading) {
       print("Showing loading page");
       return LoadingScreen();
     } else if (appState.user == null) {
+      print("No user, redirecting to Login Screen");
       // _currentIndex = 0;
       return LoginScreen();
     } else if (appState.firstDayLastPeriod == null ) {
