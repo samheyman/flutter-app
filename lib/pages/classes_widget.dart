@@ -76,16 +76,13 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       CollectionReference collectionReference =
           Firestore.instance.collection('gymClasses');
       Stream<QuerySnapshot> stream;
-      // The argument recipeType is set
       if (gymClassDate != null) {
-        print(gymClassDate);
         stream = collectionReference 
             .where("date_time", isGreaterThan: gymClassDate)
             .where("date_time", isLessThanOrEqualTo: gymClassDate.add(Duration(days: 1)))
             .snapshots();
       } else {
-        print("Gym class found");
-        // Use snapshots of all recipes if recipeType has not been passed
+        print("No date specified, using snapshot of all classes");
         stream = collectionReference.snapshots();
       }
 
@@ -97,7 +94,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(DateFormat('d MMMM').format(gymClassDate).toString().toUpperCase(),
+            Text(DateFormat('E d MMMM').format(gymClassDate).toString().toUpperCase(),
               style: TextStyle(
                 fontWeight: FontWeight.bold, 
                 color: Colors.grey[500],
@@ -108,7 +105,13 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                 stream: stream,
                 builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) return _buildLoadingIndicator();
+                    if (!snapshot.hasData) {
+                      print("Data loading");
+                      return _buildLoadingIndicator();
+                    }
+                    if (!snapshot.hasError && snapshot.data.documents.length>0) {
+                    print(snapshot.hasError);
+                    print("Now listing classes: " + snapshot.data.documents.length.toString());
                     return 
                         ListView(
                           padding: EdgeInsets.all(0),
@@ -127,6 +130,16 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                             );
                           }).toList(),
                         );
+                    } 
+                    if (snapshot.hasData && snapshot.data.documents.length==0) {
+                      print("No classes found");
+                      return Center(child: Text("Sorry no classes on this date.",
+                        style: TextStyle(color: Colors.grey[600]),));
+                    }
+                    print("Error retrieving classes: " + snapshot.error.toString());
+                      return Center(child: Text("Sorry an error occured trying to retrieve classes.",
+                        style: TextStyle(color: Colors.grey[600]),));
+
                 },
               ),
             ),
@@ -279,7 +292,7 @@ Widget _buildTab(int daysFromNow) {
 
 Center _buildLoadingIndicator() {
   return Center(
-    child: new CircularProgressIndicator(),
+    child: CircularProgressIndicator(),
   );
 }
 
