@@ -4,7 +4,7 @@ class BabyData {
   final double sizeCm;
   final String fruitSize;
   final double weightG;
-  final DateTime firstDayLastPeriod;
+  final DateTime dueDate;
 
   const BabyData(
     {
@@ -12,13 +12,16 @@ class BabyData {
       this.sizeCm,
       this.fruitSize,
       this.weightG,
-      this.firstDayLastPeriod,
+      this.dueDate,
     }
   );
 
   num get weeksElapsed {
-    if(firstDayLastPeriod != null) {
-      return ((DateTime.now().difference(firstDayLastPeriod).inDays)/7).floor();
+    if(dueDate != null) {
+      var result = ((DateTime.now().add(Duration(days: 280)).difference(dueDate).inDays)/7).floor();
+      print("Due date: " + dueDate.toString());
+      print("Weeks ellapsed: " + result.toString() );
+      return result;
     // } else if(dueDate != null) {
     //   startDate = firstDayLastPeriod.add;
     //   return ((DateTime.now().difference(startDate).inDays)/7).floor();
@@ -28,7 +31,7 @@ class BabyData {
   }
 
   num get daysElapsed {
-    return ((DateTime.now().difference(firstDayLastPeriod).inDays)).floor();
+    return ((DateTime.now().add(Duration(days: 280)).difference(dueDate).inDays)).floor();
   }
 
   num get weeksLeft {

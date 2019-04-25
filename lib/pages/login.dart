@@ -3,10 +3,15 @@ import '../utils/google_sign_in_button.dart';
 import '../utils/facebook_sign_in_button.dart';
 import '../state_widget.dart';
 import '../utils/mama_fit_club_icons.dart';
+import '../model/state.dart';
 
 class LoginScreen extends StatelessWidget {
+  StateModel appState;
+
   @override
   Widget build(BuildContext context) {
+    print("loading login screen");
+    appState = StateWidget.of(context).state;
 
     BoxDecoration _buildBackground() {
       return BoxDecoration(
@@ -37,6 +42,7 @@ class LoginScreen extends StatelessWidget {
         ),
       );
     }
+    
     return Scaffold(
       backgroundColor: Colors.redAccent,
       body: Container(
@@ -66,7 +72,7 @@ class LoginScreen extends StatelessWidget {
               ),
                             
               SizedBox(
-                height: 180,
+                height: 150,
               ),
               // Text(data)
               // GestureDetector(
@@ -78,7 +84,6 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-      
     );
   }
 }

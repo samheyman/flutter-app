@@ -40,7 +40,8 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     BabyData getBabyData() {
       return BabyData(
-        firstDayLastPeriod: appState.firstDayLastPeriod,
+        // dueDate: appState.firstDayLastPeriod,
+        dueDate: appState.dueDate,
         // daysOfDevelopment: 92,
         // sizeCm:  2.5,
         // fruitSize: "lemon",
@@ -92,7 +93,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 Padding(
                   padding: EdgeInsets.only(top: 5),
                   child: Text( 
-                      getRemainingWeeksString(babyDetails) + " weeks to go",
+                      getRemainingWeeksString(babyDetails),
                       style: Theme.of(context).textTheme.display1.copyWith(
                         color: Colors.grey[800], 
                         fontWeight: FontWeight.normal, 

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../model/state.dart';
 import '../data/user_info.dart';
 import '../state_widget.dart';
+import '../utils/mama_fit_club_icons.dart';
 
 class GetUserInfoScreen extends StatefulWidget {
   @override
@@ -16,13 +17,13 @@ class GetUserInfoScreen extends StatefulWidget {
 class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
   StateModel appState;
 
-  DateTime selectedDate = null;
+  DateTime selectedDate = DateTime.now();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2018, 8),
+        firstDate: DateTime(2017, 1),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       setState(() {
@@ -36,7 +37,9 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
     updateUserInfo(appState.user.uid, date).then((result) {
       // Update the state:
       if (result == true) {
-          appState.firstDayLastPeriod = date;
+        setState(() {
+          appState.dueDate = date;
+        });
       }
     });
   }
@@ -64,7 +67,7 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
       if (selectedDate!=null) {
         date = "${DateFormat('dd/MM/yyyy').format(selectedDate)}";
       } else {
-        date = "--/--/----";
+        date = "";
       }
       return Text(date, style: TextStyle(
         color: Colors.white,
@@ -74,40 +77,62 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
     return Scaffold(
       backgroundColor: Colors.redAccent,
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(60),
         decoration: _buildBackground(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Hello! ",
-                style: TextStyle(color: Colors.white),),
+              // Text("Hello! ",
+                // style: TextStyle(color: Colors.white),),
               SizedBox(height: 50,),
-              Text("Let's customize the app with your due date to make sure it is specific to your needs.",
-                style: TextStyle(color: Colors.white),),
+              Text("Let's make sure that the app is specific to your needs.",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18), 
+                  textAlign: TextAlign.center,),
               SizedBox(height: 30,),
-              Text("When was the first day of your last period?",
-                style: TextStyle(color: Colors.white),),  
+              Text("What is your due date?",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18), 
+                  textAlign: TextAlign.justify,), 
               SizedBox(
                 height: 30,
               ),
-              _getDate(),
-              SizedBox(height: 20.0,),
               RaisedButton(
+                color: Colors.white,
                 onPressed: () => _selectDate(context),
-                child: Text('Select date'),
+                child: Container(
+                  width: 160,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(DateFormat('MMMM dd, yyyy').format(selectedDate).toString(),
+                        style: TextStyle(color: Colors.grey[00]),),
+                      Icon(MyIcons.bookings),
+                    ],
+                  ),
+                ),
               ),
+              SizedBox(height: 20.0,),
+              // _getDate(),
               SizedBox(height: 50.0,),
               RaisedButton(
-                color: Colors.blue,
+                color: Colors.blueAccent[700],
                 onPressed: () => {
                   // print("Saving date: " + selectedDate.toString()),
                   _saveDate(selectedDate),
-                  Navigator.of(context).pushNamed('/homepage')
+                  StateWidget.of(context).saveDueDate(selectedDate),
                 },
-                child: Text("Continue",
-                  style: TextStyle(color: Colors.white) ,) ,
+                child: Text("Get started".toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)), 
               ),
             ],
           ),

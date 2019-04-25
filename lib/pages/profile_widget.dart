@@ -54,7 +54,7 @@ class ProfileWidget extends StatelessWidget {
       // print(appState.firstDayLastPeriod).toString());
       if(appState.user!=null) {
         try {
-            return Text(DateFormat('dd/MM/yyy').format(appState.firstDayLastPeriod).toString(),
+            return Text(DateFormat('dd/MM/yyy').format(appState.dueDate).toString(),
                 style: TextStyle(fontSize: 18),);
         } catch (NoSuchMethodError) {
           return Text("Please enter a date",
@@ -123,7 +123,7 @@ class ProfileWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Text('Fist date of last cycle',
+            Text('Due date',
               style: TextStyle(fontSize: 12, color: Colors.grey[600])),
             Padding(padding: EdgeInsets.only(top:5),),
             _getDueDate(),

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future<bool> updateUserInfo(String uid, DateTime firstDayLastPeriod) {
+Future<bool> updateUserInfo(String uid, DateTime dueDate) {
   DocumentReference userReference =
       Firestore.instance.collection('users').document(uid);
 
@@ -9,13 +9,13 @@ Future<bool> updateUserInfo(String uid, DateTime firstDayLastPeriod) {
     if (postSnapshot.exists) {
       // Extend 'savedClasses' if the list does not contain the recipe ID:
         await tx.update(userReference, <String, dynamic>{
-          'firstDayLastPeriod': firstDayLastPeriod,
+          'dueDate': dueDate,
         });
     } else {
       // Create a document for the current user in collection 'users'
       // and add a new array 'savedClasses' to the document:
       await tx.set(userReference, {
-        'firstDayLastPeriod': firstDayLastPeriod,
+        'dueDate': dueDate,
       });
     }
   }).then((result) {

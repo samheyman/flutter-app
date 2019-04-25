@@ -41,13 +41,15 @@ class _StateWidgetState extends State<StateWidget> {
   void initState() {
     super.initState();
     print("Initialising state");
+    print("Current state: " + widget.state.toString());
     if (widget.state != null) {
       state = widget.state;
     } else {
       print("Creating new State Model");
+      print("Facebook login status: " + FacebookLoginStatus.loggedIn.toString());
       state = StateModel(isLoading: true);
       // initUserGoogle();
-      // initUserFacebook();
+      // if (FacebookLoginStatus.loggedIn!=null) { initUserFacebook(); }
     }
   }
 
@@ -76,6 +78,15 @@ class _StateWidgetState extends State<StateWidget> {
     }
   }
 
+  Future<Null> saveDueDate(dueDate) {
+    state.dueDate = dueDate;
+    setState(() {
+      state.isLoading = false;
+      print("Saving the due date in the State Widget");
+      state.dueDate = dueDate;
+    });
+  }
+
   Future<List<String>> getSavedClasses() async {
     DocumentSnapshot querySnapshot = await Firestore.instance
         .collection('users')
@@ -90,16 +101,16 @@ class _StateWidgetState extends State<StateWidget> {
     return [];
   }
 
-  Future<DateTime> getFirstDayLastPeriod() async {
+  Future<DateTime> getDueDate() async {
     DocumentSnapshot querySnapshot = await Firestore.instance
         .collection('users')
         .document(state.user.uid)
         .get();
     if (querySnapshot.exists &&
-        querySnapshot.data.containsKey('firstDayLastPeriod') &&
-        querySnapshot.data['firstDayLastPeriod'] != null) {
+        querySnapshot.data.containsKey('dueDate') &&
+        querySnapshot.data['dueDate'] != null) {
       // Create a new List<String> from List<dynamic>
-      return DateTime.fromMicrosecondsSinceEpoch((querySnapshot.data['firstDayLastPeriod'].microsecondsSinceEpoch));
+      return DateTime.fromMicrosecondsSinceEpoch((querySnapshot.data['dueDate'].microsecondsSinceEpoch));
     }
     return null;
   }
@@ -122,13 +133,13 @@ class _StateWidgetState extends State<StateWidget> {
         print("User logged in via Facebook: " + state.user.uid);
         List<String> savedClasses = await getSavedClasses();
         print("Saved classes: " + savedClasses.toString());
-        DateTime firstDayLastPeriod = await getFirstDayLastPeriod();
-        print("First Date: " + firstDayLastPeriod.toString());
+        DateTime dueDate = await getDueDate();
+        print("First Date: " + dueDate.toString());
         setState(() {
           state.isLoading = false;
           print("Finished loading!");
           state.savedClasses = savedClasses;
-          state.firstDayLastPeriod = firstDayLastPeriod;
+          state.dueDate = dueDate;
         });
         
         break;

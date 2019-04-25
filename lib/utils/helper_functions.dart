@@ -16,14 +16,14 @@ String getRemainingTimeString(babyData) {
 }
 
 String getRemainingWeeksString(babyData) {
-  // String weeksOrWeek = 'weeks';
+  String weeksOrWeek = 'weeks';
 
-  // if (babyData.weeksLeft == 1) {
-  //   weeksOrWeek = 'week';
-  // }
+  if (babyData.weeksLeft == 1) {
+    weeksOrWeek = 'week';
+  }
   
   return
-    babyData.weeksLeft.toString();
+    babyData.weeksLeft.toString() + " " + weeksOrWeek + " to go";
 }
 
 

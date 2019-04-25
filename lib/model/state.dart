@@ -7,6 +7,7 @@ class StateModel {
   List<String> savedClasses;
   String fitnessLevel;
   DateTime firstDayLastPeriod;
+  DateTime dueDate;
 
   StateModel({
     this.isLoading = false,
@@ -14,7 +15,6 @@ class StateModel {
     this.user 
   });
 }
-
 
 // = Object({
 //       "displayName": "Sam Heyman", 
