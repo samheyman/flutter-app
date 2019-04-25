@@ -25,6 +25,12 @@
     Widget build(BuildContext context) {
       print("Building the Mama Fit Club widget");
       return MaterialApp(
+        builder: (context, child) {
+          return MediaQuery(
+            child: child,
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+          );
+        },
         debugShowCheckedModeBanner: false,
         title: 'Mama Fit Club',
         routes: {
