@@ -40,10 +40,12 @@ class BabyData {
   }
 
   String get getTrimester {
-    if (weeksElapsed < 21) {
+    if (weeksElapsed < 14) {
       return "Trimester 1";
-    } else if (weeksElapsed < 41) {
+    } else if (weeksElapsed < 27) {
       return "Trimester 2";
+    } else if (weeksElapsed < 41) {
+      return "Trimester 3";
     } else if (weeksElapsed >= 41) {
       return "Baby born";
     } else {
