@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import './user_profile.dart';
 
 class StateModel {
   bool isLoading;
   bool loginRequired;
   FirebaseUser user;
   List<String> bookedClasses;
-  String fitnessLevel;
+  FitnessLevel fitnessLevel;
   DateTime firstDayLastPeriod;
   DateTime dueDate;
 

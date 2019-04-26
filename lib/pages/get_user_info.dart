@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 
 import '../model/state.dart';
+import '../model/user_profile.dart';
 import '../data/user_info.dart';
 import '../state_widget.dart';
 import '../utils/mama_fit_club_icons.dart';
@@ -18,6 +19,8 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
   StateModel appState;
 
   DateTime selectedDate = DateTime.now();
+  FitnessLevel selectedFitnessLevel = FitnessLevel.beginner;
+  double _sliderValue = 0;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -34,11 +37,23 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
 
   void _saveDate(DateTime date) {
     print("Saving date: " + selectedDate.toString() + " for user " + appState.user.uid.toString());
-    updateUserInfo(appState.user.uid, date).then((result) {
+    updateUserDueDate(appState.user.uid, date).then((result) {
       // Update the state:
       if (result == true) {
         setState(() {
           appState.dueDate = date;
+        });
+      }
+    });
+  }
+
+  void _saveFitnessLevel(int level) {
+    print("Saving fitness level: " + level.toString() + " for user " + appState.user.uid.toString());
+    updateUserFitnessLevel(appState.user.uid, level).then((result) {
+      // Update the state:
+      if (result == true) {
+        setState(() {
+          appState.fitnessLevel = FitnessLevel.values[level];
         });
       }
     });
@@ -92,7 +107,7 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
                   color: Colors.white,
                   fontSize: 18), 
                   textAlign: TextAlign.center,),
-              SizedBox(height: 30,),
+              SizedBox(height: 60,),
               Text("What is your due date?",
                 style: TextStyle(
                   color: Colors.white,
@@ -116,6 +131,44 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
                   ),
                 ),
               ),
+              SizedBox(height: 60,),
+              Text("What is your fitness level?",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18), 
+                  textAlign: TextAlign.justify,), 
+              SizedBox(
+                height: 30,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Slider(
+                      divisions: 2,
+                      activeColor: Colors.indigoAccent,
+                      min: 0.0,
+                      max: 2.0,
+                      onChanged: (newRating) {
+                        setState(() => {
+                          _sliderValue = newRating,
+                          print("Level selected: " + _sliderValue.toString()),
+                        }
+                        );
+                      },
+                      value: _sliderValue,
+                    ),
+
+                  // This is the part that displays the value of the slider.
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(FitnessLevel.values[_sliderValue.toInt()].toString().split('.')[1].toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white ),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 20.0,),
               // _getDate(),
               SizedBox(height: 50.0,),
@@ -124,7 +177,9 @@ class _GetUserInfoScreenState extends State<GetUserInfoScreen>{
                 onPressed: () => {
                   // print("Saving date: " + selectedDate.toString()),
                   _saveDate(selectedDate),
+                  _saveFitnessLevel(_sliderValue.toInt()),
                   StateWidget.of(context).saveDueDate(selectedDate),
+                  // StateWidget.of(context).saveFitnessLevel(selectedFitnessLevel),
                 },
                 child: Text("Get started".toUpperCase(),
                   style: TextStyle(

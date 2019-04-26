@@ -34,7 +34,7 @@ class _RootScreenState extends State<RootScreen> {
       print("No user, redirecting to Login Screen");
       // _currentIndex = 0;
       return LoginScreen();
-    } else if (appState.dueDate == null ) {
+    } else if (appState.dueDate == null || appState.fitnessLevel == null ) {
       // _currentIndex = 0;
       return GetUserInfoScreen();
     } else {

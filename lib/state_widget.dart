@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './model/state.dart';
 import './utils/auth.dart';
+import './model/user_profile.dart';
 
 class StateWidget extends StatefulWidget {
   final StateModel state;
@@ -115,6 +116,20 @@ class _StateWidgetState extends State<StateWidget> {
     return null;
   }
 
+  Future<FitnessLevel> getFitnessLevel() async {
+    DocumentSnapshot querySnapshot = await Firestore.instance
+        .collection('users')
+        .document(state.user.uid)
+        .get();
+    if (querySnapshot.exists &&
+        querySnapshot.data.containsKey('fitnessLevel') &&
+        querySnapshot.data['fitnessLevel'] != null) {
+      // Create a new List<String> from List<dynamic>
+      return FitnessLevel.values[querySnapshot.data['fitnessLevel']];
+    }
+    return null;
+  }
+
   Future<Null> signInWithFacebook() async {
     if (facebookLoginResult==null) {
       initUserFacebook();
@@ -134,12 +149,14 @@ class _StateWidgetState extends State<StateWidget> {
         List<String> bookedClasses = await getBookedClasses();
         print("Saved classes: " + bookedClasses.toString());
         DateTime dueDate = await getDueDate();
+        FitnessLevel fitnessLevel = await getFitnessLevel();
         print("First Date: " + dueDate.toString());
         setState(() {
           state.isLoading = false;
           print("Finished loading!");
           state.bookedClasses = bookedClasses;
           state.dueDate = dueDate;
+          state.fitnessLevel = fitnessLevel;
         });
         
         break;

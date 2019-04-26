@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../state_widget.dart';
 import '../model/state.dart';
-import '../pages/login.dart';
-import './settings_pages/edit_name.dart';
+import './settings_pages/edit_fitness_level.dart';
+import './settings_pages/edit_due_date.dart';
 
 class ProfileWidget extends StatelessWidget {
   StateModel appState;
@@ -68,7 +68,7 @@ class ProfileWidget extends StatelessWidget {
     _getFitnessLevel() {
       if(appState.user!=null) {
         try {
-            return Text(appState.fitnessLevel.toString(),
+            return Text(appState.fitnessLevel.toString().split('.')[1].toUpperCase(),
                 style: TextStyle(fontSize: 18),);
         } catch (NoSuchMethodError) {
           return Text("",
@@ -139,7 +139,7 @@ class ProfileWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EditName("name")),
+              MaterialPageRoute(builder: (context) => EditDueDate(appState.dueDate)),
             );
           }
         ),
@@ -163,10 +163,10 @@ class ProfileWidget extends StatelessWidget {
             ],
           ),
           onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => EditName(appState.user.displayName)),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EditFitnessLevel(appState.fitnessLevel)),
+            );
           }
         ),
         Padding(padding: EdgeInsets.only(top:30),),
