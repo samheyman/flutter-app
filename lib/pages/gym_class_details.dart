@@ -54,60 +54,81 @@ class _GymClassDetailsState extends State<GymClassDetails> {
         SizedBox(height: 20.0),
         Text(
           widget.gymClass.class_name,
-          style: TextStyle(color: Colors.black, fontSize: 38.0),
+          style: TextStyle(color: Colors.black, fontSize: 38.0,), textAlign: TextAlign.center,
         ),
         SizedBox(height: 30.0),
-        InkWell(
-        onTap: () => { 
-          _handleBookedClassesListChanged(widget.gymClass.id),
-        },
-        child: appState.bookedClasses.contains(widget.gymClass.id) == true ?
-        Container(
-          width: 130.0,
-          height: 45.0,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            border: Border.all(color: Colors.white, width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Center(child: Text(
-            "Class booked", 
-            style: TextStyle(fontSize: 18.0, color: Colors.white),),
-          ),) :
-        Container(
-          width: 130.0,
-          height: 45.0,
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            border: Border.all(color: Colors.white, width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Center(child: Text(
-            "Book class", 
-            style: TextStyle(fontSize: 18.0, color: Colors.white),),
-          ), )
-      ),
       ],
     );
 
-    final headerShortcutIcons = RawMaterialButton(
-        constraints: const BoxConstraints(minWidth: 60.0, minHeight: 60.0),
-        onPressed: (){
-          // _handleBookedClassesListChanged(widget.gymClass.id);
-        },
-        child: Icon(
-          Icons.share,
-          color: Colors.white,
-          size: 30, // New code
+    final bookingButton = Container(
+      child: appState.bookedClasses.contains(widget.gymClass.id) == true ?
+        InkWell(
+          onTap: () => { 
+            // _handleBookedClassesListChanged(widget.gymClass.id),
+          },
+          child: Container(
+            width: 160.0,
+            height: 65.0,
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.green, width: 1.0),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(
+              children: [
+                Icon(Icons.check_circle_outline, color: Colors.grey[700],),
+                Text(
+                  "Class booked!", 
+                  style: TextStyle(fontSize: 18.0, color: Colors.grey[700]),
+                ),
+              ],
+            ),
+          ),
+        ) :
+        InkWell(
+          onTap: () => { 
+            _handleBookedClassesListChanged(widget.gymClass.id),
+          },
+          child: Container(
+            width: 130.0,
+            height: 45.0,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              border: Border.all(color: Colors.white, width: 1.0),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Center(
+              child: Text(
+                "Book class", 
+                style: TextStyle(fontSize: 18.0, color: Colors.white),),
+              ), 
+          ),
         ),
-        elevation: 0.0,
+      );
+
+    final headerShortcutIcons = Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text("Share  "),  
+        GestureDetector(
+          // constraints: const BoxConstraints(minWidth: 60.0, minHeight: 60.0),
+          onTap: (){
+            // _handleBookedClassesListChanged(widget.gymClass.id);
+          },
+          child: Image.asset(
+            'images/facebook_share_icon.png',
+            height: 22,
+          ),
+        ),
+      ]
     );
 
     final headerContent = Stack(
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(left: 10.0, right: 10.0),
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.3,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(widget.gymClass.image_url),
@@ -116,10 +137,10 @@ class _GymClassDetailsState extends State<GymClassDetails> {
           )
         ),
         Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.3,
           padding: EdgeInsets.only(left: 40.0, right: 40.0),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Color.fromRGBO(255, 255, 255, 0.5)),
+          decoration: BoxDecoration(color: Color.fromRGBO(255, 255, 255, 0.6)),
           child: Center(
             child: headerContentText,
           ),
@@ -129,66 +150,9 @@ class _GymClassDetailsState extends State<GymClassDetails> {
 
     final bottomContentText = Column(
       children: [
-        Container(
-          // decoration: BoxDecoration(color: Colors.white),
-          child: DefaultTabController(    
-            length: 2,
-            initialIndex: 0,  
-            child: Column(
-              children: [
-                Container(
-                  constraints: BoxConstraints.expand(height: 50),
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: TabBar(
-                    indicator: BoxDecoration(
-                      border: BorderDirectional(
-                        top: BorderSide(color: Colors.grey[400], width: 3),
-                        end: BorderSide(color: Colors.grey[200], width: 1),
-                      ),
-                      color: Colors.white),
-                      indicatorSize: TabBarIndicatorSize.tab,
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.grey[400],
-                    indicatorColor: Colors.black,
-                    tabs: <Widget>[
-                      Text(
-                        "Details".toUpperCase(),
-                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Map".toUpperCase(),
-                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                // Expanded(
-                //   child: Container(
-                //     child: TabBarView(
-                //       children: [
-                //         Container(
-                //           child: Text("Home Body"),
-                //         ),
-                //         Container(
-                //           child: Text("Articles Body"),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-          ),
-        ),
-        // Padding(padding: EdgeInsets.only(top: 20),),
-        Container(
-          decoration: BoxDecoration(
-            border: BorderDirectional(top: BorderSide(color: Colors.grey[200], width: 1)),
-            color: Colors.white),
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              Row(
+        bookingButton,
+        SizedBox(height: 30,),
+        Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -250,9 +214,69 @@ class _GymClassDetailsState extends State<GymClassDetails> {
             // Expanded(flex: 0, child: gymClassPrice ),
           ],
         ),
-        SizedBox(height: 20,),
-                  Text(widget.gymClass.details[0]),
-
+        SizedBox(height: 30,),
+        Container(
+          // decoration: BoxDecoration(color: Colors.white),
+          child: DefaultTabController(    
+            length: 2,
+            initialIndex: 0,  
+            child: Column(
+              children: [
+                Container(
+                  constraints: BoxConstraints.expand(height: 50),
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: TabBar(
+                    indicator: BoxDecoration(
+                      border: BorderDirectional(
+                        top: BorderSide(color: Colors.grey[400], width: 3),
+                        end: BorderSide(color: Colors.grey[200], width: 1),
+                      ),
+                      color: Colors.white),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey[400],
+                    indicatorColor: Colors.black,
+                    tabs: <Widget>[
+                      Text(
+                        "Details".toUpperCase(),
+                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Map".toUpperCase(),
+                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                // Expanded(
+                //   child: Container(
+                //     child: TabBarView(
+                //       children: [
+                //         Container(
+                //           child: Text("Home Body"),
+                //         ),
+                //         Container(
+                //           child: Text("Articles Body"),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ),
+        // Padding(padding: EdgeInsets.only(top: 20),),
+        Container(
+          decoration: BoxDecoration(
+            border: BorderDirectional(top: BorderSide(color: Colors.grey[200], width: 1)),
+            color: Colors.white),
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 20,),
+              Text(widget.gymClass.details[0]),
+               
             ],
           )
         ),
@@ -262,12 +286,10 @@ class _GymClassDetailsState extends State<GymClassDetails> {
     final bottomContent = Container(
       // height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      // color: Theme.of(context).primaryColor,
-      padding: EdgeInsets.all(0.0),
-      child: Center(
-        child: Column(
-          children: <Widget>[bottomContentText],
-        ),
+      color: Colors.white,
+      padding: EdgeInsets.only(top:20.0),
+      child: Container(
+        child: bottomContentText,
       ),
     );
 

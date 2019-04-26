@@ -12,7 +12,7 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
     //   title: Text('Guide')
     // ),
     BottomNavigationBarItem(
-      icon: Icon(MyIcons.stretch),
+      icon: Icon(Icons.search),
       title: Text('Classes')
     ),
     BottomNavigationBarItem(
@@ -20,7 +20,7 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       title: Text('Bookings')
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.star),
+      icon: Icon(Icons.star_border),
       title: Text('Rewards')
     ),
     BottomNavigationBarItem(

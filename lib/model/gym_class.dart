@@ -1,5 +1,6 @@
 // import 'package:duration/duration.dart';
 
+// use the enumeration GymClassType in order to avoid errors on the initialization of objects
 enum GymClassType {
   aerobic,
   strength,
@@ -26,7 +27,7 @@ class GymClass {
       id: id,   
       created_date: DateTime.fromMicrosecondsSinceEpoch((data['created_date'].microsecondsSinceEpoch)),
       date_time: DateTime.fromMicrosecondsSinceEpoch((data['date_time'].microsecondsSinceEpoch)),
-      type: data['type'],
+      type: GymClassType.values[data['type']],
       duration: data['duration'],
       class_name: data['class_name'],
       gym_name: data['gym_name'],
