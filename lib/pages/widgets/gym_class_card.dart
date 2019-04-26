@@ -23,6 +23,15 @@ class GymClassCard extends StatelessWidget {
         child: ListTile(
         contentPadding:
             EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+        trailing: Container(
+          child: Column(
+            children: [
+              (gymClass.spaces_available>0) ? 
+                Text(gymClass.spaces_available.toString() + "\nplaces\nleft", style: TextStyle(fontSize: 8),textAlign: TextAlign.center,) : 
+                Text("Class\nfull", style: TextStyle(fontSize: 8),textAlign: TextAlign.center,),
+            ],
+          ),
+        ),
         leading: Container(
           padding: EdgeInsets.only(right: 2.0),
           decoration: BoxDecoration(

@@ -29,13 +29,14 @@ class LoginScreen extends StatelessWidget {
 
     Container _logo() {
       return Container(
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('images/gestantes.png', height: 60,),
-            Text("Mama\nFit\nClub".toUpperCase(),
-              textAlign: TextAlign.center,
+            Image.asset('images/gestantes.png', height: 170,),
+            SizedBox(width: 10,),
+            Text("Mama\n  Fit\nClub".toUpperCase(),
+              textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline, 
             ),
           ],
@@ -58,12 +59,13 @@ class LoginScreen extends StatelessWidget {
               Text("To continue please",
                 style: TextStyle(color: Colors.white),),
               SizedBox(height: 30,),
-              // GoogleSignInButton( // New code
-              //         onPressed: () => 
-              //           StateWidget.of(context).signInWithGoogle(), // New code
-              //       ),
-              // SizedBox(height: 10,),
-              // Text("or", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+              GoogleSignInButton( // New code
+                      onPressed: () => 
+                        StateWidget.of(context).signInWithGoogle(), // New code
+                    ),
+              SizedBox(height: 10,),
+              Text("or", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+              SizedBox(height: 10,),
               FacebookSignInButton( 
                 // child: Image.asset('images/facebook-login.png'),// New code
                 onPressed: () => {

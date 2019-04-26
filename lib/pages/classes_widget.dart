@@ -9,6 +9,7 @@ import './gym_class_details.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
 import '../pages/login.dart';
+import '../pages/profile_widget.dart';
 
 
 class ClassesWidget extends StatefulWidget {
@@ -43,6 +44,21 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Classes'),
+          actions: <Widget>[
+              Container(
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProfileWidget(),
+                      )
+                    )
+                  },
+                  child: Icon(Icons.settings),
+                ),
+                padding: EdgeInsets.all(10),
+              ),
+            ],
           bottom: TabBar(
             isScrollable: true,
             tabs: [
@@ -110,7 +126,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                       return _buildLoadingIndicator();
                     }
                     if (!snapshot.hasError && snapshot.data.documents.length>0) {
-                    print(snapshot.hasError);
+                    print("Error in snapshot? " + snapshot.hasError.toString());
                     print("Now listing classes: " + snapshot.data.documents.length.toString());
                     return 
                         ListView(

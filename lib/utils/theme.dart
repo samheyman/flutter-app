@@ -27,7 +27,6 @@ ThemeData buildTheme() {
       labelStyle: TextStyle(fontWeight: FontWeight.bold)
     ),
     indicatorColor: Colors.red[50],
-    // scaffoldBackgroundColor: const Color(0xFFF5F5F5),
     accentColor: Colors.purple[200],
     backgroundColor: Colors.grey[200],
     iconTheme: IconThemeData(

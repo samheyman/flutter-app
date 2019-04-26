@@ -174,6 +174,8 @@ class ProfileWidget extends StatelessWidget {
           child: Text("Log out"),
           onPressed: () => {
             StateWidget.of(context).signOut(),
+                  Navigator.pop(context),
+
             // Navigator.of(context).pushNamed('/login'),
           },
         )

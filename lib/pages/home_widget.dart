@@ -192,7 +192,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         );
       }
 
-    Container myClasses() {
+    Container myUpcomingClasses() {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -221,6 +221,82 @@ class _HomeWidgetState extends State<HomeWidget> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Text("You have no upcoming classes.",
+                          style: 
+                            TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey[600],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                    ),
+                    // RaisedButton(
+                    //   child: SizedBox(
+                    //     width: 120,
+                    //     child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Icon(Icons.search),
+                    //       Text(
+                    //         " Search classes", 
+                    //         style: TextStyle( 
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: 12,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //     ),
+                    //   ),
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => ClassesWidget()),
+                    //     );
+                    //   },
+                    //   color: Colors.purple[200],
+                    //   textColor: Colors.white,
+                    //   elevation: 1,
+                    //   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+                    // ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Container myRecommendedClasses() {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+        color: Colors.transparent,
+        child: Column( 
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(0),
+              child: Text('Recommended classes'.toUpperCase(), 
+                style: sectionHeaderStyle()),
+            ),
+            
+            Card(
+              elevation: 1,
+              margin: EdgeInsets.symmetric(vertical:5, horizontal: 0),
+              shape: BeveledRectangleBorder(
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                padding: EdgeInsets.symmetric(vertical:20, horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text("",
                           style: 
                             TextStyle(
                               fontSize: 13,
@@ -305,7 +381,8 @@ class _HomeWidgetState extends State<HomeWidget> {
               SizedBox(height: 0,),
               headerContent,
               myBaby(),
-              myClasses(),
+              myUpcomingClasses(),
+              myRecommendedClasses(),
               _buildFitnessTips(context),
               // myNutritionTips(),  
             ],

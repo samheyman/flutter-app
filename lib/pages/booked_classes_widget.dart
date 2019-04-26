@@ -9,6 +9,7 @@ import './gym_class_details.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
 import '../pages/login.dart';
+import '../pages/profile_widget.dart';
 
 
 class BookedClassesWidget extends StatefulWidget {
@@ -42,6 +43,21 @@ class _BookedClassesWidgetState extends State<BookedClassesWidget> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Bookings'),
+          actions: <Widget>[
+              Container(
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProfileWidget(),
+                      )
+                    )
+                  },
+                  child: Icon(Icons.settings),
+                ),
+                padding: EdgeInsets.all(10),
+              ),
+            ],
           bottom: TabBar(
             isScrollable: false,
             labelStyle: TextStyle(

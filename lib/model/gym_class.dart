@@ -32,7 +32,7 @@ class GymClass {
       class_name: data['class_name'],
       gym_name: data['gym_name'],
       address: data['address'],
-      spaces_available: data['places'],
+      spaces_available: data['spaces_left'],
       price: data['price'].toDouble(),
       details: List<String>.from(data['details']),
       source_url: data['source_url'],
