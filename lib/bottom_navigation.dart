@@ -16,8 +16,8 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       title: Text('Classes')
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.favorite),
-      title: Text('Favorites')
+      icon: Icon(MyIcons.bookings),
+      title: Text('Bookings')
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.account_circle),

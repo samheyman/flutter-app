@@ -5,12 +5,12 @@ import '../gym_class_details.dart';
 
 class GymClassCard extends StatelessWidget {
   final GymClass gymClass;
-  final bool inSavedClasses;
+  final bool inBookedClasses;
   final Function onSaveButtonPressed;
 
   GymClassCard(
     {@required this.gymClass,
-    @required this.inSavedClasses,
+    @required this.inBookedClasses,
     @required this.onSaveButtonPressed,}
   );
 

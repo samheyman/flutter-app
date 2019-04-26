@@ -4,7 +4,7 @@ class StateModel {
   bool isLoading;
   bool loginRequired;
   FirebaseUser user;
-  List<String> savedClasses;
+  List<String> bookedClasses;
   String fitnessLevel;
   DateTime firstDayLastPeriod;
   DateTime dueDate;

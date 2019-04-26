@@ -11,7 +11,6 @@ import '../state_widget.dart';
 class GymClassDetails extends StatefulWidget {
 
   final GymClass gymClass;
-  // final bool savedClass;
   GymClassDetails(this.gymClass); 
   
   @override
@@ -23,36 +22,25 @@ class GymClassDetails extends StatefulWidget {
 class _GymClassDetailsState extends State<GymClassDetails> {
   StateModel appState;
 
-  _handleSavedClassesListChanged(String gymClassId) {
+  _handleBookedClassesListChanged(String gymClassId) {
       print("Button pressed to save class");
       print("User ID: " + appState.user.uid.toString());
-      updateSavedClasses(appState.user.uid, gymClassId).then((result) {
+      updateBookedClasses(appState.user.uid, gymClassId).then((result) {
       if (result == true) {
         setState(() {
-          if (!appState.savedClasses.contains(gymClassId))
-            appState.savedClasses.add(gymClassId);
+          if (!appState.bookedClasses.contains(gymClassId))
+            appState.bookedClasses.add(gymClassId);
           else
-            appState.savedClasses.remove(gymClassId);
+            appState.bookedClasses.remove(gymClassId);
         });
       }
-      print(appState.savedClasses[0].toString());
+      // print(appState.bookedClasses[0].toString());
     });
   }
   
   @override
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
-
-    final gymClassPrice = Container(
-      padding: const EdgeInsets.all(7.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(5.0)),
-      child: Text(
-        "SEK " + widget.gymClass.price.toString(),
-        style: TextStyle(color: Colors.white),
-      ),
-    );
 
     final headerContentText = Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -70,32 +58,45 @@ class _GymClassDetailsState extends State<GymClassDetails> {
         ),
         SizedBox(height: 30.0),
         InkWell(
-  onTap: () => print('hello'),
-  child: Container(
-    width: 100.0,
-    height: 40.0,
-    decoration: BoxDecoration(
-      color: Theme.of(context).primaryColor,
-      border: Border.all(color: Colors.white, width: 1.0),
-      borderRadius: BorderRadius.circular(10.0),
-    ),
-    child: Center(child: Text(
-      widget.gymClass.price.toInt().toString() + ' krs', 
-      style: TextStyle(fontSize: 18.0, color: Colors.white),),),
-  ),
-),
-        
-        
+        onTap: () => { 
+          _handleBookedClassesListChanged(widget.gymClass.id),
+        },
+        child: appState.bookedClasses.contains(widget.gymClass.id) == true ?
+        Container(
+          width: 130.0,
+          height: 45.0,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            border: Border.all(color: Colors.white, width: 1.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Center(child: Text(
+            "Class booked", 
+            style: TextStyle(fontSize: 18.0, color: Colors.white),),
+          ),) :
+        Container(
+          width: 130.0,
+          height: 45.0,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            border: Border.all(color: Colors.white, width: 1.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Center(child: Text(
+            "Book class", 
+            style: TextStyle(fontSize: 18.0, color: Colors.white),),
+          ), )
+      ),
       ],
     );
 
     final headerShortcutIcons = RawMaterialButton(
         constraints: const BoxConstraints(minWidth: 60.0, minHeight: 60.0),
         onPressed: (){
-          _handleSavedClassesListChanged(widget.gymClass.id);
+          // _handleBookedClassesListChanged(widget.gymClass.id);
         },
         child: Icon(
-          appState.savedClasses.contains(widget.gymClass.id) == true ? Icons.favorite : Icons.favorite_border,
+          Icons.share,
           color: Colors.white,
           size: 30, // New code
         ),
@@ -126,77 +127,8 @@ class _GymClassDetailsState extends State<GymClassDetails> {
       ],
     );
 
-    RawMaterialButton _buildFavoriteButton() {
-      return RawMaterialButton(
-        constraints: const BoxConstraints(minWidth: 40.0, minHeight: 40.0),
-        onPressed: (){
-          _handleSavedClassesListChanged(widget.gymClass.id);
-        },
-        child: Icon(
-          // Conditional expression:
-          // show "favorite" icon or "favorite border" icon depending on widget.inFavorites:
-          appState.savedClasses.contains(widget.gymClass.id) == true ? Icons.favorite : Icons.favorite_border,
-          color: Theme.of(context).primaryColor, // New code
-        ),
-        elevation: 0.0,
-        fillColor: Theme.of(context).buttonColor, // New code
-        shape: CircleBorder(),
-      );
-    }
-
     final bottomContentText = Column(
       children: [
-        
-        // Padding(padding: EdgeInsets.only(top: 15),),
-        // Row( 
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     Expanded(
-        //       flex: 1,
-        //       child: Column(
-        //         children: <Widget>[
-        //           Icon(MyIcons.bookings, color: Theme.of(context).secondaryHeaderColor, size: 24,),
-        //           Padding(padding: EdgeInsets.only(top: 8),),
-        //           Text("Date",
-        //             style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-        //           ),
-        //           Padding(padding: EdgeInsets.only(top: 4),),
-        //           Text(DateFormat('EE dd MMM').format(widget.gymClass.date_time))
-        //         ],
-        //       ),
-        //     ),
-        //     Expanded(
-        //       flex: 1,
-        //       child: Column(
-        //         children: <Widget>[
-        //           Icon(Icons.timer, color: Theme.of(context).secondaryHeaderColor, size: 24,),
-        //           Padding(padding: EdgeInsets.only(top: 8),),
-        //           Text("Duration",
-        //             style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-        //           ),
-        //           Padding(padding: EdgeInsets.only(top: 4),),
-        //           Text(widget.gymClass.duration.toString() + " mins")
-        //         ],
-        //       ),
-        //     ),
-        //     Expanded(
-        //       flex: 1,
-        //       child: Column(
-        //         children: <Widget>[
-        //           Icon(Icons.access_time, color: Theme.of(context).secondaryHeaderColor, size: 24,),
-        //           Padding(padding: EdgeInsets.only(top: 8),),
-        //           Text("Time",
-        //             style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-        //           ),
-        //           Padding(padding: EdgeInsets.only(top: 4),),
-        //           Text(DateFormat('Hm').format(widget.gymClass.date_time))
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // Padding(padding: EdgeInsets.only(top: 30),),
         Container(
           // decoration: BoxDecoration(color: Colors.white),
           child: DefaultTabController(    

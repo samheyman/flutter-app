@@ -87,16 +87,16 @@ class _StateWidgetState extends State<StateWidget> {
     });
   }
 
-  Future<List<String>> getSavedClasses() async {
+  Future<List<String>> getBookedClasses() async {
     DocumentSnapshot querySnapshot = await Firestore.instance
         .collection('users')
         .document(state.user.uid)
         .get();
     if (querySnapshot.exists &&
-        querySnapshot.data.containsKey('savedClasses') &&
-        querySnapshot.data['savedClasses'] is List) {
+        querySnapshot.data.containsKey('bookedClasses') &&
+        querySnapshot.data['bookedClasses'] is List) {
       // Create a new List<String> from List<dynamic>
-      return List<String>.from(querySnapshot.data['savedClasses']);
+      return List<String>.from(querySnapshot.data['bookedClasses']);
     }
     return [];
   }
@@ -131,14 +131,14 @@ class _StateWidgetState extends State<StateWidget> {
         AuthCredential credential= FacebookAuthProvider.getCredential(accessToken: myToken.token);
         state.user = await FirebaseAuth.instance.signInWithCredential(credential);
         print("User logged in via Facebook: " + state.user.uid);
-        List<String> savedClasses = await getSavedClasses();
-        print("Saved classes: " + savedClasses.toString());
+        List<String> bookedClasses = await getBookedClasses();
+        print("Saved classes: " + bookedClasses.toString());
         DateTime dueDate = await getDueDate();
         print("First Date: " + dueDate.toString());
         setState(() {
           state.isLoading = false;
           print("Finished loading!");
-          state.savedClasses = savedClasses;
+          state.bookedClasses = bookedClasses;
           state.dueDate = dueDate;
         });
         
@@ -191,10 +191,10 @@ class _StateWidgetState extends State<StateWidget> {
     }
     FirebaseUser firebaseUser = await signIntoFirebaseWithGoogle(googleAccount);
     state.user = firebaseUser; // new
-    List<String> savedClasses = await getSavedClasses(); // new
+    List<String> bookedClasses = await getBookedClasses(); // new
     setState(() {
       state.isLoading = false;
-      state.savedClasses = savedClasses; // new
+      state.bookedClasses = bookedClasses; // new
     });
   }
 

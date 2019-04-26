@@ -3,14 +3,14 @@ import '../../model/gym_class.dart';
 import 'package:intl/intl.dart';
 import '../gym_class_details.dart';
 
-class FavoriteGymClassCard extends StatelessWidget {
+class BookedGymClassCard extends StatelessWidget {
   final GymClass gymClass;
-  final bool inSavedClasses;
+  final bool inBookedClasses;
   final Function onSaveButtonPressed;
 
-  FavoriteGymClassCard(
+  BookedGymClassCard(
     {@required this.gymClass,
-    @required this.inSavedClasses,
+    @required this.inBookedClasses,
     @required this.onSaveButtonPressed,}
   );
 

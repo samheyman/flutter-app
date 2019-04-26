@@ -4,32 +4,32 @@ import 'package:intl/intl.dart';
 import '../data/gym_classes.dart';
 import '../model/gym_class.dart';
 import '../utils/theme.dart';
-import './widgets/favorite_gym_class_card.dart';
+import './widgets/booked_gym_class_card.dart';
 import './gym_class_details.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
 import '../pages/login.dart';
 
 
-class FavoritesWidget extends StatefulWidget {
+class BookedClassesWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _FavoritesWidgetState();
+    return _BookedClassesWidgetState();
   }
 }
 
-class _FavoritesWidgetState extends State<FavoritesWidget> {
+class _BookedClassesWidgetState extends State<BookedClassesWidget> {
   StateModel appState;
 
-  void _handleSavedClassesChanged(String gymID) {
-    updateSavedClasses(appState.user.uid, gymID).then((result) {
+  void _handleBookedClassesChanged(String gymID) {
+    updateBookedClasses(appState.user.uid, gymID).then((result) {
       // Update the state:
       if (result == true) {
         setState(() {
-          if (!appState.savedClasses.contains(gymID))
-            appState.savedClasses.add(gymID);
+          if (!appState.bookedClasses.contains(gymID))
+            appState.bookedClasses.add(gymID);
           else
-            appState.savedClasses.remove(gymID);
+            appState.bookedClasses.remove(gymID);
         });
       }
     });
@@ -41,7 +41,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Favorites'),
+          title: Text('Bookings'),
           bottom: TabBar(
             isScrollable: false,
             labelStyle: TextStyle(
@@ -104,7 +104,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return _buildLoadingIndicator();
-                  print("Displaying favorite classes: " + appState.savedClasses.toString());
+                  print("Displaying favorite classes: " + appState.bookedClasses.toString());
                   print("List of ids : " + ids.toString());
                   return ListView(
                     children: snapshot.data.documents
@@ -113,12 +113,9 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                         .map((document) {
                           // print(ids);
                           print("Gym class ID: " + document.documentID.toString());
-                          return FavoriteGymClassCard(
+                          return BookedGymClassCard(
                             gymClass:
                                 GymClass.fromMap(document.data, document.documentID),
-                            // inSavedClasses:
-                            //     appState.savedClasses.contains(document.documentID),
-                            // onSaveButtonPressed: _handleSavedClassesListChanged,
                           );
                     }).toList(),
                   );
@@ -135,12 +132,12 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
         _buildGymClasses(
           startDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
           endDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days:3650)),
-          ids: appState.savedClasses,
+          ids: appState.bookedClasses,
         ),
         _buildGymClasses(
           endDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).subtract(Duration(days:0)),
           startDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).subtract(Duration(days:3650)),
-          ids: appState.savedClasses,
+          ids: appState.bookedClasses,
         ),
       ],
     );
