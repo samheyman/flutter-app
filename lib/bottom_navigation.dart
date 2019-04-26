@@ -7,10 +7,10 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       icon: Icon(Icons.home),
       title: Text('Home')
     ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.pregnant_woman),
-      title: Text('Guide')
-    ),
+    // BottomNavigationBarItem(
+    //   icon: Icon(Icons.pregnant_woman),
+    //   title: Text('Guide')
+    // ),
     BottomNavigationBarItem(
       icon: Icon(MyIcons.stretch),
       title: Text('Classes')
@@ -18,6 +18,10 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(MyIcons.bookings),
       title: Text('Bookings')
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.star),
+      title: Text('Rewards')
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.account_circle),
