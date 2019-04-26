@@ -22,9 +22,6 @@ class BabyData {
       print("Due date: " + dueDate.toString());
       print("Weeks ellapsed: " + result.toString() );
       return result;
-    // } else if(dueDate != null) {
-    //   startDate = firstDayLastPeriod.add;
-    //   return ((DateTime.now().difference(startDate).inDays)/7).floor();
     } else {
       return 0;
     }
@@ -42,7 +39,15 @@ class BabyData {
     return 280 - daysElapsed;
   }
 
-  // DateTime get dueDate {
-  //   return firstDayLastPeriod.add(Duration(days:280));
-  // }
+  String get getTrimester {
+    if (weeksElapsed < 21) {
+      return "Trimester 1";
+    } else if (weeksElapsed < 41) {
+      return "Trimester 2";
+    } else if (weeksElapsed >= 41) {
+      return "Baby born";
+    } else {
+      return "";
+    }
+  }
 }

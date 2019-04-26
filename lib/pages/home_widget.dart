@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import '../bottom_navigation.dart';
-import '../model/pregnancy_tip.dart';
-import '../model/user_profile.dart';
 import '../model/baby_data.dart';
 import '../utils/helper_functions.dart';
 import '../pages/pregnancy_tip_page.dart';
 import './widgets/animated_chart.dart';
-import '../pages/classes_widget.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
 import './app_pages.dart';
@@ -51,10 +47,9 @@ class _HomeWidgetState extends State<HomeWidget> {
     
     Container myDates(BabyData babyDetails) {
       return Container(
-        // margin: EdgeInsets.symmetric(vertical:40, horizontal:10),
         width: 150.0,
         height: 150.0,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.circle,
         ),
@@ -136,14 +131,24 @@ class _HomeWidgetState extends State<HomeWidget> {
           )
         ),
         Container(
-          margin: EdgeInsets.only(top:90),
-          padding: EdgeInsets.only(left: 20),
-          child: progressPieChart,
+          margin: EdgeInsets.only(top:30, left: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(getBabyData().getTrimester , style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+              Container(
+                margin: EdgeInsets.only(top:30),
+                padding: EdgeInsets.only(left: 0),
+                child: progressPieChart,
+              ),
+            ],
+          ),
         ),
       ],
     );
     
-    Card myBaby(babyDetails) {
+    Card myBaby() {
       return Card(
         color: Colors.white,
         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -168,8 +173,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                       Image.asset('images/lemon.png', height: 50),
                       Padding(
                         padding: EdgeInsets.only(left:30),
-                        child: Text("Your baby is about the size of \na " + babyDetails.fruitSize
-                          + " (" + babyDetails.sizeCm.toString() + "cm and " + babyDetails.weightG.toString() + "g)",
+                        child: Text("Your baby is about the size of \na " + 'lemon'
+                          + " (" + "2.5" + "cm and " + "100g" + "g)",
                           style: 
                             TextStyle(
                               fontSize: 13
@@ -197,7 +202,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           children: [
             Padding(
               padding: EdgeInsets.all(0),
-              child: Text('My classes'.toUpperCase(), 
+              child: Text('Upcoming classes'.toUpperCase(), 
                 style: sectionHeaderStyle()),
             ),
             
@@ -273,6 +278,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         return _appPages[_currentIndex].pageWidget;
       } else {
         return Scaffold(
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text('Mama Fit Club'),
           ),
@@ -282,8 +288,8 @@ class _HomeWidgetState extends State<HomeWidget> {
             children: [
               SizedBox(height: 0,),
               headerContent,
-              // myBaby(getBabyData()),
-              // myClasses(),
+              myBaby(),
+              myClasses(),
               _buildFitnessTips(context),
               // myNutritionTips(),  
             ],
@@ -292,9 +298,8 @@ class _HomeWidgetState extends State<HomeWidget> {
       }
     }
   
-  
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).backgroundColor,
       body: _getBodyContent(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -328,7 +333,7 @@ Widget _myFitnessTips(BuildContext context, List documents) {
       children: [
         Padding(
           padding: EdgeInsets.all(0),
-          child: Text('Fitness tips'.toUpperCase(), 
+          child: Text('DAILY TIPS'.toUpperCase(), 
             style: sectionHeaderStyle()),
         ),
         Column(
@@ -424,11 +429,3 @@ _goToTipPage(BuildContext context, pregnancyTip) {
     )
   );
 }
-
-// PregnancyTip(
-//       name: 'Magnesium',
-//       content: 'If you’re not getting enough of this essential mineral in your diet, you could be more prone to stress – as a mom or mom-to-be, getting help in the stress-reduction space is always welcome.',
-//       category: 'Nutrition',
-//       source: 'Baby2Body',
-//       image: 'magnesium.jpg'
-//     ),
