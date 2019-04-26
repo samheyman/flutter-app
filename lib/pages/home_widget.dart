@@ -4,6 +4,7 @@ import '../bottom_navigation.dart';
 import '../model/baby_data.dart';
 import '../utils/helper_functions.dart';
 import '../pages/pregnancy_tip_page.dart';
+import '../pages/profile_widget.dart';
 import './widgets/animated_chart.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
@@ -281,6 +282,21 @@ class _HomeWidgetState extends State<HomeWidget> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text('Mama Fit Club'),
+            actions: <Widget>[
+              Container(
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProfileWidget(),
+                      )
+                    )
+                  },
+                  child: Icon(Icons.settings),
+                ),
+                padding: EdgeInsets.all(10),
+              ),
+            ],
           ),
           // margin: const EdgeInsets.all(0),
           body: ListView(
@@ -313,7 +329,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
 Widget _buildFitnessTips(BuildContext context) {
   return StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('pregnancyTips').snapshots(),
+    stream: Firestore.instance.collection('pregnancyTips').where("category", isEqualTo: "fitness").snapshots(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) return LinearProgressIndicator();
       // print(snapshot.data.documents.length);
@@ -424,7 +440,7 @@ Widget _makeTipContainer(BuildContext context, DocumentSnapshot pregnancyTip) {
 
 _goToTipPage(BuildContext context, pregnancyTip) {
   Navigator.of(context).push(
-    new MaterialPageRoute(
+    MaterialPageRoute(
       builder: (context) => PregnancyTipPage(pregnancyTip)
     )
   );

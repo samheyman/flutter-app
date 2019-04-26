@@ -24,7 +24,7 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       title: Text('Rewards')
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.account_circle),
-      title: Text('Profile')
+      icon: Icon(Icons.people),
+      title: Text('Social')
     ),  
   ];
