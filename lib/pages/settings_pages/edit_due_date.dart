@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../model/gym_class.dart';
 import '../../utils/mama_fit_club_icons.dart';
 import '../../model/state.dart';
-import '../../pages/login.dart';
 import '../../state_widget.dart';
+import '../../data/user_info.dart';
 
 class EditDueDate extends StatefulWidget {
 
@@ -28,10 +27,20 @@ class _EditDueDateState extends State<EditDueDate> {
         firstDate: DateTime(2017, 1),
         lastDate: DateTime(2101));
     if (picked != null && picked != widget.dueDate) {
-      setState(() {
-        appState.dueDate = picked;
-      });
+      _saveDueDate(picked);
     }
+  }
+
+  void _saveDueDate(DateTime date) {
+    print("Updating due date: " + date.toString() + " for user " + appState.user.uid.toString());
+    updateUserDueDate(appState.user.uid, date).then((result) {
+      // Update the state:
+      if (result == true) {
+        setState(() {
+          appState.dueDate = date;
+        });
+      }
+    });
   }
   
   @override
