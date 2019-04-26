@@ -64,11 +64,11 @@ class _GymClassDetailsState extends State<GymClassDetails> {
       child: appState.bookedClasses.contains(widget.gymClass.id) == true ?
         InkWell(
           onTap: () => { 
-            // _handleBookedClassesListChanged(widget.gymClass.id),
+            _handleBookedClassesListChanged(widget.gymClass.id),
           },
           child: Container(
             width: 160.0,
-            height: 65.0,
+            height: 85.0,
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -77,10 +77,18 @@ class _GymClassDetailsState extends State<GymClassDetails> {
             ),
             child: Column(
               children: [
-                Icon(Icons.check_circle_outline, color: Colors.grey[700],),
+                Icon(Icons.check_circle_outline, color: Colors.green,),
                 Text(
                   "Class booked!", 
-                  style: TextStyle(fontSize: 18.0, color: Colors.grey[700]),
+                  style: TextStyle(fontSize: 18.0, color: Colors.green),
+                ),
+                SizedBox(height: 5,),
+                Text(
+                  "Cancel", 
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 13.0, 
+                    color: Colors.grey[700],),
                 ),
               ],
             ),
