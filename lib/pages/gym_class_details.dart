@@ -7,6 +7,7 @@ import '../model/state.dart';
 import '../data/gym_classes.dart';
 import '../pages/login.dart';
 import '../state_widget.dart';
+import './map_widget.dart';
 
 class GymClassDetails extends StatefulWidget {
 
@@ -223,65 +224,87 @@ class _GymClassDetailsState extends State<GymClassDetails> {
           ],
         ),
         SizedBox(height: 30,),
-        Container(
-          // decoration: BoxDecoration(color: Colors.white),
-          child: DefaultTabController(    
-            length: 2,
-            initialIndex: 0,  
-            child: Column(
-              children: [
-                Container(
-                  constraints: BoxConstraints.expand(height: 50),
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: TabBar(
-                    indicator: BoxDecoration(
-                      border: BorderDirectional(
-                        top: BorderSide(color: Colors.grey[400], width: 3),
-                        end: BorderSide(color: Colors.grey[200], width: 1),
-                      ),
-                      color: Colors.white),
-                      indicatorSize: TabBarIndicatorSize.tab,
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.grey[400],
-                    indicatorColor: Colors.black,
-                    tabs: <Widget>[
-                      Text(
-                        "Details".toUpperCase(),
-                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Map".toUpperCase(),
-                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                // Expanded(
-                //   child: Container(
-                //     child: TabBarView(
-                //       children: [
-                //         Container(
-                //           child: Text("Home Body"),
-                //         ),
-                //         Container(
-                //           child: Text("Articles Body"),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
+        // Container(
+        //   // decoration: BoxDecoration(color: Colors.white),
+        //   child: DefaultTabController(    
+        //     length: 2,
+        //     initialIndex: 0,  
+        //     child: Column(
+        //       children: [
+        //         Container(
+        //           constraints: BoxConstraints.expand(height: 50),
+        //           decoration: BoxDecoration(color: Colors.white),
+        //           child: TabBar(
+        //             indicator: BoxDecoration(
+        //               border: BorderDirectional(
+        //                 top: BorderSide(color: Colors.grey[400], width: 3),
+        //                 end: BorderSide(color: Colors.grey[200], width: 1),
+        //               ),
+        //               color: Colors.white),
+        //               indicatorSize: TabBarIndicatorSize.tab,
+        //             labelColor: Colors.black,
+        //             unselectedLabelColor: Colors.grey[400],
+        //             indicatorColor: Colors.black,
+        //             tabs: <Widget>[
+        //               Text(
+        //                 "Details".toUpperCase(),
+        //                 style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+        //               ),
+                      
+        //               Text(
+        //                 "Map".toUpperCase(),
+        //                 style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //         // Expanded(
+        //         //   child: Container(
+        //         //     child: TabBarView(
+        //         //       children: [
+        //         //         Container(
+        //         //           child: Text("Home Body"),
+        //         //         ),
+        //         //         Container(
+        //         //           child: Text("Articles Body"),
+        //         //         ),
+        //         //       ],
+        //         //     ),
+        //         //   ),
+        //         // ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        // Padding(padding: EdgeInsets.only(top: 20),),
+        GestureDetector(
+          onTap: () => {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => MapWidget(),
+              )
+            )
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.map, size: 30, color: Colors.grey,),
+              Text("  view map"),
+            ],
           ),
         ),
-        // Padding(padding: EdgeInsets.only(top: 20),),
+        SizedBox(height: 20,),
+
         Container(
           decoration: BoxDecoration(
             border: BorderDirectional(top: BorderSide(color: Colors.grey[200], width: 1)),
             color: Colors.white),
           padding: EdgeInsets.all(20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text("Description".toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.start,),
               SizedBox(height: 20,),
               Text(widget.gymClass.details[0]),
                
