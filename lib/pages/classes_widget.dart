@@ -105,12 +105,12 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       // Define query depeneding on passed args
       return Padding(
         // Padding before and after the list view:
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(DateFormat('E d MMMM').format(gymClassDate).toString().toUpperCase(),
+            Text(DateFormat(' E d MMMM').format(gymClassDate).toString().toUpperCase(),
               style: TextStyle(
                 fontWeight: FontWeight.bold, 
                 color: Colors.grey[500],

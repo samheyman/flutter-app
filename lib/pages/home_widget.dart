@@ -296,7 +296,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text("",
+                    Text("No recommended classes",
                           style: 
                             TextStyle(
                               fontSize: 13,

@@ -17,34 +17,30 @@ class GymClassCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Padding _buildListTile() {
-      return Padding(
-        padding: EdgeInsets.all(10.0),
-        child: ListTile(
-        contentPadding:
-            EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+    ListTile _buildListTile() {
+      return ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
         trailing: Container(
           child: Column(
             children: [
-              (gymClass.spaces_available>0) ? 
-                Text(gymClass.spaces_available.toString() + "\nplaces\nleft", style: TextStyle(fontSize: 8),textAlign: TextAlign.center,) : 
-                Text("Class\nfull", style: TextStyle(fontSize: 8),textAlign: TextAlign.center,),
+              Icon(Icons.chevron_right, size: 22,)
             ],
           ),
         ),
         leading: Container(
           padding: EdgeInsets.only(right: 2.0),
+          
           decoration: BoxDecoration(
               border: Border(
                   right: BorderSide(width: 1.0, color: Colors.white24))),
           child: Container(
             width: 80,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(bottom: 3),
+                  padding: EdgeInsets.only(bottom: 5),
                   child: Text(
                     DateFormat('Hm').format(gymClass.date_time).toString(),
                     style: TextStyle(
@@ -53,15 +49,18 @@ class GymClassCard extends StatelessWidget {
                       fontWeight: FontWeight.normal )),
                 ),
                 Row(
-                    children: [
-                      Icon(Icons.timer, color: Colors.grey, size: 14,),
-                      Text(
-                        " " + gymClass.duration.toString() + " min",
-                        style: TextStyle(
-                          fontSize: 12, 
-                          color: Colors.black54)),
-                    ],
+                  children: [
+                    Icon(Icons.timer, color: Colors.grey, size: 14,),
+                    Text(
+                      " " + gymClass.duration.toString() + " min",
+                      style: TextStyle(
+                        fontSize: 12, 
+                        color: Colors.black54
+                      ),
+                    ),
+                  ],
                 ),
+                SizedBox(height: 18,),
               ],
             ),
           ),
@@ -74,12 +73,35 @@ class GymClassCard extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 16),
         ),
-        subtitle: Text(
-          gymClass.gym_name,
-          style: TextStyle(
-            color: Colors.black54, 
-            fontSize: 14  )
-          ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 5,),
+            Text(
+              gymClass.gym_name,
+              style: TextStyle(
+                color: Colors.black54, 
+                fontSize: 14
+              ),
+            ),
+            SizedBox(height: 5,),
+            (gymClass.spaces_available>0) ? 
+              Text(gymClass.spaces_available.toString() + " places left", 
+                style: TextStyle(
+                  color: Colors.green, 
+                  fontSize: 10),) : 
+              Row (
+                children: [
+                  Icon(Icons.warning, size: 10, color: Colors.amber[900],),
+                  Text(" Class fully booked",
+                    style: TextStyle(
+                      color: Colors.amber[900], 
+                      fontSize: 10
+                    ),
+                  ),
+                ],
+            ),
+          ],
         ),
       );
     }
@@ -94,32 +116,7 @@ class GymClassCard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top:10),
         child: Card(
-          margin: EdgeInsets.all(0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // We overlap the image and the button by
-              // creating a Stack object:
-              // Stack(
-              //   children: <Widget>[
-              //     AspectRatio(
-              //       aspectRatio: 16.0 / 9.0,
-              //       child: Image.network(
-              //         gymClass.image_url,
-              //         fit: BoxFit.cover,
-              //       ),
-              //     ),
-              //     // Positioned(
-              //     //   child: _buildFavoriteButton(),
-              //     //   top: 2.0,
-              //     //   right: 2.0,
-              //     // ),
-              //   ],
-              // ),
-              _buildListTile(),
-            ],
-          ),
+          child: _buildListTile(),
         ),
       ),
     );
