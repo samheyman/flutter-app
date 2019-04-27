@@ -1,29 +1,30 @@
 
 class BabyData {
-  final int daysOfDevelopment;
-  final double sizeCm;
-  final String fruitSize;
-  final double weightG;
+  // final int daysOfDevelopment;
+  // final double sizeCm;
+  // final String fruitSize;
+  // final double weightG;
   final DateTime dueDate;
 
   const BabyData(
     {
-      this.daysOfDevelopment,
-      this.sizeCm,
-      this.fruitSize,
-      this.weightG,
+      // this.daysOfDevelopment,
+      // this.sizeCm,
+      // this.fruitSize,
+      // this.weightG,
       this.dueDate,
     }
   );
 
   num get weeksElapsed {
+    print("Calculating weeks ellapsed");
     if(dueDate != null) {
       var result = ((DateTime.now().add(Duration(days: 280)).difference(dueDate).inDays)/7).floor();
       print("Due date: " + dueDate.toString());
-      print("Weeks ellapsed: " + result.toString() );
+      print("Weeks ellapsed: " + result.toString());
       return result;
     } else {
-      return 0;
+      return -1;
     }
   }
 

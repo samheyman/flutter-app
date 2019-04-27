@@ -50,7 +50,7 @@ String getElapsedWeeksString(babyData) {
   // if (babyData.weeksElapsed == 1) {
   //   weeksOrWeek = 'week';
   // }
-  
+  print("ellapsed weeks: " + babyData.weeksElapsed.toString());
   return
     babyData.weeksElapsed.toString();
 }

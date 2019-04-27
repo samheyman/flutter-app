@@ -43,6 +43,7 @@ class _AnimatedPieChartState extends State<AnimatedPieChart> {
 
   @override
   Widget build(BuildContext context) {
+    print("Building pie chart: " + widget.ellapsedWeeks.toString() + " and " + widget.remainingWeeks.toString());
     return AnimatedCircularChart(
       key: _chartKey,
       duration: Duration(seconds: 0),

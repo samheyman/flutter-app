@@ -28,24 +28,135 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
 
   StateModel appState;
+  BabyData babyData;
   int _currentIndex = 0;
   final List<AppPage> _appPages = appPages;
 
   @override
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
-
-    BabyData getBabyData() {
-      return BabyData(
-        // dueDate: appState.firstDayLastPeriod,
-        dueDate: appState.dueDate,
-        // daysOfDevelopment: 92,
-        // sizeCm:  2.5,
-        // fruitSize: "lemon",
-        // weightG: 3,
-      );
-    }
+    babyData = BabyData();
     
+    Column pieChartInterior(babyDetails) {
+      if (babyDetails.weeksElapsed < 0) {
+        return Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: Text( 
+                  'We\ndon\'t know\nyour\ndue date',
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.red[700], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+            ),
+          ],
+        );
+      } else if (babyDetails.weeksElapsed > 40) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 0),
+              child: Text( 
+                  (babyDetails.weeksElapsed - 40).toString(),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.red[700], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 42,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 10),
+              child: 
+                (babyDetails.weeksElapsed > 1) ? 
+                Text( 
+                  "weeks old".toUpperCase(),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.grey[800], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+                :
+                Text( 
+                  "week old".toUpperCase(),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.grey[800], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+            ),
+            Icon(Icons.child_friendly, color: Colors.purpleAccent,),
+          ],
+        );
+      }  else {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 0),
+              child: Text( 
+                  babyDetails.weeksElapsed.toString(),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.red[700], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 42,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 0),
+              child: 
+                (babyDetails.weeksElapsed > 1) ? 
+                Text( 
+                  "weeks today".toUpperCase(),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.grey[800], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+                :
+                Text( 
+                  "week today".toUpperCase(),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.grey[800], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Text( 
+                  getRemainingWeeksString(babyDetails),
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                    color: Colors.grey[800], 
+                    fontWeight: FontWeight.normal, 
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+            ),
+          ],
+        );
+      }
+    }
+
     Container myDates(BabyData babyDetails) {
       return Container(
         width: 150.0,
@@ -58,48 +169,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 0),
-                  child: Text( 
-                      getElapsedWeeksString(babyDetails),
-                      style: Theme.of(context).textTheme.display1.copyWith(
-                        color: Colors.red[700], 
-                        fontWeight: FontWeight.normal, 
-                        fontSize: 42,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 0),
-                  child: Text( 
-                      "weeks today".toUpperCase(),
-                      style: Theme.of(context).textTheme.display1.copyWith(
-                        color: Colors.grey[800], 
-                        fontWeight: FontWeight.normal, 
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Text( 
-                      getRemainingWeeksString(babyDetails),
-                      style: Theme.of(context).textTheme.display1.copyWith(
-                        color: Colors.grey[800], 
-                        fontWeight: FontWeight.normal, 
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                ),
-              ],
-            ),
+            pieChartInterior(babyDetails),
           ],
         ),
       );
@@ -107,13 +177,13 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     Stack progressPieChart = Stack(
       children: <Widget>[
-        myDates(getBabyData()),
+        myDates(babyData),
         SizedBox(
           height: 150,
           width: 150,
           child: AnimatedPieChart(
-            ellapsedWeeks: getBabyData().weeksElapsed.toDouble(), 
-            remainingWeeks: getBabyData().weeksLeft.toDouble(),
+            ellapsedWeeks: babyData.weeksElapsed.toDouble(), 
+            remainingWeeks: babyData.weeksLeft.toDouble(),
           ),
         )
       ],
@@ -126,7 +196,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           height: MediaQuery.of(context).size.height * 0.35,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/exercise2.jpg"),
+              image: AssetImage("images/background_image.jpg"),
               fit: BoxFit.cover,
             ),
           )
@@ -137,7 +207,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(getBabyData().getTrimester , style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+              Text(babyData.getTrimester , style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
               Container(
                 margin: EdgeInsets.only(top:30),
                 padding: EdgeInsets.only(left: 0),
@@ -307,34 +377,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                     ),
-                    // RaisedButton(
-                    //   child: SizedBox(
-                    //     width: 120,
-                    //     child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       Icon(Icons.search),
-                    //       Text(
-                    //         " Search classes", 
-                    //         style: TextStyle( 
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 12,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //     ),
-                    //   ),
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) => ClassesWidget()),
-                    //     );
-                    //   },
-                    //   color: Colors.purple[200],
-                    //   textColor: Colors.white,
-                    //   elevation: 1,
-                    //   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
-                    // ),
                   ],
                 ),
               ),
