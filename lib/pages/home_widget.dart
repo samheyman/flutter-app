@@ -9,6 +9,8 @@ import './widgets/animated_chart.dart';
 import '../model/state.dart';
 import '../state_widget.dart';
 import './app_pages.dart';
+import './widgets/upcoming_gym_class_card.dart';
+import './widgets/recommended_gym_class_card.dart';
 
 TextStyle sectionHeaderStyle() {
   return TextStyle(
@@ -32,12 +34,54 @@ class _HomeWidgetState extends State<HomeWidget> {
   int _currentIndex = 0;
   final List<AppPage> _appPages = appPages;
 
+  String getBabyFruitSize() {
+    String fruit;
+    if (babyData.weeksElapsed <5 ) return 'a poppy seed';
+    if (babyData.weeksElapsed == 5) return 'an apple seed';
+    if (babyData.weeksElapsed == 6) return 'a sweet pea';
+    if (babyData.weeksElapsed == 7) return 'a blueberry';
+    if (babyData.weeksElapsed == 8) return 'a rasberry';
+    if (babyData.weeksElapsed == 9) return 'a cherry';
+    if (babyData.weeksElapsed == 10) return 'a raddish';
+    if (babyData.weeksElapsed == 11) return 'a strawberry';
+    if (babyData.weeksElapsed == 12) return 'a chili pepper';
+    if (babyData.weeksElapsed == 13) return 'a lime';
+    if (babyData.weeksElapsed == 14) return 'a plum';
+    if (babyData.weeksElapsed == 15) return 'a kiwi';
+    if (babyData.weeksElapsed == 16) return 'a lemon';
+    if (babyData.weeksElapsed == 17) return 'a peach';
+    if (babyData.weeksElapsed == 18) return 'an onion';
+    if (babyData.weeksElapsed == 19) return 'a tomato';
+    if (babyData.weeksElapsed == 20) return 'an apple';
+    if (babyData.weeksElapsed == 21) return 'an avocado';
+    if (babyData.weeksElapsed == 22) return 'a pear';
+    if (babyData.weeksElapsed == 23) return 'a pomegranate';
+    if (babyData.weeksElapsed == 24) return 'a papaya';
+    if (babyData.weeksElapsed == 25) return 'a bel pepper';
+    if (babyData.weeksElapsed == 26) return 'a broccoli';
+    if (babyData.weeksElapsed == 27) return 'a carrot';
+    if (babyData.weeksElapsed == 28) return 'a grapefruit';
+    if (babyData.weeksElapsed == 29) return 'a grapes';
+    if (babyData.weeksElapsed == 30) return 'a corncob';
+    if (babyData.weeksElapsed == 31) return 'a turnip';
+    if (babyData.weeksElapsed == 32) return 'a coconut';
+    if (babyData.weeksElapsed == 33) return 'an egg plant';
+    if (babyData.weeksElapsed == 34) return 'a cabbage';
+    if (babyData.weeksElapsed == 35) return 'a lettuce';
+    if (babyData.weeksElapsed == 36) return 'a leek';
+    if (babyData.weeksElapsed == 37) return 'a butter nutsquash';
+    if (babyData.weeksElapsed == 38) return 'a pineapple';
+    if (babyData.weeksElapsed == 39) return 'a watermelon';
+    if (babyData.weeksElapsed == 40) return 'a pumpkin';
+    if (babyData.weeksElapsed > 40) return '';
+  }
+  
   @override
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
-    babyData = BabyData();
+    babyData = BabyData(dueDate: appState.dueDate);
     
-    Column pieChartInterior(babyDetails) {
+    Column _pieChartInterior(babyDetails) {
       if (babyDetails.weeksElapsed < 0) {
         return Column(
           children: <Widget>[
@@ -157,7 +201,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       }
     }
 
-    Container myDates(BabyData babyDetails) {
+    Container _myDates(BabyData babyDetails) {
       return Container(
         width: 150.0,
         height: 150.0,
@@ -169,7 +213,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            pieChartInterior(babyDetails),
+            _pieChartInterior(babyDetails),
           ],
         ),
       );
@@ -177,7 +221,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     Stack progressPieChart = Stack(
       children: <Widget>[
-        myDates(babyData),
+        _myDates(babyData),
         SizedBox(
           height: 150,
           width: 150,
@@ -189,7 +233,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       ],
     );
 
-    Stack headerContent = Stack(
+    Stack _headerHero = Stack(
       children: [
         Container(
           padding: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -219,7 +263,8 @@ class _HomeWidgetState extends State<HomeWidget> {
       ],
     );
     
-    Card myBaby() {
+    Card _myBabyDetails() {
+      print("******************************************" + getBabyFruitSize().split(' ')[1]);
       return Card(
         color: Colors.white,
         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -241,11 +286,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Image.asset('images/lemon.png', height: 50),
+                      Image.network('https://raw.githubusercontent.com/samheyman/flutter-app/master/images/onion.png', height: 50),
                       Padding(
                         padding: EdgeInsets.only(left:30),
-                        child: Text("Your baby is about the size of \na " + 'lemon'
-                          + " (" + "2.5" + "cm and " + "100g" + "g)",
+                        child: Text("Your baby is about the size of \n " + getBabyFruitSize(),
                           style: 
                             TextStyle(
                               fontSize: 13
@@ -262,7 +306,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         );
       }
 
-    Container myUpcomingClasses() {
+    Container _myUpcomingClasses() {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -276,61 +320,35 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: Text('Upcoming classes'.toUpperCase(), 
                 style: sectionHeaderStyle()),
             ),
-            
             Card(
               elevation: 1,
               margin: EdgeInsets.symmetric(vertical:5, horizontal: 0),
-              shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                padding: EdgeInsets.symmetric(vertical:20, horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text("You have no upcoming classes.",
-                          style: 
-                            TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey[600],
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                    ),
-                    // RaisedButton(
-                    //   child: SizedBox(
-                    //     width: 120,
-                    //     child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       Icon(Icons.search),
-                    //       Text(
-                    //         " Search classes", 
-                    //         style: TextStyle( 
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 12,
-                    //         ),
-                    //       ),
-                    //     ],
+              // shape: BeveledRectangleBorder(
+              //     borderRadius: BorderRadius.circular(3),
+              //   ),
+              child: Column(
+                // margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                // padding: EdgeInsets.symmetric(vertical:0, horizontal: 0),
+                children: [
+                  // UpcomingGymClassCard(),
+                  ListTile(title: Text("You have no upcoming classes", style: TextStyle(fontSize: 14, color: Colors.grey[600]),),)
+                  // mainAxisAlignment: MainAxisAlignment.end,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  // children: <Widget>[
+                    // Text("You have no upcoming classes.",
+                    //   style: 
+                    //     TextStyle(
+                    //       fontSize: 13,
+                    //       color: Colors.grey[600],
                     //     ),
+                    //     textAlign: TextAlign.start,
                     //   ),
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) => ClassesWidget()),
-                    //     );
-                    //   },
-                    //   color: Colors.purple[200],
-                    //   textColor: Colors.white,
-                    //   elevation: 1,
-                    //   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+                    
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 10),
                     // ),
-                  ],
-                ),
+                    
+                ],
               ),
             ),
           ],
@@ -338,7 +356,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       );
     }
 
-    Container myRecommendedClasses() {
+    Container _myRecommendedClasses() {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -351,34 +369,19 @@ class _HomeWidgetState extends State<HomeWidget> {
               padding: EdgeInsets.all(0),
               child: Text('Recommended classes'.toUpperCase(), 
                 style: sectionHeaderStyle()),
-            ),
-            
+            ),  
             Card(
               elevation: 1,
               margin: EdgeInsets.symmetric(vertical:5, horizontal: 0),
               shape: BeveledRectangleBorder(
                   borderRadius: BorderRadius.circular(3),
                 ),
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                padding: EdgeInsets.symmetric(vertical:20, horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text("No recommended classes",
-                          style: 
-                            TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey[600],
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                    ),
-                  ],
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  RecommendedGymClassCard(),
+                ],
               ),
             ),
           ],
@@ -421,10 +424,10 @@ class _HomeWidgetState extends State<HomeWidget> {
             scrollDirection: Axis.vertical,
             children: [
               SizedBox(height: 0,),
-              headerContent,
-              myBaby(),
-              myUpcomingClasses(),
-              myRecommendedClasses(),
+              _headerHero,
+              _myBabyDetails(),
+              _myUpcomingClasses(),
+              _myRecommendedClasses(),
               _buildFitnessTips(context),
               // myNutritionTips(),  
             ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../state_widget.dart';
 import '../pages/profile_widget.dart';
 
 class RewardsWidget extends StatelessWidget {
-
+  
   @override
   Widget build(BuildContext context) {
-    double _icon_size = 24;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -34,8 +34,11 @@ class RewardsWidget extends StatelessWidget {
         child: ListView(
           // mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text('Rewards'),
-
+            Image.network(
+              'https://raw.githubusercontent.com/samheyman/flutter-app/master/images/rewards.png',
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
           ],
         ),
       ),

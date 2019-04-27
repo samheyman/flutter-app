@@ -4,6 +4,7 @@ class PregnancyTip {
   final String category;
   final String source;
   final String image;
+  final int advert;
 
 
   const PregnancyTip(
@@ -13,6 +14,7 @@ class PregnancyTip {
       this.category,
       this.source,
       this.image,
+      this.advert,
     }
   );
 }

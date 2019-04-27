@@ -34,7 +34,11 @@ class SocialWidget extends StatelessWidget {
         child: ListView(
           // mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text('Social'),
+            Image.network(
+              'https://raw.githubusercontent.com/samheyman/flutter-app/master/images/social.png',
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
 
           ],
         ),

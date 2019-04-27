@@ -72,6 +72,15 @@ class PregnancyTipPage extends StatelessWidget {
       ],
     );
 
+    Card _advert() {
+      return Card(
+        child: Container(
+          padding: EdgeInsets.only(top: 10, bottom:10),
+          child: Image.network('https://raw.githubusercontent.com/samheyman/flutter-app/master/images/advert' + pregnancyTip['advert'].toString() + '.png'),
+        ),
+      );
+    }
+
     final bottomContent = Container(
       // height: MediaQuery.of(context).size.height,
       //width: MediaQuery.of(context).size.width,
@@ -90,6 +99,9 @@ class PregnancyTipPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(pregnancyTip['title']),
+        actions: <Widget>[
+          
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -98,6 +110,7 @@ class PregnancyTipPage extends StatelessWidget {
           children: [
             headerContent,
             bottomContent,
+            _advert(),
           ],
         ),
       ),
