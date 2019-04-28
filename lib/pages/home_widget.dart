@@ -54,7 +54,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     if (babyData.weeksElapsed == 19) return 'a tomato';
     if (babyData.weeksElapsed == 20) return 'an apple';
     if (babyData.weeksElapsed == 21) return 'an avocado';
-    if (babyData.weeksElapsed == 22) return 'a pear';
+    if (babyData.weeksElapsed == 22) return 'a pear'; 
     if (babyData.weeksElapsed == 23) return 'a pomegranate';
     if (babyData.weeksElapsed == 24) return 'a papaya';
     if (babyData.weeksElapsed == 25) return 'a bel pepper';
@@ -73,7 +73,8 @@ class _HomeWidgetState extends State<HomeWidget> {
     if (babyData.weeksElapsed == 38) return 'a pineapple';
     if (babyData.weeksElapsed == 39) return 'a watermelon';
     if (babyData.weeksElapsed == 40) return 'a pumpkin';
-    if (babyData.weeksElapsed > 40) return '';
+    if (babyData.weeksElapsed > 40) return 'a baby';
+    return 'a baby';
   }
   
   @override
@@ -264,7 +265,6 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
     
     Card _myBabyDetails() {
-      print("******************************************" + getBabyFruitSize().split(' ')[1]);
       return Card(
         color: Colors.white,
         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -286,16 +286,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Image.network('https://raw.githubusercontent.com/samheyman/flutter-app/master/images/onion.png', height: 50),
+                      Image.network('https://raw.githubusercontent.com/samheyman/flutter-app/master/images/' + getBabyFruitSize().split(' ')[1]+ '.png', height: 50),
                       Padding(
                         padding: EdgeInsets.only(left:30),
-                        child: Text("Your baby is about the size of \n " + getBabyFruitSize(),
-                          style: 
-                            TextStyle(
-                              fontSize: 13
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
+                        child: 
+                          Text("Your baby is about the size of \n " + getBabyFruitSize(),
+                            style: 
+                              TextStyle(
+                                fontSize: 13
+                              ),
+                              textAlign: TextAlign.start,
+                          )
                       ),
                     ],
                   ),
@@ -425,7 +426,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             children: [
               SizedBox(height: 0,),
               _headerHero,
-              _myBabyDetails(),
+              (babyData.weeksElapsed > 0 && babyData.weeksElapsed < 41) ? _myBabyDetails() : SizedBox(height: 0,),
               _myUpcomingClasses(),
               _myRecommendedClasses(),
               _buildFitnessTips(context),
