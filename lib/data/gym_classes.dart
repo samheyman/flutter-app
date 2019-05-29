@@ -59,7 +59,7 @@ Future<bool> createBooking(String classId, String className, DateTime classDateT
         'timestamp': DateTime.now(),
         'class_id': classId,
         'class_name': className,
-        'class_date_time': classDateTime.toString(),
+        'class_date_time': classDateTime.toUtc(),
         'gym_name': gymName,
         'user_id': uid,
         'user_email': userEmail,
