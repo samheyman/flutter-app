@@ -403,7 +403,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         return Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text('Mama Fit Club'),
+            title: Text('Mamma Fit Club'),
             actions: <Widget>[
               Container(
                 child: GestureDetector(

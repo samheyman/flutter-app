@@ -22,20 +22,6 @@ class BookedClassesWidget extends StatefulWidget {
 class _BookedClassesWidgetState extends State<BookedClassesWidget> {
   StateModel appState;
 
-  void _handleBookedClassesChanged(String gymID) {
-    updateBookedClasses(appState.user.uid, gymID).then((result) {
-      // Update the state:
-      if (result == true) {
-        setState(() {
-          if (!appState.bookedClasses.contains(gymID))
-            appState.bookedClasses.add(gymID);
-          else
-            appState.bookedClasses.remove(gymID);
-        });
-      }
-    });
-  }
-
   DefaultTabController _buildTabView({Widget body}) {
 
     return DefaultTabController(

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future<bool> updateBookedClasses(String uid, String classId) {
+Future<bool> updateUserBookedClasses(String uid, String classId) {
   DocumentReference bookedClassesReference =
       Firestore.instance.collection('users').document(uid);
   
@@ -31,6 +31,33 @@ Future<bool> updateBookedClasses(String uid, String classId) {
       
       await tx.set(bookedClassesReference, {
         'bookedClasses': [classId]
+      });
+    }
+  }).then((result) {
+    return true;
+  }).catchError((error) {
+    print('Error: $error');
+    return false;
+  });
+}
+
+Future<bool> createBooking(String uid, String classId) {
+  DocumentReference bookingReference =
+      Firestore.instance.collection('bookings').document(uid + "_" + classId);
+  
+  return Firestore.instance.runTransaction((Transaction tx) async {
+    DocumentSnapshot postSnapshot = await tx.get(bookingReference);
+    if (postSnapshot.exists) {
+        print("Booking already made for this user/class combination. Terminating.");
+        return false;
+    } else {
+      // Create a document for the current user in collection 'users'
+      // and add a new array 'bookedClasses' to the document:
+      print("Creating the booking for class " + classId);
+      
+      await tx.set(bookingReference, {
+        'user_id': uid,
+        'class_id': classId,
       });
     }
   }).then((result) {

@@ -32,7 +32,7 @@
           );
         },
         debugShowCheckedModeBanner: false,
-        title: 'Mama Fit Club',
+        title: 'Mamma Fit Club',
         routes: {
           '/': (context) => RootScreen(),
           '/root': (context) => RootScreen(),

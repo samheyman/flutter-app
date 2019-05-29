@@ -23,20 +23,22 @@ class GymClassDetails extends StatefulWidget {
 class _GymClassDetailsState extends State<GymClassDetails> {
   StateModel appState;
 
-  _handleBookedClassesListChanged(String gymClassId) {
-      print("Button pressed to save class");
-      print("User ID: " + appState.user.uid.toString());
-      updateBookedClasses(appState.user.uid, gymClassId).then((result) {
-      if (result == true) {
-        setState(() {
-          if (!appState.bookedClasses.contains(gymClassId))
-            appState.bookedClasses.add(gymClassId);
-          else
-            appState.bookedClasses.remove(gymClassId);
+  void _handleClassBooking(String gymID) {
+    createBooking(appState.user.uid, gymID).then((resp) {
+      if (resp == true) {
+        updateUserBookedClasses(appState.user.uid, gymID).then((result) {
+          // Update the state:
+          if (result == true) {
+            setState(() {
+              if (!appState.bookedClasses.contains(gymID))
+                appState.bookedClasses.add(gymID);
+              else
+                appState.bookedClasses.remove(gymID);
+            });
+          }
         });
-      }
-      // print(appState.bookedClasses[0].toString());
-    });
+      } 
+    });   
   }
   
   @override
@@ -65,7 +67,7 @@ class _GymClassDetailsState extends State<GymClassDetails> {
       child: appState.bookedClasses.contains(widget.gymClass.id) == true ?
         InkWell(
           onTap: () => { 
-            _handleBookedClassesListChanged(widget.gymClass.id),
+            _handleClassBooking(widget.gymClass.id),
           },
           child: Container(
             width: 160.0,
@@ -97,7 +99,7 @@ class _GymClassDetailsState extends State<GymClassDetails> {
         ) :
         InkWell(
           onTap: () => { 
-            _handleBookedClassesListChanged(widget.gymClass.id),
+            _handleClassBooking(widget.gymClass.id),
           },
           child: Container(
             width: 130.0,
@@ -277,22 +279,22 @@ class _GymClassDetailsState extends State<GymClassDetails> {
         //   ),
         // ),
         // Padding(padding: EdgeInsets.only(top: 20),),
-        GestureDetector(
-          onTap: () => {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => MapWidget(),
-              )
-            )
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.map, size: 30, color: Colors.grey,),
-              Text("  view map"),
-            ],
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: () => {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(
+        //         builder: (context) => MapWidget(),
+        //       )
+        //     )
+        //   },
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       Icon(Icons.map, size: 30, color: Colors.grey,),
+        //       Text("  view map"),
+        //     ],
+        //   ),
+        // ),
         SizedBox(height: 20,),
 
         Container(
@@ -334,7 +336,7 @@ class _GymClassDetailsState extends State<GymClassDetails> {
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: headerShortcutIcons,
+          title: Text('Class details'),
         ),
         body: _buildLoadingIndicator(),
       );
@@ -344,7 +346,7 @@ class _GymClassDetailsState extends State<GymClassDetails> {
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: headerShortcutIcons,
+          title: Text('Class details'),
         ),
         body: ListView(
           children: <Widget>[

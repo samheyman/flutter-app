@@ -54,22 +54,8 @@ flutter:
   
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/lemon.jpg
-    - images/lemon.png
-    - images/pregnant-spinning.jpeg
-    - images/yoga.jpg
-    - images/embryo_13.jpg
-    - images/magnesium.jpg
-    - images/cardio.jpg
-    - images/background_image.jpg
-    - images/fitness_ball_squats.jpg
-    - images/g-logo.png
-    - images/logo.png
-    - images/facebook-logo.png
-    - images/facebook_share_icon.png
-    - images/gestantes.png
-    - images/carrot.png
-
+    - images/
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

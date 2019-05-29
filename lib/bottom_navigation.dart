@@ -23,8 +23,8 @@ final bottomNavigationItems = <BottomNavigationBarItem>[
       icon: Icon(Icons.star_border),
       title: Text('Rewards')
     ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.people),
-      title: Text('Social')
-    ),  
+    // BottomNavigationBarItem(
+    //   icon: Icon(Icons.people),
+    //   title: Text('Social')
+    // ),  
   ];

@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             Image.asset('images/gestantes.png', height: 170,),
             SizedBox(width: 10,),
-            Text("Mama\n  Fit\nClub".toUpperCase(),
+            Text("Mamma\n  Fit\nClub".toUpperCase(),
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline, 
             ),
