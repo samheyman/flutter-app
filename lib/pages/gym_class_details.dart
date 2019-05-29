@@ -23,21 +23,89 @@ class GymClassDetails extends StatefulWidget {
 class _GymClassDetailsState extends State<GymClassDetails> {
   StateModel appState;
 
-  void _handleClassBooking(String gymID) {
-    createBooking(appState.user.uid, gymID).then((resp) {
-      if (resp == true) {
-        updateUserBookedClasses(appState.user.uid, gymID).then((result) {
-          // Update the state:
-          if (result == true) {
-            setState(() {
-              if (!appState.bookedClasses.contains(gymID))
-                appState.bookedClasses.add(gymID);
-              else
-                appState.bookedClasses.remove(gymID);
-            });
-          }
-        });
-      } 
+  _confirmBooking(String gymClassId) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: Text("Alert!", textAlign: TextAlign.center,),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("You are about to book this class.", ),
+              SizedBox(height: 20,),
+              Text("Cancellations possible up to 48h beforehand, however failure to attend the class will require full payment."),
+              SizedBox(height: 20,),
+              Text("For more information and cancellations please email us at:"),
+              SizedBox(height: 20,),
+              Text("mamafitclub@hotmail.com"),
+              SizedBox(height: 40,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("BOOK CLASS", style: TextStyle(color: Colors.white),),
+                    color: Colors.redAccent,
+                    onPressed: () {
+                      _handleClassBooking(
+                        widget.gymClass.id,
+                        widget.gymClass.class_name,
+                        widget.gymClass.date_time,
+                        widget.gymClass.gym_name,
+                        appState.user.uid,
+                        appState.user.providerData[0].email.toString(),
+                      );
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 40,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  FlatButton(
+                  child: Text("cancel", style: TextStyle(color: Colors.white),),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+            ),
+                ],
+              ),
+            ],
+          ),
+          actions: [
+          ],
+        );
+      },
+      );
+  }
+
+  void _handleClassBooking(String classID, String className, DateTime classDateTime, String gymName, String userID, String userEmail) {
+    createBooking(
+      classID,
+      className,
+      classDateTime,
+      gymName,
+      appState.user.uid, 
+      userEmail, 
+      )
+      .then((resp) {
+        if (resp == true) {
+          updateUserBookedClasses(appState.user.uid, classID).then((result) {
+            // Update the state:
+            if (result == true) {
+              setState(() {
+                if (!appState.bookedClasses.contains(classID))
+                  appState.bookedClasses.add(classID);
+                else
+                  appState.bookedClasses.remove(classID);
+              });
+            }
+          });
+        } 
     });   
   }
   
@@ -67,11 +135,18 @@ class _GymClassDetailsState extends State<GymClassDetails> {
       child: appState.bookedClasses.contains(widget.gymClass.id) == true ?
         InkWell(
           onTap: () => { 
-            _handleClassBooking(widget.gymClass.id),
+            _handleClassBooking(
+              widget.gymClass.id,
+              widget.gymClass.class_name,
+              widget.gymClass.date_time,
+              widget.gymClass.gym_name,
+              appState.user.uid,
+              appState.user.providerData[0].email.toString(),
+            ),
           },
           child: Container(
-            width: 160.0,
-            height: 85.0,
+            width: 250.0,
+            // height: 115.0,
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -87,9 +162,16 @@ class _GymClassDetailsState extends State<GymClassDetails> {
                 ),
                 SizedBox(height: 5,),
                 Text(
-                  "Cancel", 
+                  "to cancel please email:", 
                   style: TextStyle(
-                    decoration: TextDecoration.underline,
+                    // decoration: TextDecoration.underline,
+                    fontSize: 13.0, 
+                    color: Colors.grey[700],),
+                ),
+                Text(
+                  "mamafitclub@hotmail.com", 
+                  style: TextStyle(
+                    // decoration: TextDecoration.underline,
                     fontSize: 13.0, 
                     color: Colors.grey[700],),
                 ),
@@ -99,7 +181,7 @@ class _GymClassDetailsState extends State<GymClassDetails> {
         ) :
         InkWell(
           onTap: () => { 
-            _handleClassBooking(widget.gymClass.id),
+            _confirmBooking(widget.gymClass.id),
           },
           child: Container(
             width: 130.0,

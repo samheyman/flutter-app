@@ -41,7 +41,7 @@ Future<bool> updateUserBookedClasses(String uid, String classId) {
   });
 }
 
-Future<bool> createBooking(String uid, String classId) {
+Future<bool> createBooking(String classId, String className, DateTime classDateTime, String gymName, String uid, String userEmail) {
   DocumentReference bookingReference =
       Firestore.instance.collection('bookings').document(uid + "_" + classId);
   
@@ -56,8 +56,13 @@ Future<bool> createBooking(String uid, String classId) {
       print("Creating the booking for class " + classId);
       
       await tx.set(bookingReference, {
-        'user_id': uid,
+        'timestamp': DateTime.now(),
         'class_id': classId,
+        'class_name': className,
+        'class_date_time': classDateTime.toString(),
+        'gym_name': gymName,
+        'user_id': uid,
+        'user_email': userEmail,
       });
     }
   }).then((result) {
