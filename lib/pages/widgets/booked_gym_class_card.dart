@@ -31,11 +31,12 @@ class BookedGymClassCard extends StatelessWidget {
           child: Container(
             width: 80,
             child: Column(
+              
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  radius: 35.0,
+                  radius: 27.0,
                   backgroundImage: NetworkImage(gymClass.image_url),
                 ),
               ],
